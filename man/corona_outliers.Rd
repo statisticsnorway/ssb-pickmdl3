@@ -25,7 +25,7 @@ update_spec_corona_outliers(
 
 \item{q_month}{month of quarter as \code{1}, \code{2} or \code{3}}
 
-\item{spec}{An \code{\link{x13_spec}} output object to be updated}
+\item{spec}{A specification object of class "JD3_X13_SPEC" to be updated.}
 
 \item{outlier_date_limit}{Only outliers with \code{date < outlier_date_limit} will be included in updated spec.}
 }
@@ -39,22 +39,22 @@ Corona outliers as a type-date data frame. Also a function to update spec with t
 Corona outliers with same date as outliers already in spec will be omitted.
 }
 \examples{
+
 corona_outliers()
 corona_outliers(freq = 4)
 
-spec_a <- x13_spec(spec = "RSA3", transform.function = "Log")
+spec_a <- rjd3x13::x13_spec(name = "rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_a, fun = "Log")
 spec_a2 <- update_spec_corona_outliers(spec_a)
-s_preOut(spec_a)
-s_preOut(spec_a2)
+as.data.frame(t(sapply(spec_a$regarima$regression$outliers,"[")))
+as.data.frame(t(sapply(spec_a2$regarima$regression$outliers,"[")))
 
-spec_b <- x13_spec(spec = "RSA3", transform.function = "Log", 
-                   usrdef.outliersEnabled = TRUE, 
-                   usrdef.outliersType = rep("AO", 3), 
-                   usrdef.outliersDate = c("2009-01-01", "2016-01-01", "2020-05-01"))
+spec_b <- rjd3x13::x13_spec(name = "rsa3")
+spec_b <- rjd3toolkit::set_transform(spec_b, fun = "Log")
+spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("AO",3),
+                                date=c("2009-01-01", "2016-01-01", "2020-05-01"))
 spec_b2 <- update_spec_corona_outliers(spec_b, outlier_date_limit = "2021-11-01")
-s_preOut(spec_b)
-s_preOut(spec_b2)
-}
-\seealso{
-\code{\link{s_preOut}}
+as.data.frame(t(sapply(spec_b$regarima$regression$outliers,"[")))
+as.data.frame(t(sapply(spec_b2$regarima$regression$outliers,"[")))
+
 }

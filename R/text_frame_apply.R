@@ -1,24 +1,22 @@
-
-
-#' Apply function(s) with input from a data frame 
-#' 
-#' 
-#' @details 
-#' Data frame where all variables are character and with parameter names as column names. 
-#' Each cell contains text with R code written as source code in a function call.
-#' The parameter will be omitted when the cell is missing (`NA`).  
-#' The row names will be used as names in the output and can be used in selections with the `id` parameter.
-#' With `fun = NULL`, the first column must contain function name(s) to be called. 
+#' Apply function(s) with input from a data frame
 #'
-#' @param text_frame Data frame to specify function arguments. See details. 
+#'
+#' @details
+#' Data frame where all variables are character and with parameter names as column names.
+#' Each cell contains text with R code written as source code in a function call.
+#' The parameter will be omitted when the cell is missing (`NA`).
+#' The row names will be used as names in the output and can be used in selections with the `id` parameter.
+#' With `fun = NULL`, the first column must contain function name(s) to be called.
+#'
+#' @param text_frame Data frame to specify function arguments. See details.
 #' @param fun The function to be called, given as a character string.
-#' @param id  To select rows from input `text_frame` (name or number). 
+#' @param id  To select rows from input `text_frame` (name or number).
 #' @param ... Extra arguments that do not change.
 #' @param call_list Extra arguments that do not change, specified as a list.
-#' @param drop Whether to omit list output when a single row is specified by `id`.  
-#' @param verbose When `TRUE`, function calls will be printed. 
+#' @param drop Whether to omit list output when a single row is specified by `id`.
+#' @param verbose When `TRUE`, function calls will be printed.
 #' @param envir The environment for the function evaluation.  See \code{\link{eval}}.
-#' 
+#'
 #' @note This function is general and may be usable outside the pickmdl package.
 #'
 #' @return A list of function evaluation outputs or output from a single function evaluation (see `drop`).
@@ -62,7 +60,9 @@ text_frame_apply <- function(text_frame, fun = NULL, id = NULL, ..., call_list =
     for (j in seq_along(call_i)) {
       call_i[[j]] <- eval(call_i[[j]], envir = envir)
     }
+    
     out[[i]] <- eval(call_i, envir = envir)
+    
   }
   
   if (length(out) == 1 & drop == TRUE) {
@@ -75,7 +75,7 @@ text_frame_apply <- function(text_frame, fun = NULL, id = NULL, ..., call_list =
 
 make_line_i <- function(text_frame, i = 1, verbose = FALSE, fun = NULL) {
   text_frame_i <- as.list(text_frame[i, , drop = FALSE])
-  text_frame_i <- text_frame_i[!sapply(text_frame_i, is.na)]  # missing elements removed 
+  text_frame_i <- text_frame_i[!sapply(text_frame_i, is.na)]  # missing elements removed
   
   if (!is.null(fun)) {
     if (is.character(fun)) {
@@ -89,10 +89,3 @@ make_line_i <- function(text_frame, i = 1, verbose = FALSE, fun = NULL) {
   names(line_i)[1] <- ""
   line_i
 }
-
-
-
-
-
-
-

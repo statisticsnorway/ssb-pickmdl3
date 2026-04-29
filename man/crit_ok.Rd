@@ -7,23 +7,27 @@
 crit_ok(sa)
 }
 \arguments{
-\item{sa}{A \code{\link{x13}} output object}
+\item{sa}{A \code{\link[rjd3x13]{x13}} output object}
 }
 \value{
 \code{TRUE} or \code{FALSE}
 }
 \description{
-Check whether \code{\link{x13}} output is ok according to
+Check whether \code{\link[rjd3x13]{x13}} output is ok according to
 the  PICKMDL "first" method
 }
 \details{
 Unlike \code{\link{ok}}, this function does the actual calculations.
 }
 \examples{
+
 myseries <- pickmdl_data("myseries")
 
-a <- x13(myseries, x13_spec(spec = "RSA3", transform.function = "Log"))
-b <- x13(myseries, x13_spec(spec = "RSA3", transform.function = "None"))
+spec_now <- rjd3x13::x13_spec("rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_now,fun="Log")
+a <- x13_pickmdl(myseries, spec_a)
+spec_b <- rjd3toolkit::set_transform(spec_now,fun="None")
+b <- x13_pickmdl(myseries, spec_b)
 
 crit_ok(a)
 crit_ok(b)

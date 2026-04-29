@@ -32,16 +32,19 @@ Selection from table of PICKMDL criteria
 \examples{
 myseries <- pickmdl_data("myseries")
 
-spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
+spec_a <- rjd3x13::x13_spec("rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_a,fun="Log")
 
-sa5 <- x13_multi(myseries, spec = spec5)   
+spec5 <- x13_spec_pickmdl(spec_a)
+
+sa5 <- x13_multi(myseries, spec = spec5)
 
 tab <- crit_table(sa5)
 
 crit_selection(tab)
 crit_selection(tab[2:5, ])
 crit_selection(tab[1:2, ]) # Warning
-crit_selection(tab[1:2, ], star = 2, when_star = message) 
+crit_selection(tab[1:2, ], star = 2, when_star = message)
 crit_selection(tab[5:1, ])
 crit_selection(tab[5:1, ], pickmdl_method = "aic")
 

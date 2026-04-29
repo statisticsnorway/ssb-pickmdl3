@@ -18,8 +18,11 @@ Extract \code{ok}, \code{ok_final} and \code{mdl_nr}
 \examples{
 myseries <- pickmdl_data("myseries")
 
-a <- x13_pickmdl(myseries, x13_spec(spec = "RSA3", transform.function = "Log"))
-b <- x13_pickmdl(myseries, x13_spec(spec = "RSA3", transform.function = "None"))
+spec_now <- rjd3x13::x13_spec("rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_now, fun = "Log")
+a <- x13_pickmdl(myseries, spec_a)
+spec_b <- rjd3toolkit::set_transform(spec_now, fun = "None")
+b <- x13_pickmdl(myseries, spec_b)
 
 comment(a)
 comment(b)

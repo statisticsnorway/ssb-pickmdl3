@@ -2,11 +2,13 @@
 % Please edit documentation in R/x13_both.R
 \name{x13_both}
 \alias{x13_both}
-\title{\code{\link{x13_spec}}  and \code{\link{x13_pickmdl}} wrapped as a single function}
+\title{\code{\link[rjd3x13]{x13_spec}}  and \code{\link{x13_pickmdl}} wrapped as a single function}
 \usage{
 x13_both(
-  series,
+  ts,
+  spec = NULL,
   ...,
+  context = NULL,
   userdefined = NULL,
   both_output = "main",
   corona = FALSE,
@@ -25,16 +27,21 @@ x13_both(
   fastfirst = TRUE,
   verbose = FALSE,
   output = "sa",
-  add_comment = TRUE,
-  old_crit2 = NA
+  add_comment = TRUE
 )
 }
 \arguments{
-\item{series}{\code{x13} parameter}
+\item{ts}{\code{x13} parameter}
 
-\item{...}{Parameters to \code{\link{x13_spec}}.}
+\item{spec}{A "JD3_X13_SPEC" class object as generated with \code{\link[rjd3x13]{x13_spec}} or a list of several such objects as outputted from \code{\link{x13_spec_pickmdl}}.
+In the case of a single object and when \code{automdl.enabled} is \code{FALSE}, \code{spec} will be converted internally
+by \code{x13_spec_pickmdl} with default five arima model specifications.}
 
-\item{userdefined}{Parameter to \code{\link{x13}}  (via \code{...}  to \code{x13_pickmdl}).}
+\item{...}{Specification setting on the form function__parameter. See examples.}
+
+\item{context}{Parameter to \code{\link[rjd3x13]{x13}}. List of external regressors (calendar or other) to be used for estimation.}
+
+\item{userdefined}{Parameter to \code{\link[rjd3x13]{x13}}  (via \code{...}  to \code{x13_pickmdl}).}
 
 \item{both_output}{One of \code{"main"} (default, x13_pickmdl output), \code{"spec"} (spec output) or \code{"both"}.}
 
@@ -61,9 +68,9 @@ otherwise the \code{star} model is chosen.
 See \code{\link{crit_ok}}.}
 
 \item{identification_end}{To shorten the series before runs used to identify (arima) parameters.
-That is, the series is shortened by \verb{window(series,} \verb{end = identification_end)}.}
+That is, the series is shortened by \verb{window(ts,} \verb{end = identification_end)}.}
 
-\item{identification_estimate.to}{To set \code{\link{x13_spec}} parameter \code{estimate.to} before runs used to identify (arima) parameters.
+\item{identification_estimate.to}{To set \code{\link[rjd3toolkit]{set_estimate}} parameter \code{d1} before runs used to identify (arima) parameters.
 This is an alternative to  \code{identification_end}.}
 
 \item{identify_t_filter}{When \code{TRUE}, Henderson trend filter is identified by the shortened (see above) series.}
@@ -93,17 +100,8 @@ This affects the output when \code{output = "all"}.}
 
 \item{add_comment}{When \code{TRUE}, a  comment attribute
 (character vector with \code{ok}, \code{ok_final} and \code{mdl_nr}) will
-be added to the \code{\link{x13}} output object. Use \code{\link{comment}}
+be added to the \code{\link[rjd3x13]{x13}} output object. Use \code{\link{comment}}
 to get the attribute or \code{\link{ok}} to get the attribute converted to a list.}
-
-\item{old_crit2}{Logical. The p-value criterion used for PICKMDL criterion number 2.
-Set to \code{FALSE} for "Ljung-Box" and to \code{TRUE} for "Ljung-Box (residuals at seasonal lags)".
-This parameter can be overridden by setting the \code{"pickmdl.old_crit2"} option,
-in which case the option value will take precedence.
-The default value (\code{NA}) means that \code{old_crit2 = (date_found < "2024-10-15")},
-where \code{date_found} refers to the end date according to \code{identification_end} or \code{identification_estimate.to}.
-If none of these is specified, \code{old_crit2}  is set to \code{FALSE}.
-The default value is chosen to ensure that the new criterion is phased in automatically.}
 }
 \value{
 By default an \code{x13} output object, or otherwise a list as specified by parameter \code{output} and \code{both_output}.
@@ -115,7 +113,33 @@ Output is determined by the parameter \code{both_output}.
 All parameters except \code{both_output} and \code{...} are parameters to \code{\link{x13_pickmdl}}.
 }
 \examples{
-a <- x13_both(pickmdl_data("myseries"), spec = "RSA3", transform.function = "Log", verbose = TRUE)
-a$decomposition
+
+myseries <- pickmdl_data("myseries")
+
+a <- x13_both(myseries, spec = "rsa3", set_transform__fun = "Log", verbose = TRUE)
+summary(a)
+
+# is equivalent to
+
+spec_a <- x13_spec("rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_a, fun = "Log")
+a2 <- x13_both(myseries,spec_a,verbose=TRUE)
+a2
+
+# several specification settings:
+
+b <- x13_both(myseries, spec="rsa3",
+  set_transform__fun = "None",
+  set_easter__enable = TRUE,
+  set_easter__duration = 3,
+  set_easter__test = "None",
+  set_outlier__outliers.type = c("LS","AO"),
+  set_outlier__critical.value = 3
+)
+
+# user defined regressors and modelling context
+
+
+
 
 }

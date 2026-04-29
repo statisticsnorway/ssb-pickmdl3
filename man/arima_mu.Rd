@@ -2,24 +2,27 @@
 % Please edit documentation in R/arima_mu.R
 \name{arima_mu}
 \alias{arima_mu}
-\title{Capture \code{arima.mu} from x13 output}
+\title{Capture whether there is a mean coefficient from x13 output}
 \usage{
 arima_mu(sa)
 }
 \arguments{
-\item{sa}{A \code{\link{x13}} output object}
+\item{sa}{A \code{\link[rjd3x13]{x13}} output object}
 }
 \value{
 \code{TRUE} or \code{FALSE}
 }
 \description{
-Capture \code{arima.mu} from x13 output
+Capture whether there is a mean coefficient from x13 output
 }
 \examples{
 myseries <- pickmdl_data("myseries")
 
-a <- x13(myseries, spec = "RSA3")
-b <- x13(sqrt(myseries), spec = "RSA3")
+spec_a <- rjd3x13::x13_spec("rsa1")
+spec_b <- rjd3toolkit::set_arima(spec_a,mean=0.2)
+
+a <- rjd3x13::x13(myseries, spec = spec_a)
+b <- rjd3x13::x13(myseries, spec = spec_b)
 
 arima_mu(a)
 arima_mu(b)

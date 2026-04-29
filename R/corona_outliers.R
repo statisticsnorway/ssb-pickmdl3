@@ -1,38 +1,40 @@
 
 #' Corona outliers
-#' 
+#'
 #' Corona outliers as a type-date data frame. Also a function to update spec with these outliers.
-#' 
-#' Corona outliers with same date as outliers already in spec will be omitted.   
+#'
+#' Corona outliers with same date as outliers already in spec will be omitted.
 #'
 #' @param option Only `"ssb"` implemented
 #' @param freq frequency, `4` or `12`
 #' @param day day of month as character
 #' @param q_month month of quarter as `1`, `2` or `3`
-#' @param spec An \code{\link{x13_spec}} output object to be updated
-#' @param outlier_date_limit  Only outliers with `date < outlier_date_limit` will be included in updated spec. 
+#' @param spec A specification object of class "JD3_X13_SPEC" to be updated.
+#' @param outlier_date_limit  Only outliers with `date < outlier_date_limit` will be included in updated spec.
 #'
 #' @return data frame
 #' @export
-#' 
-#' @seealso \code{\link{s_preOut}}
+#'
 #'
 #' @examples
+#'
 #' corona_outliers()
 #' corona_outliers(freq = 4)
-#' 
-#' spec_a <- x13_spec(spec = "RSA3", transform.function = "Log")
+#'
+#' spec_a <- rjd3x13::x13_spec(name = "rsa3")
+#' spec_a <- rjd3toolkit::set_transform(spec_a, fun = "Log")
 #' spec_a2 <- update_spec_corona_outliers(spec_a)
-#' s_preOut(spec_a)
-#' s_preOut(spec_a2)
-#' 
-#' spec_b <- x13_spec(spec = "RSA3", transform.function = "Log", 
-#'                    usrdef.outliersEnabled = TRUE, 
-#'                    usrdef.outliersType = rep("AO", 3), 
-#'                    usrdef.outliersDate = c("2009-01-01", "2016-01-01", "2020-05-01"))
+#' as.data.frame(t(sapply(spec_a$regarima$regression$outliers,"[")))
+#' as.data.frame(t(sapply(spec_a2$regarima$regression$outliers,"[")))
+#'
+#' spec_b <- rjd3x13::x13_spec(name = "rsa3")
+#' spec_b <- rjd3toolkit::set_transform(spec_b, fun = "Log")
+#' spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("AO",3),
+#'                                 date=c("2009-01-01", "2016-01-01", "2020-05-01"))
 #' spec_b2 <- update_spec_corona_outliers(spec_b, outlier_date_limit = "2021-11-01")
-#' s_preOut(spec_b)
-#' s_preOut(spec_b2)
+#' as.data.frame(t(sapply(spec_b$regarima$regression$outliers,"[")))
+#' as.data.frame(t(sapply(spec_b2$regarima$regression$outliers,"[")))
+#'
 corona_outliers <- function(option = "ssb", freq = 12, day = "01", q_month = 1) {
   if (option != "ssb") {
     stop('Only type "ssb" implemented')
@@ -63,15 +65,20 @@ update_spec_corona_outliers <- function(spec, option = "ssb", freq = 12, day = "
   co <- corona_outliers(option = option, freq = freq, day = day, q_month = q_month)
   co <- co[co$date < outlier_date_limit, , drop = FALSE]
   if (nrow(co)) {
-    updated <- update_outliers(sa = co, spec = spec, day = day)  # as.character for old r versions
+    pre_date <- sapply(spec$regarima$regression$outliers,"[[","pos")
+    updated <- co[!(co$date %in% pre_date),]
   } else {
     updated <- NULL
   }
-  if (is.null(updated)) {
+  if (is.null(updated) ) {
     return(spec)
   }
-  x13_spec(spec, usrdef.outliersEnabled = TRUE, usrdef.outliersType = as.character(updated$type), usrdef.outliersDate = as.character(updated$date))
-} 
+  if(!nrow(updated)){
+    return(spec)
+  }else{
+    rjd3toolkit::add_outlier(spec,type=as.character(updated$type),date=as.character(updated$date))
+  }
+}
 
 
 

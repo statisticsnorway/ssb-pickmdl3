@@ -1,31 +1,31 @@
 
-#' x13 with PICKMDL and partial concurrent possibilities  
-#' 
-#' \code{\link{x13}} can be run as usual (automdl) or with a PICKMDL specification.
+#' x13 with PICKMDL and partial concurrent possibilities
+#'
+#' \code{\link[rjd3x13]{x13}} can be run as usual (automdl) or with a PICKMDL specification.
 #' The ARIMA model, outliers and filters can be identified at a certain date and then held fixed (with a new outlier-span).
-#' 
-#' @param series `x13` parameter
-#' @param spec An \code{\link{x13_spec}} output object or a list of several objects as outputted from \code{\link{x13_spec_pickmdl}}. 
-#'             In the case of a single object and when `automdl.enabled` is `FALSE`, `spec` will be converted internally 
-#'             by `x13_spec_pickmdl` with default five arima model specifications. 
-#' @param corona Whether to update `spec` by outliers according to \code{\link{corona_outliers}}.  
-#'               `FALSE` or `NULL` means no update. `TRUE` or `"ssb"` means update.         
+#'
+#' @param ts `x13` parameter
+#' @param spec A "JD3_X13_SPEC" class object as generated with \code{\link[rjd3x13]{x13_spec}} or a list of several such objects as outputted from \code{\link{x13_spec_pickmdl}}.
+#'             In the case of a single object and when `automdl.enabled` is `FALSE`, `spec` will be converted internally
+#'             by `x13_spec_pickmdl` with default five arima model specifications.
+#' @param corona Whether to update `spec` by outliers according to \code{\link{corona_outliers}}.
+#'               `FALSE` or `NULL` means no update. `TRUE` or `"ssb"` means update.
 #' @param ... Further `x13` parameters (currently only parameter `userdefined` is additional parameter to `x13`).
-#' @param pickmdl_method \code{\link{crit_selection}} parameter 
+#' @param pickmdl_method \code{\link{crit_selection}} parameter
 #'         or one of the two extra possibilities, `"first_automdl"` or `"first_tryautomdl"`.
 #'         In both cases the `crit_selection` parameter is `"first"` and the automdl model is added as the last pickmdl model.
-#' * **`"first_automdl"`:** The automdl model is chosen whenever no pickmdl model is ok.    
-#'                          In other words, the `star` parameter changes.  
-#' * **`"first_tryautomdl"`:** When no pickmdl model is ok:  The automdl model is chosen if this model is ok, 
-#'                          otherwise the `star` model is chosen.  
+#' * **`"first_automdl"`:** The automdl model is chosen whenever no pickmdl model is ok.
+#'                          In other words, the `star` parameter changes.
+#' * **`"first_tryautomdl"`:** When no pickmdl model is ok:  The automdl model is chosen if this model is ok,
+#'                          otherwise the `star` model is chosen.
 #' @param star           \code{\link{crit_selection}} parameter
 #' @param when_star      \code{\link{crit_selection}} parameter
 #' @param when_automdl Function to be called when automdl since no pickmdl model ok. Supply NULL to do nothing.
 #' @param when_finalnotok Function to be called, e.g. \code{\link{warning}}, when final run with final model is not ok. Supply NULL to do nothing.
-#'                        See \code{\link{crit_ok}}. 
+#'                        See \code{\link{crit_ok}}.
 #' @param identification_end To shorten the series before runs used to identify (arima) parameters.
-#'            That is, the series is shortened by `window(series,` `end = identification_end)`.
-#' @param identification_estimate.to   To set \code{\link{x13_spec}} parameter `estimate.to` before runs used to identify (arima) parameters.  
+#'            That is, the series is shortened by `window(ts,` `end = identification_end)`.
+#' @param identification_estimate.to   To set \code{\link[rjd3toolkit]{set_estimate}} parameter `d1` before runs used to identify (arima) parameters.
 #'            This is an alternative to  `identification_end`.
 #' @param identify_t_filter When `TRUE`, Henderson trend filter is identified by the shortened (see above) series.
 #' @param identify_s_filter When `TRUE`, Seasonal moving average filter is identified by the shortened series.
@@ -37,197 +37,169 @@
 #'   - For any value other than `TRUE` or `FALSE`, the ARIMA model is chosen as specified by `spec`.
 #'
 #' Note that when `automdl.enabled` is not `FALSE`, if `spec` is a list containing several objects outputted from `x13_spec_pickmdl`, only the first object is used.
-#' @param fastfirst When `TRUE` and when pickmdl with `crit_selection` parameter `"first"`, 
+#' @param fastfirst When `TRUE` and when pickmdl with `crit_selection` parameter `"first"`,
 #'                  only as many models as needed are run.
-#'                  This affects the output when `output = "all"`. 
-#' @param verbose Printing information to console when `TRUE`. 
-#' @param output One of `"sa"` (default), `"spec"` (final spec), `"sa_spec"` (both) and `"all"`. See examples.   
-#' @param add_comment When `TRUE`, a  comment attribute 
-#'      (character vector with `ok`, `ok_final` and `mdl_nr`) will 
-#'      be added to the \code{\link{x13}} output object. Use \code{\link{comment}} 
-#'      to get the attribute or \code{\link{ok}} to get the attribute converted to a list. 
-#' @param old_crit2  Logical. The p-value criterion used for PICKMDL criterion number 2.
-#'       Set to `FALSE` for "Ljung-Box" and to `TRUE` for "Ljung-Box (residuals at seasonal lags)".
-#'       This parameter can be overridden by setting the `"pickmdl.old_crit2"` option,
-#'       in which case the option value will take precedence.
-#'       The default value (`NA`) means that `old_crit2 = (date_found < "2024-10-15")`, 
-#'       where `date_found` refers to the end date according to `identification_end` or `identification_estimate.to`.
-#'       If none of these is specified, `old_crit2`  is set to `FALSE`.
-#'       The default value is chosen to ensure that the new criterion is phased in automatically. 
+#'                  This affects the output when `output = "all"`.
+#' @param verbose Printing information to console when `TRUE`.
+#' @param output One of `"sa"` (default), `"spec"` (final spec), `"sa_spec"` (both) and `"all"`. See examples.
+#' @param add_comment When `TRUE`, a  comment attribute
+#'      (character vector with `ok`, `ok_final` and `mdl_nr`) will
+#'      be added to the \code{\link[rjd3x13]{x13}} output object. Use \code{\link{comment}}
+#'      to get the attribute or \code{\link{ok}} to get the attribute converted to a list.
 #'
 #' @return By default an `x13` output object, or otherwise a list as specified by parameter `output`.
 #' @export
 #' @importFrom stats window
+#' @importFrom rjd3toolkit set_transform add_outlier set_outlier
 #'
 #' @examples
 #' myseries <- pickmdl_data("myseries")
-#' 
-#' spec_a  <- x13_spec(spec = "RSA3", transform.function = "Log")
-#' 
+#'
+#' spec_a  <- rjd3x13::x13_spec(name = "rsa3")
+#' spec_a <- rjd3toolkit::set_transform(spec_a, fun = "Log")
+#'
 #' a <- x13_pickmdl(myseries, spec_a, verbose = TRUE)
 #' comment(a)
 #' ok(a)
 #' unlist(ok(a))
-#' a$regarima
-#' 
+#' summary(a$result$preprocessing)
+#'
 #' a2 <- x13_pickmdl(myseries, spec_a, identification_end = c(2014, 2))
-#' a2$regarima
-#' 
+#' summary(a2$result$preprocessing)
+#'
 #' # As above, another way
 #' a3 <- x13_pickmdl(myseries, spec_a, identification_estimate.to = "2014-03-01")
-#' a3$regarima
-#' 
+#' summary(a3$result$preprocessing)
+#'
 #' a4 <- x13_automdl(myseries, spec_a, identification_end = c(2014, 2))
-#' a4$regarima
-#' 
+#' summary(a4$result$preprocessing)
+#'
 #' # As above, another way
-#' spec_a_single  <- x13_spec(spec = "RSA3", transform.function = "Log")
-#' a5 <- x13_automdl(myseries, spec_a_single, identification_estimate.to = "2014-03-01")
-#' a5$regarima
-#' 
+#' a5 <- x13_automdl(myseries, spec_a, identification_estimate.to = "2014-03-01")
+#' summary(a5$result$preprocessing)
+#'
+#'
 #' allvar <- pickmdl_data("allvar")
-#' 
-#' spec_b <- x13_spec(
-#'             spec = "RSA3", transform.function = "Log",
-#'             usrdef.varEnabled = TRUE, 
-#'             usrdef.varType = c("Calendar", "Calendar"), 
-#'             usrdef.var = allvar, 
-#'             outlier.enabled = FALSE, 
-#'             usrdef.outliersEnabled = TRUE,
-#'             usrdef.outliersType = rep("LS", 20), 
-#'             usrdef.outliersDate = c("2009-01-01", "2016-01-01", 
-#'                                     "2020-03-01", "2020-04-01", "2020-05-01", 
-#'                                     "2020-06-01", "2020-07-01", "2020-08-01", 
-#'                                     "2020-09-01", "2020-10-01", "2020-11-01", 
-#'                                     "2020-12-01", "2021-01-01", "2021-02-01",
-#'                                     "2021-03-01", "2021-04-01", "2021-05-01",
-#'                                     "2021-06-01", "2021-07-01", "2021-08-01"))
-#' b <- x13_pickmdl(myseries, spec_b, identification_end = c(2020, 2))                                     
-#' b$regarima
-#' 
-#' # automdl instead  
-#' b1 <- x13_automdl(myseries, spec_b, identification_end = c(2020, 2))
-#' b1$regarima
-#' 
+#' allvar <- list(arb_dag=allvar[,1],skuddar=allvar[,2])
+#' my_context <- modelling_context(variables=allvar)
+#' spec_b <- rjd3x13::x13_spec(name= "rsa3")
+#' spec_b <- rjd3toolkit::set_transform(spec_b,fun="Log")
+#' spec_b <- rjd3toolkit::set_tradingdays(spec_b,
+#'                        option="Userdefined",uservariable=c("r.arb_dag","r.skuddar"))
+#' spec_b <- rjd3toolkit::set_outlier(spec_b,outliers.type=NULL)
+#' spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("LS",20),
+#'                            date = c("2009-01-01", "2016-01-01", "2020-03-01",
+#'                                     "2020-04-01", "2020-05-01", "2020-06-01",
+#'                                     "2020-07-01", "2020-08-01", "2020-09-01",
+#'                                     "2020-10-01", "2020-11-01", "2020-12-01",
+#'                                     "2021-01-01", "2021-02-01", "2021-03-01",
+#'                                     "2021-04-01", "2021-05-01", "2021-06-01",
+#'                                     "2021-07-01", "2021-08-01"))
+#' b <- x13_pickmdl(myseries,spec_b, identification_end = c(2020, 2),context=my_context)
+#' summary(b$result$preprocessing)
+#'
+#' # automdl instead
+#' b1 <- x13_automdl(myseries, spec_b, identification_end = c(2020, 2),context=my_context)
+#' summary(b1$result$preprocessing)
+#'
 #' # effect of identify_t_filter and identify_s_filter
 #' set.seed(1)
-#' rndseries <- ts(rep(1:12, 20) + (1 + (1:240)/20) * runif(240) + 0.5 * c(rep(1, 120), (1:120)^2), 
+#' rndseries <- ts(rep(1:12, 20) + (1 + (1:240)/20) * runif(240) + 0.5 * c(rep(1, 120), (1:120)^2),
 #'                 frequency = 12, start = c(2000, 1))
-#' spec_c <- x13_spec(outlier.enabled = FALSE)               
-#' c1 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12))    
-#' c1$decomposition
-#' c2 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12), identify_t_filter = TRUE) 
-#' c2$decomposition
-#' c3 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12), identify_t_filter = TRUE, 
-#'                   identify_s_filter = TRUE)     
-#' c3$decomposition                       
-#' 
-#' 
+#' spec_c <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"),outliers.type=NULL)
+#' c1 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12))
+#' c1
+#' c2 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12), identify_t_filter = TRUE)
+#' c2
+#' c3 <- x13_automdl(rndseries, spec_c, identification_end = c(2009, 12), identify_t_filter = TRUE,
+#'                   identify_s_filter = TRUE)
+#' c3
+#'
+#'
 #' # Warning when transform.function = "None"
-#' spec_d  <- x13_spec(spec = "RSA3", transform.function = "None")
+#' spec_d  <- rjd3toolkit::set_transform(rjd3x13::x13_spec("rsa3"), fun = "None")
 #' d <- x13_pickmdl(myseries, spec_d, verbose = TRUE)
-#' 
-#' # Warning avoided (when_star) and 2nd (star) model selected 
+#'
+#' # Warning avoided (when_star) and 2nd (star) model selected
 #' d2 <- x13_pickmdl(myseries, spec_d, star = 2, when_star = NULL, verbose = TRUE)
-#' 
-#' # automdl since no pickmdl model ok, but still not ok 
+#'
+#' # automdl since no pickmdl model ok, but still not ok
 #' d3 <- x13_pickmdl(myseries, spec_d, pickmdl_method = "first_automdl", verbose = TRUE)
-#' 
-#' # airline model (star) since automdl also not ok 
+#'
+#' # airline model (star) since automdl also not ok
 #' d4 <- x13_pickmdl(myseries, spec_d, pickmdl_method = "first_tryautomdl", verbose = TRUE,
 #'                   when_finalnotok = warning) # also finalnotok warning
-#' 
-#' # As a2, with output = "all"
-#' k <- x13_pickmdl(myseries, spec_b, identification_end = c(2010, 2), output = "all",
-#'                  fastfirst = FALSE) # With TRUE only one model in this case 
-#' k$sa$decomposition  # As a2$decomposition 
+#'
+#' # As b, with output = "all"
+#' k <- x13_pickmdl(myseries, spec_b, identification_end = c(2014, 2), context = my_context,
+#'                  output = "all", fastfirst = FALSE) # With TRUE only one model in this case
+#' summary(k$sa$result$preprocessing)  # As summary(b$result$preprocessing)
+#'
 #' k$mdl_nr            # index of selected model used to identify parameters
-#' k$sa_mult[[k$mdl_nr]]$decomposition  # decomposition for model to identify
-#' k$crit_tab          # Table of criteria 
-#' 
-#' 
+#' k$sa_mult[[k$mdl_nr]] # model to identify
+#' k$crit_tab          # Table of criteria
+#'
+#'
 #' # Effect of identify_outliers (TRUE is default)
-#' m1 <- x13_pickmdl(myseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
+#' m1 <- x13_pickmdl(myseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value= 3),
 #'                   identification_end = c(2010, 2), identify_outliers = FALSE)
-#' m2 <- x13_pickmdl(myseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
-#'                   identification_end = c(2010, 2), identify_outliers = TRUE, 
-#'                   verbose = TRUE, output = "all")
-#' m3 <- x13_pickmdl(myseries, m2$spec, identification_end = c(2018, 2), identify_outliers = TRUE, 
+#' m2 <- x13_pickmdl(myseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value= 3),
+#'                   identification_end = c(2010, 2), identify_outliers = TRUE,
 #'                   verbose = TRUE)
-#' 
-#' m1$regarima
-#' m2$sa$regarima
-#' m3$regarima
-#' 
-#' 
-#' # With corona outliers (even possible when series is not long enough) 
+#' m3 <- x13_pickmdl(myseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value= 3),
+#'                   identification_end = c(2018, 2), identify_outliers = TRUE,
+#'                   verbose = TRUE)
+#'
+#'
+#'
+#' # With corona outliers (even possible when series is not long enough)
 #' m4 <- x13_pickmdl(myseries, spec_a, verbose = TRUE, corona = TRUE)
-#' m4$regarima
-#' m5 <- x13_pickmdl(myseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
-#'                   identification_end = c(2010, 2), identify_outliers = TRUE, 
-#'                   verbose = TRUE, corona = TRUE) 
-#' m5$regarima 
-#' 
-#'  
+#' summary(m4$result$preprocessing)
+#' m5 <- x13_pickmdl(myseries , rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value= 3),
+#'                   identification_end = c(2010, 2), identify_outliers = TRUE,
+#'                   verbose = TRUE, corona = TRUE)
+#' summary(m5$result$preprocessing)
+#'
+#'
 #' ###########  quarterly series  #############
-#'    
-#' qseries <- pickmdl_data("qseries")    
-#' 
+#'
+#' qseries <- pickmdl_data("qseries")
+#'
 #' # Effect of identify_outliers (TRUE is default)
-#' q1 <- x13_pickmdl(qseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
+#' q1 <- x13_pickmdl(qseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value = 3),
 #'                   identification_end = c(2010, 2), identify_outliers = FALSE)
-#' q2 <- x13_pickmdl(qseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
-#'                   identification_end = c(2010, 2), identify_outliers = TRUE, 
+#' q2 <- x13_pickmdl(qseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value = 3),
+#'                   identification_end = c(2010, 2), identify_outliers = TRUE,
 #'                   verbose = TRUE, output = "all")
-#' q3 <- x13_pickmdl(qseries, q2$spec, identification_end = c(2018, 2), identify_outliers = TRUE, 
+#' q3 <- x13_pickmdl(qseries, q2$spec, identification_end = c(2018, 2), identify_outliers = TRUE,
 #'                   verbose = TRUE)
-#' 
-#' q1$regarima
-#' q2$sa$regarima
-#' q3$regarima
-#' 
-#' 
-#' # With corona outliers (even possible when series is not long enough) 
+#'
+#' # With corona outliers (even possible when series is not long enough)
 #' q4 <- x13_pickmdl(qseries, spec_a, verbose = TRUE, corona = TRUE)
-#' q4$regarima
-#' q5 <- x13_pickmdl(qseries, x13_spec("RSA3", outlier.usedefcv = FALSE, outlier.cv = 3), 
-#'                   identification_end = c(2010, 2), identify_outliers = TRUE, 
-#'                   verbose = TRUE, corona = TRUE) 
-#' q5$regarima 
-#' 
-#' 
-#' # Demonstrate strange behavior of x13 with TC at end. Updating outlier.from matters.
-#' # Explains why TC (III-2021) is in q4 and not in q5 
-#' q11 <- x13(window(qseries, end = c(2020, 1)), 
-#'     spec = x13_spec(spec = "RSA3", transform.function = "Log", 
-#'     usrdef.outliersEnabled = TRUE, usrdef.outliersType = "TC", 
-#'     usrdef.outliersDate = "2020-01-01"))  
-#' q12 <- x13(window(qseries, end = c(2020, 1)), # same with outlier.from 
-#'     spec = x13_spec(spec = "RSA3", transform.function = "Log", 
-#'     usrdef.outliersEnabled = TRUE, usrdef.outliersType = "TC", 
-#'     usrdef.outliersDate = "2020-01-01", outlier.from = "2020-04-01")) 
-#' q11$regarima 
-#' q12$regarima
-#' 
-#' 
-x13_pickmdl <- function(series, spec, 
-                        corona = FALSE, ..., 
-                        pickmdl_method = "first", star = 1, 
+#' summary(q4$result$preprocessing)
+#'
+#' q5 <- x13_pickmdl(qseries, rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"), critical.value = 3),
+#'                   identification_end = c(2010, 2), identify_outliers = TRUE,
+#'                   verbose = TRUE, corona = TRUE)
+#' summary(q5$result$preprocessing)
+#'
+#'
+
+x13_pickmdl <- function(ts, spec,
+                        corona = FALSE, ...,
+                        pickmdl_method = "first", star = 1,
                         when_star = warning,
                         when_automdl = message,
                         when_finalnotok = NULL,
-                        identification_end = NULL, identification_estimate.to = NULL, 
-                        identify_t_filter = FALSE, identify_s_filter = FALSE, 
+                        identification_end = NULL, identification_estimate.to = NULL,
+                        identify_t_filter = FALSE, identify_s_filter = FALSE,
                         identify_outliers = TRUE,
                         identify_arima_mu = TRUE,
                         automdl.enabled = FALSE,
                         fastfirst = TRUE,
                         verbose = FALSE,
                         output = "sa",
-                        add_comment = TRUE,
-                        old_crit2 = NA) {
-  
-  original_option <- getOption("pickmdl.old_crit2")
+                        add_comment = TRUE) {
   
   if (is.logical(corona)) {
     if (corona) {
@@ -248,8 +220,10 @@ x13_pickmdl <- function(series, spec,
   
   auto_in_pickmdl <- FALSE
   
-  if (!all(apply(sapply(spec, class), 1, unique) == c("SA_spec", "X13"))) {
-    if (!all(class(spec) == c("SA_spec", "X13"))) {
+  ## lager liste med spec. Oversatt til rjd3.
+  
+  if (!all(sapply(spec, class) == "JD3_X13_SPEC")) {
+    if (!all(class(spec) == "JD3_X13_SPEC")){
       stop("Wrong `spec` input")
     }
     if (automdl.enabled) {
@@ -257,7 +231,7 @@ x13_pickmdl <- function(series, spec,
     } else {
       if(pickmdl_method %in% c("first_automdl", "first_tryautomdl")){
         spec <- c(x13_spec_pickmdl(spec), list(spec))
-        spec[[length(spec)]] <- x13_spec(spec[[length(spec)]], automdl.enabled = TRUE)
+        spec[[length(spec)]] <- rjd3toolkit::set_automodel(spec[[length(spec)]],enabled = TRUE)
         if(pickmdl_method=="first_automdl"){
           star <- length(spec)
         }
@@ -269,10 +243,10 @@ x13_pickmdl <- function(series, spec,
     }
   }
   
-  if (!is.null(corona) | is.na(old_crit2)) { 
-    end_ts <- end(ts(1:2, start = end(window(series, end = identification_end)), frequency = frequency(series)))
-    end_ts_final <- end(ts(1:2, start = end(series), frequency = frequency(series)))
-    if (frequency(series) == 4) {
+  if (!is.null(corona)) {
+    end_ts <- stats::end(stats::ts(1:2, start = stats::end(stats::window(ts, end = identification_end)), frequency = stats::frequency(ts)))
+    end_ts_final <- stats::end(stats::ts(1:2, start = stats::end(ts), frequency = stats::frequency(ts)))
+    if (stats::frequency(ts) == 4) {
       end_ts[2] <- 1 + (end_ts[2] - 1) * 3
       end_ts_final[2] <- 1 + (end_ts_final[2] - 1) * 3
     }
@@ -283,42 +257,21 @@ x13_pickmdl <- function(series, spec,
     }
   }
   
-  if (is.na(old_crit2)) {
-    if (is.null(identification_end) & is.null(identification_estimate.to)) {
-      old_crit2 <- FALSE
-      if (verbose) {
-        cat("old_crit2 set to ", old_crit2, " since no identification specification. \n", sep = "")
-      }
-    } else {
-      threshold_date <- "2024-10-15"
-      old_crit2 <- as.Date(outlier_date_limit) < as.Date(threshold_date)
-      if (verbose) {
-        cat("old_crit2 set to ", old_crit2, " based on the date found (", outlier_date_limit, ") and threshold (", threshold_date, ").\n", sep = "")
-      }
-    }
-  }
   
-  
-  # Set the option to `old_crit2` only if it does not already exist
-  if (is.null(original_option)) {
-    options(pickmdl.old_crit2 = old_crit2)
-    
-    # Ensure that the option is removed when the function exits
-    on.exit(options(pickmdl.old_crit2 = NULL), add = TRUE)
-  }
-  
-  if (!is.null(corona)) {  # Because of possible error (bug) only include outliers within estimation span 
+  if (!is.null(corona)) {  # Because of possible error (bug) only include outliers within estimation span
     for (i in seq_along(spec)) {
-      spec[[i]] <- update_spec_corona_outliers(spec[[i]], option = corona, outlier_date_limit = outlier_date_limit, freq = frequency(series))
+      spec[[i]] <- update_spec_corona_outliers(spec[[i]], option = corona, outlier_date_limit = outlier_date_limit, freq = stats::frequency(ts))
     }
   }
   
   if (automdl.enabled) {
     spec <- spec[1]
     if (specify_automdl.enabled) {
-      spec[[1]] <- x13_spec(spec[[1]], automdl.enabled = TRUE)
+      spec[[1]] <- rjd3toolkit::set_automodel(spec[[1]], enabled = TRUE)
     }
   }
+  
+  
   
   if (fastfirst) {
     fastfirst <- !automdl.enabled & pickmdl_method == "first"
@@ -333,12 +286,14 @@ x13_pickmdl <- function(series, spec,
     when_star_here <- NULL
     while (!ok_loop) {
       i <- i + 1
+      
       # almost same code as below (spec -> spec[i])
       if (is.null(identification_estimate.to)) {
-        sa_mult <- c(sa_mult, x13_multi(series = window(series, end = identification_end), spec = spec[i], ...))
+        sa_mult <- c(sa_mult, x13_multi(ts = stats::window(ts, end = identification_end), spec = spec[i], ...))
       } else {
-        sa_mult <- c(sa_mult, x13_multi(series = window(series, end = identification_end), 
-                                        spec = lapply(spec[i], x13_spec, estimate.to = identification_estimate.to), ...))
+        sa_mult <- c(sa_mult, x13_multi(ts = stats::window(ts, end = identification_end),
+                                        #spec = lapply(spec[i], x13_spec, estimate.to = identification_estimate.to), ...))
+                                        spec =  lapply(spec[i], rjd3toolkit::set_estimate, type="To",d1=identification_estimate.to), ...))
       }
       crit_tab_i <- crit_table(sa_mult[i])
       if (i == length(spec)) {
@@ -357,10 +312,11 @@ x13_pickmdl <- function(series, spec,
     }
   } else {
     if (is.null(identification_estimate.to)) {
-      sa_mult <- x13_multi(series = window(series, end = identification_end), spec = spec, ...)
+      sa_mult <- x13_multi(ts = stats::window(ts, end = identification_end), spec = spec, ...)
     } else {
-      sa_mult <- x13_multi(series = window(series, end = identification_end), 
-                           spec = lapply(spec, x13_spec, estimate.to = identification_estimate.to), ...)
+      sa_mult <- x13_multi(ts = stats::window(ts, end = identification_end),
+                           spec = lapply(spec, rjd3toolkit::set_estimate, type="To",d1=identification_estimate.to), ...)
+      
     }
     
     if (automdl.enabled) {
@@ -381,14 +337,13 @@ x13_pickmdl <- function(series, spec,
   
   
   
-  
-  
   if(verbose){
-    print(sa_mult[[mdl_nr]]$regarima$arma)
+    print(utils::capture.output(sa_mult[[mdl_nr]]$result$preprocessing$description$arima)[1])
   }
   
   length_spec <- length(spec)
   spec <- spec[[mdl_nr]]
+  
   
   if(automdl.enabled | (auto_in_pickmdl & mdl_nr == length_spec)){
     if(!automdl.enabled){
@@ -396,28 +351,31 @@ x13_pickmdl <- function(series, spec,
         when_automdl("automdl since no pickmdl model ok")
       }
     }
-    arma <- sa_mult[[mdl_nr]]$regarima$arma  # as.numeric remove names, as.numeric needed? can be factors?  
-    spec <- x13_spec(spec, 
-                     arima.p = as.numeric(arma["p"]), 
-                     arima.d = as.numeric(arma["d"]), 
-                     arima.q = as.numeric(arma["q"]), 
-                     arima.bp = as.numeric(arma["bp"]), 
-                     arima.bd = as.numeric(arma["bd"]), 
-                     arima.bq = as.numeric(arma["bq"]),
-                     automdl.enabled = FALSE)
+    arma <- sa_mult[[mdl_nr]]$result$preprocessing$description$arima
+    spec <- rjd3toolkit::set_arima(rjd3toolkit::set_automodel(spec,enabled = automdl.enabled),
+                                   p = as.numeric(ifelse(is.matrix(arma$phi),ncol(arma$phi),0)),
+                                   d = as.numeric(arma$d),
+                                   q =  as.numeric(ifelse(is.matrix(arma$theta),ncol(arma$theta),0)),
+                                   bp = as.numeric(ifelse(is.matrix(arma$bphi),ncol(arma$bphi),0)),
+                                   bd = as.numeric(arma$bd),
+                                   bq = as.numeric(ifelse(is.matrix(arma$btheta),ncol(arma$btheta),0)))
   }
   
   if (identify_arima_mu) {
-    spec <- x13_spec(spec, arima.mu = arima_mu(sa_mult[[mdl_nr]]))
+    if(arima_mu(sa_mult[[mdl_nr]])){
+      spec <- rjd3toolkit::set_arima(spec,mean=0,mean.type="Initial")
+    }else{
+      spec <- rjd3toolkit::set_arima(spec,mean=NA)
+    }
   }
   
   if (identify_t_filter | identify_s_filter) {
     filters <- filter_input(sa_mult[[mdl_nr]])
     if (identify_t_filter) {
-      spec <- x13_spec(spec, x11.trendAuto = FALSE, x11.trendma = filters[["x11.trendma"]])
+      spec <- rjd3x13::set_x11(spec,henderson.filter = filters[["henderson.filter"]])
     }
     if (identify_s_filter) {
-      spec <- x13_spec(spec, x11.seasonalma = filters[["x11.seasonalma"]])
+      spec <- rjd3x13::set_x11(spec,seasonal.filter = filters[["seasonal.filter"]])
     }
     if (verbose) {
       print(unlist(filters)[c(identify_t_filter, identify_s_filter)], quote = FALSE)
@@ -425,30 +383,32 @@ x13_pickmdl <- function(series, spec,
   }
   
   
-  if (!is.null(corona)) { # Because of new final limit possible extra outliers included  
-    spec <- update_spec_corona_outliers(spec, option = corona, outlier_date_limit = outlier_date_limit_final, freq = frequency(series))
+  if (!is.null(corona)) { # Because of new final limit possible extra outliers included
+    spec <- update_spec_corona_outliers(spec, option = corona, outlier_date_limit = outlier_date_limit_final, freq = stats::frequency(ts))
   }
   
   if (identify_outliers) {
-      spec <- update_spec_outliers(sa = sa_mult[[mdl_nr]], spec = spec, verbose = verbose)
+    spec <- update_spec_outliers(sa = sa_mult[[mdl_nr]], spec = spec, verbose = verbose)
   }
   
   if(output == "spec"){
     return(spec)
   }
   
-  sa <- x13(series = series, spec = spec, ...)
+  sa <- rjd3x13::x13(ts = ts, spec = spec, ...)
   
   # Include possibility to check differences.
   # Seen that !isTRUE(all_equal) happen as result of specified outlier at end of series.
-  # End outlier not included in first model, but included after outlier.from updated. 
+  # End outlier not included in first model, but included after outlier.from updated.
   if (is.null(identification_end) & is.null(identification_estimate.to)) {
     if (get0("check_all.equal", ifnotfound = FALSE)) {
       all_equal <- all.equal(sa$final$series, sa_mult[[mdl_nr]]$final$series)
       if (isTRUE(all_equal))
         message(all_equal) else warning(all_equal)
     }
-  }
+  }   ### Denne maa fikses paa !
+  
+  
   
   ok_final <- crit_ok(sa)
   
@@ -459,8 +419,8 @@ x13_pickmdl <- function(series, spec,
   }
   
   if (add_comment) {
-    comment(sa) <- c(ok = as.character(ok), 
-                     ok_final = as.character(ok_final), 
+    comment(sa) <- c(ok = as.character(ok),
+                     ok_final = as.character(ok_final),
                      mdl_nr = as.character(mdl_nr * c(1, NA)[automdl.enabled + 1]))
   }
   
@@ -480,5 +440,3 @@ x13_pickmdl <- function(series, spec,
 x13_automdl <- function(..., automdl.enabled = TRUE){
   x13_pickmdl(..., automdl.enabled = automdl.enabled)
 }
-
-

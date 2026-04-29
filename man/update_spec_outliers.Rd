@@ -16,9 +16,9 @@ update_spec_outliers(
 update_outliers(sa, spec, day = "01", null_when_no_new = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{sa}{An \code{\link{x13}} output object}
+\item{sa}{An \code{\link[rjd3x13]{x13}} output object}
 
-\item{spec}{An \code{\link{x13_spec}} output object}
+\item{spec}{An \code{\link[rjd3x13]{x13_spec}} output object}
 
 \item{day}{Day of month as character to be used in outlier coding}
 
@@ -42,27 +42,22 @@ For special use, parameter \code{sa} to \code{update_outliers} can be a
 data frame of outliers (as created by \code{\link{corona_outliers}}).
 }
 \examples{
-myseries <- ipi_c_eu[, "FR"]
+myseries <- pickmdl_data("myseries")
 
-spec_1 <- x13_spec(spec = "RSA3", transform.function = "None", usrdef.outliersEnabled = TRUE, 
-                   usrdef.outliersType = "AO", usrdef.outliersDate = "2007-03-01", 
-                   outlier.usedefcv = FALSE, outlier.cv = 3)
-                   
-spec_2 <- x13_spec(spec_1, estimate.to = "2018-08-01")
+spec_1 <- rjd3x13::x13_spec("rsa3")
+spec_1 <- rjd3toolkit::set_transform(spec_1, fun = "Log")
+spec_1 <- rjd3toolkit::set_outlier(spec_1, critical.value =3)
+spec_1 <- rjd3toolkit::add_outlier(spec_1, type="AO",date="2008-09-01")
 
-a <- x13(myseries, spec_2)
+
+spec_2 <- rjd3toolkit::set_basic(spec_1, type="To", d1 = "2020-02-01")
+
+a <- rjd3x13::x13(myseries, spec_2)
 
 update_outliers(a, spec_1)
 
 spec_3 <- update_spec_outliers(a, spec_1)
 
-s_span(spec_1)
-s_span(spec_2)
-s_span(spec_3)
-
-s_preOut(spec_1)
-s_preOut(spec_2)
-s_preOut(spec_3)
-
 update_spec_outliers(a)
+
 }

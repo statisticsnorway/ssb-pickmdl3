@@ -36,9 +36,12 @@ The other functions are underlying functions that take a single \code{x13} outpu
 \examples{
 myseries <- pickmdl_data("myseries")
 
-spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
+spec_a <- rjd3x13::x13_spec("rsa3")
+spec_a <- rjd3toolkit::set_transform(spec_a,fun="Log")
 
-sa5 <- x13_multi(myseries, spec = spec5)   
+spec5 <- x13_spec_pickmdl(spec_a)
+
+sa5 <- x13_multi(myseries, spec=spec5)
 
 crit_table(sa5)
 
@@ -47,5 +50,6 @@ crit123_m_aic(sa5[[4]])
 crit1(sa5[[4]])
 crit2(sa5[[4]])
 crit3(sa5[[4]])
-m_aic(sa5[[4]]) 
+m_aic(sa5[[4]])
+
 }

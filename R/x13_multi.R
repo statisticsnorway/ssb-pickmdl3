@@ -1,7 +1,7 @@
 #' Multiple x13 runs from multiple specifications
-#' 
-#' \code{\link{x13}} is run multiple times 
-#' 
+#'
+#' \code{\link[rjd3x13]{x13}} is run multiple times
+#'
 #' This function behaves like `x13` except that parameter `spec` is a list of multiple specifications.
 #'
 #' @param ... `x13` parameters
@@ -9,20 +9,22 @@
 #'
 #' @return List of several `x13` output objects
 #' @export
-#' @importFrom RJDemetra x13
+#' @importFrom rjd3x13 x13
 #'
 #' @examples
-#' myseries <- pickmdl_data("myseries")
-#' 
-#' spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
-#' 
-#' sa5 <- x13_multi(myseries, spec = spec5)   
-#'            
+#'
+#'  myseries <- pickmdl_data("myseries")
+#'
+#'  spec <- rjd3x13::x13_spec("rsa3")
+#'  spec5 <- x13_spec_pickmdl(spec)
+#'
+#'  sa5 <- x13_multi(myseries, spec = spec5)
+#'
 x13_multi <- function(..., spec) {
   n <- length(spec)
   sa <- vector("list", n)
   for (i in 1:length(spec)) {
-    sa[[i]] <- x13(..., spec = spec[[i]])
+    sa[[i]] <- rjd3x13::x13(..., spec = spec[[i]])
   }
   sa
 }

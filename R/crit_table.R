@@ -1,86 +1,86 @@
-
-#' Table of PICKMDL criteria 
-#' 
-#' Function `crit_table` takes several `x13` output objects as input and produces a table of criteria (matrix class). 
-#' The other functions are underlying functions that take a single `x13` output object as input. 
+#' Table of PICKMDL criteria
+#'
+#' Function `crit_table` takes several `x13` output objects as input and produces a table of criteria (matrix class).
+#' The other functions are underlying functions that take a single `x13` output object as input.
 #'
 #' @param sa_list List of several `x13` output objects. That is, `spec` can be output from  \code{\link{x13_multi}}.
 #'
-#' @return A matrix, a vector or a single numerical value 
+#' @return A matrix, a vector or a single numerical value
 #' @export
 #' @importFrom utils tail
 #'
 #' @examples
 #' myseries <- pickmdl_data("myseries")
-#' 
-#' spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
-#' 
-#' sa5 <- x13_multi(myseries, spec = spec5)   
+#'
+#' spec_a <- rjd3x13::x13_spec("rsa3")
+#' spec_a <- rjd3toolkit::set_transform(spec_a,fun="Log")
+#'
+#' spec5 <- x13_spec_pickmdl(spec_a)
+#'
+#' sa5 <- x13_multi(myseries, spec=spec5)
 #'
 #' crit_table(sa5)
-#' 
+#'
 #' crit123_m_aic(sa5[[4]])
-#' 
+#'
 #' crit1(sa5[[4]])
 #' crit2(sa5[[4]])
 #' crit3(sa5[[4]])
-#' m_aic(sa5[[4]]) 
+#' m_aic(sa5[[4]])
+#'
 crit_table <- function(sa_list){
   t(sapply(sa_list, crit123_m_aic))
-} 
+}
 
 
 #' @rdname crit_table
-#' @param sa A single `x13` output object. 
+#' @param sa A single `x13` output object.
 #' @export
 crit123_m_aic <- function(sa){
   c(crit1 = crit1(sa),
     crit2 = crit2(sa),
     crit3 = crit3(sa),
-    m_aic = m_aic(sa)) 
+    m_aic = m_aic(sa))
 }
 
 
 #' @rdname crit_table
 #' @export
 crit1 <- function(sa){
-  input_series <- sa$final$series[,"y"]
+  input_series <- sa$result$preadjust$a1
   freq <- frequency(input_series)
-  rest_l     <- sa$regarima$residuals
-  rest_l1    <- tail(rest_l, 3 * freq)
+  rest_l     <- sa$result$preprocessing$estimation$res
+  rest_l1    <- utils::tail(rest_l, 3 * freq)
   resid1_pct <- 100 * rest_l1 / tail(input_series, 3 * freq)  ## data_inn1
   mean(abs(resid1_pct))
-} 
+}
 
 
 #' @rdname crit_table
 #' @export
 crit2 <- function(sa){
-  hj1 <- sa$regarima$residuals.stat$tests$P.value
   if (isTRUE(getOption("pickmdl.old_crit2"))) {   # see ?x13_pickmdl
-    return(hj1[5])  # ljung box (residuals at seasonal lags)
+    hj1 <- sa$result$preprocessing$diagnostics$lb2$pvalue   #ikke sett dokumentasjon p?? at dette er seasonal lag.
+  }else{
+    hj1 <- sa$result$preprocessing$diagnostics$lb$pvalue   # ikke sikker p?? om denne er riktig....
   }
-  hj1[4]   # ljung box
+  hj1    # ljung box
 }
 
 
 #' @rdname crit_table
 #' @export
 crit3 <- function(sa){
-  hj2 <- sa$regarima$arima.coefficients
-  hj3 <- hj2[substr(rownames(hj2), 1, 5) == "Theta", ]
+  hj3 <- sa$result$preprocessing$description$arima$theta
+  hj3 <- as.numeric(hj3["value",])
   
-  if (!is.matrix(hj3)) {
-    return(as.numeric(hj3[1])) # as.numeric removes name (Estimate)
-  } 
-  sum(hj3[, 1])
+  sum(hj3)
 }
 
 
 #' @rdname crit_table
 #' @export
 m_aic <- function(sa){
-  hj1 <- sa$regarima$loglik
-  hj1["aic", ]
+  hj1 <- sa$result$preprocessing$estimation$likelihood$aic
+  hj1
 }
-

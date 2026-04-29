@@ -1,48 +1,44 @@
-
-
 #' x13 output filters to x13 input filters
-#' 
-#' Elements `t_filter` and `s_filter` are transformed to input parameters `x11.trendma` and `x11.seasonalma` 
-#' 
 #'
-#' @param sa A \code{\link{x13}} output object
+#' Elements `t_filter` and `s_filter` are transformed to input parameters `henderson.filter` and `seasonal.filter` in \code{\link[rjd3x13]{set_x11}}
 #'
-#' @return list of `x11.trendma` (numeric) and `x11.seasonalma` (character)
+#' @param sa A \code{\link[rjd3x13]{x13}} output object
+#'
+#' @return list of `henderson.filter` (numeric) and `seasonal.filter` (character)
 #' @export
 #'
 #' @examples
 #' myseries <- pickmdl_data("myseries")
-#' 
-#' a <- x13(myseries, spec = "RSA3")
-#' 
-#' a$decomposition$t_filter
-#' a$decomposition$s_filter
+#'
+#' a <- rjd3x13::x13(myseries, spec = "rsa3")
+#'
+#' a$result$decomposition$final_henderson
+#' a$result$decomposition$final_seasonal
 #' filter_input(a)
-#' 
-#' spec_b <- x13_spec(spec = "RSA3", x11.trendma = 13, x11.seasonalma = "Stable", 
-#'                    x11.trendAuto = FALSE)
-#' b <- x13(myseries, spec = spec_b)
-#' 
-#' b$decomposition$t_filter
-#' b$decomposition$s_filter
+#'
+#' spec_b <- rjd3x13::x13_spec("rsa3")
+#' spec_b <- rjd3x13::set_x11(spec_b,seasonal.filter="Stable",henderson.filter=13)
+#' b <- rjd3x13::x13(myseries, spec = spec_b)
+#'
+#' b$result$decomposition$final_henderson
+#' b$result$decomposition$final_seasonal
 #' filter_input(b)
+#'
+
 filter_input <- function(sa) {
-  x11.trendma <- as.numeric(split_for_filter(sa$decomposition$t_filter))
-  x11.seasonalma <- split_for_filter(sa$decomposition$s_filter)
-  if (is.na(x11.trendma)) {
-    stop("Could not find x11.trendma")
+  henderson.filter <- sa$result$decomposition$final_henderson
+  seasonal.filter <- sa$result$decomposition$final_seasonal
+  if (is.na(henderson.filter)) {
+    stop("Could not find henderson.filter")
   }
-  if (x11.trendma < 1) {
-    stop("Could not find correct x11.trendma")
+  if (henderson.filter < 1) {
+    stop("Could not find correct henderson.filter")
   }
-  if (substr(x11.seasonalma, 2, 2) %in% c("x", "X")) {
-    x11.seasonalma <- paste0("S", x11.seasonalma)
-    x11.seasonalma <- toupper(x11.seasonalma)
-  }
-  list(x11.trendma = x11.trendma, x11.seasonalma = x11.seasonalma)
+  seasonal.filter <- paste0("S3x", seasonal.filter)
+  
+  list(henderson.filter = henderson.filter, seasonal.filter = seasonal.filter)
 }
 
 split_for_filter = function(s){
- unlist(strsplit(as.character(s), split = "[ -]"))[1]
+  unlist(strsplit(as.character(s), split = "[ -]"))[1]
 }
-

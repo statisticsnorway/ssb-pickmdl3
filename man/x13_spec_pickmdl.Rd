@@ -16,33 +16,35 @@ x13_spec_pickmdl(
 )
 }
 \arguments{
-\item{...}{\code{x13_spec} parameters}
+\item{...}{A "JD3_X13_SPEC" class object generated with \code{\link[rjd3x13]{x13_spec}}}
 
-\item{arima.p}{\code{x13_spec} parameter as vector}
+\item{arima.p}{'set_arima' parameters as vector.}
 
-\item{arima.d}{\code{x13_spec} parameter as vector}
+\item{arima.d}{'set_arima' parameters as vector.}
 
-\item{arima.q}{\code{x13_spec} parameter as vector}
+\item{arima.q}{'set_arima' parameters as vector.}
 
-\item{arima.bp}{\code{x13_spec} parameter, possibly as vector}
+\item{arima.bp}{'set_arima' parameters as vector.}
 
-\item{arima.bd}{\code{x13_spec} parameter, possibly as vector}
+\item{arima.bd}{'set_arima' parameters as vector.}
 
-\item{arima.bq}{\code{x13_spec} parameter, possibly as vector}
+\item{arima.bq}{'set_arima' parameters as vector.}
 
-\item{automdl.enabled}{\code{x13_spec} parameter}
+\item{automdl.enabled}{'set_automodel' parameter}
 }
 \value{
-List of several \code{x13_spec} output objects
+List of several "JD3_X13_SPEC" class objects
 }
 \description{
-\code{\link{x13_spec}} is run multiple times with input for multiple arima models.
+\code{\link[rjd3x13]{x13_spec}} is run multiple times with input for multiple arima models.
 }
 \details{
 This function behaves like \code{x13_spec} except that some of the parameters may be vectors.
 These vectors must be the same length.
 }
 \examples{
-spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
+
+spec <- rjd3x13::x13_spec("rsa3")
+spec_list <- x13_spec_pickmdl(spec)
 
 }

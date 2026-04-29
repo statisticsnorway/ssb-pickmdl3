@@ -6,7 +6,7 @@
 \usage{
 x13_text_frame(
   text_frame,
-  series = NULL,
+  ts = NULL,
   id = NULL,
   ...,
   drop = TRUE,
@@ -15,14 +15,16 @@ x13_text_frame(
 )
 }
 \arguments{
-\item{text_frame}{Data frame where all variables are character and with parameter names as column names.
+\item{text_frame}{Data frame where all variables are character.
+Column names are either parameter names or on the form function__parameter.
+The latter only when setting pre-processing parameters with functions from rjd3toolkit og rjd3x13. See examples.
 Each cell contains text with R code written as source code in a call to \code{\link{x13_both}}.
 The parameter will be omitted when the cell is missing (NA).
 The exception is the column name, \code{name}, which contains the time series names.
 Without such a column, the names are taken from the row names.}
 
-\item{series}{A named multiple time series object, given as a character string.
-When \code{NULL}, the series parameter must be included in \code{text_frame}.}
+\item{ts}{A named multiple time series object, given as a character string.
+When \code{NULL}, the ts parameter must be included in \code{text_frame}.}
 
 \item{id}{To select specific time series to be processed (name or number).}
 
@@ -46,15 +48,31 @@ Multiple \code{\link{x13_both}} runs with code input from a data frame
 myseries <- pickmdl_data("myseries")
 seriesABC <- cbind(A = myseries, B = myseries + 10, C = myseries + 20)
 
-tf <- data.frame(name = c("A", "B", "C"), automdl.enabled = c("TRUE", "FALSE", "FALSE"),
-                 usrdef.outliersDate = c('c("2009-01-01", "2016-01-01")', 'c("2009-01-01")', NA),
-                 usrdef.outliersType = c('rep("LS", 2)', '"AO"', NA),
-                 usrdef.outliersEnabled = c("TRUE", "TRUE", NA))
+tf <- data.frame(name = c("A", "B", "C"),automdl.enabled = c("TRUE", "FALSE", "FALSE"),
+                 add_outlier__date = c('c("2009-01-01", "2016-01-01")', 'c("2009-01-01")', NA),
+                 add_outlier__type = c('rep("LS", 2)', '"AO"', NA),
+                 set_outlier__outliers.type = c(rep('c("LS","AO")',3)))
 
-outABC <- x13_text_frame(tf, series = "seriesABC", spec = "RSA3", transform.function = "Log", 
+outABC <- x13_text_frame(tf, ts = "seriesABC", spec = "RSA3", set_transform__fun  = "Log",
                          verbose = TRUE)
-outB   <- x13_text_frame(tf, series = "seriesABC", spec = "RSA3", transform.function = "Log", 
+outB   <- x13_text_frame(tf, ts = "seriesABC", spec = "RSA3", set_transform__fun  = "Log",
                          id = "B")
 identical(outABC[[2]], outB)  # TRUE
+
+
+# Spec can also be given as variable in the data frame
+
+tf2 <- data.frame(name = c("A", "B", "C"),spec = '\"rsa3\"',
+                 automdl.enabled = c("TRUE", "FALSE", "FALSE"),
+                 add_outlier__date = c('c("2009-01-01", "2016-01-01")', 'c("2009-01-01")', NA),
+                 add_outlier__type = c('rep("LS", 2)', '"AO"', NA),
+                 set_outlier__outliers.type = c(rep('c("LS","AO")',3)))
+
+outABC2 <-  x13_text_frame(tf2, ts = "seriesABC",set_transform__fun  = "Log",
+                         verbose = TRUE)
+
+identical(outABC, outABC2)
+
+
 
 }

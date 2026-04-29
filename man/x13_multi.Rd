@@ -15,16 +15,18 @@ x13_multi(..., spec)
 List of several \code{x13} output objects
 }
 \description{
-\code{\link{x13}} is run multiple times
+\code{\link[rjd3x13]{x13}} is run multiple times
 }
 \details{
 This function behaves like \code{x13} except that parameter \code{spec} is a list of multiple specifications.
 }
 \examples{
-myseries <- pickmdl_data("myseries")
 
-spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
+ myseries <- pickmdl_data("myseries")
 
-sa5 <- x13_multi(myseries, spec = spec5)   
-           
+ spec <- rjd3x13::x13_spec("rsa3")
+ spec5 <- x13_spec_pickmdl(spec)
+
+ sa5 <- x13_multi(myseries, spec = spec5)
+
 }

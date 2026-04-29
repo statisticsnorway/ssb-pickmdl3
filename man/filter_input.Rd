@@ -7,28 +7,29 @@
 filter_input(sa)
 }
 \arguments{
-\item{sa}{A \code{\link{x13}} output object}
+\item{sa}{A \code{\link[rjd3x13]{x13}} output object}
 }
 \value{
-list of \code{x11.trendma} (numeric) and \code{x11.seasonalma} (character)
+list of \code{henderson.filter} (numeric) and \code{seasonal.filter} (character)
 }
 \description{
-Elements \code{t_filter} and \code{s_filter} are transformed to input parameters \code{x11.trendma} and \code{x11.seasonalma}
+Elements \code{t_filter} and \code{s_filter} are transformed to input parameters \code{henderson.filter} and \code{seasonal.filter} in \code{\link[rjd3x13]{set_x11}}
 }
 \examples{
 myseries <- pickmdl_data("myseries")
 
-a <- x13(myseries, spec = "RSA3")
+a <- rjd3x13::x13(myseries, spec = "rsa3")
 
-a$decomposition$t_filter
-a$decomposition$s_filter
+a$result$decomposition$final_henderson
+a$result$decomposition$final_seasonal
 filter_input(a)
 
-spec_b <- x13_spec(spec = "RSA3", x11.trendma = 13, x11.seasonalma = "Stable", 
-                   x11.trendAuto = FALSE)
-b <- x13(myseries, spec = spec_b)
+spec_b <- rjd3x13::x13_spec("rsa3")
+spec_b <- rjd3x13::set_x11(spec_b,seasonal.filter="Stable",henderson.filter=13)
+b <- rjd3x13::x13(myseries, spec = spec_b)
 
-b$decomposition$t_filter
-b$decomposition$s_filter
+b$result$decomposition$final_henderson
+b$result$decomposition$final_seasonal
 filter_input(b)
+
 }

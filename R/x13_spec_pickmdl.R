@@ -1,29 +1,31 @@
 
 #' Multiple X-13ARIMA model specifications
 #' 
-#' \code{\link{x13_spec}} is run multiple times with input for multiple arima models.
+#' \code{\link[rjd3x13]{x13_spec}} is run multiple times with input for multiple arima models.
 #' 
 #' This function behaves like `x13_spec` except that some of the parameters may be vectors.
 #' These vectors must be the same length.
 #'
-#' @param ... `x13_spec` parameters
-#' @param arima.p `x13_spec` parameter as vector
-#' @param arima.d `x13_spec` parameter as vector
-#' @param arima.q `x13_spec` parameter as vector
-#' @param arima.bp `x13_spec` parameter, possibly as vector
-#' @param arima.bd `x13_spec` parameter, possibly as vector
-#' @param arima.bq `x13_spec` parameter, possibly as vector
-#' @param automdl.enabled `x13_spec` parameter
+#' @param ...  A "JD3_X13_SPEC" class object generated with \code{\link[rjd3x13]{x13_spec}}
+#' @param arima.p 'set_arima' parameters as vector.
+#' @param arima.d 'set_arima' parameters as vector.
+#' @param arima.q 'set_arima' parameters as vector.
+#' @param arima.bp 'set_arima' parameters as vector.
+#' @param arima.bd 'set_arima' parameters as vector.
+#' @param arima.bq 'set_arima' parameters as vector.
+#' @param automdl.enabled 'set_automodel' parameter
 #'
-#' @return List of several `x13_spec` output objects
+#' @returns List of several "JD3_X13_SPEC" class objects
 #' @export
-#' @importFrom RJDemetra x13_spec
+#' @importFrom rjd3x13 x13_spec
 #'
 #' @examples
-#' spec5 <- x13_spec_pickmdl(spec = "RSA3", transform.function = "Log")
-#' 
-x13_spec_pickmdl <- function(..., arima.p = c(0, 0, 2, 0, 2), 
-                             arima.d = c(1, 1, 1, 2, 1), arima.q = c(1, 2, 0, 2, 2), 
+#'
+#' spec <- rjd3x13::x13_spec("rsa3")
+#' spec_list <- x13_spec_pickmdl(spec)
+#'
+x13_spec_pickmdl <- function(..., arima.p = c(0, 0, 2, 0, 2),
+                             arima.d = c(1, 1, 1, 2, 1), arima.q = c(1, 2, 0, 2, 2),
                              arima.bp = 0, arima.bd = 1, arima.bq = 1,
                              automdl.enabled = FALSE ) {
   n <- length(arima.p)
@@ -42,15 +44,11 @@ x13_spec_pickmdl <- function(..., arima.p = c(0, 0, 2, 0, 2),
   }
   
   
-  spec <- vector("list", n)  
+  spec <- vector("list", n)
   for (i in 1:n) {
-    spec[[i]] <- x13_spec(..., 
-                          arima.p = arima.p[i], arima.d = arima.d[i], 
-                          arima.q = arima.q[i], arima.bp = arima.bp[i], 
-                          arima.bd = arima.bd[i], arima.bq = arima.bq[i],
-                          automdl.enabled = automdl.enabled)
+    spec[[i]] <- suppressWarnings(rjd3toolkit::set_arima(rjd3toolkit::set_automodel(...,enabled = automdl.enabled),
+                                                         p = arima.p[i], d = arima.d[i], q = arima.q[i],
+                                                         bp = arima.bp[i], bd = arima.bd[i], bq = arima.bq[i]))
   }
   spec
 }
-
-
