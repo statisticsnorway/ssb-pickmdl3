@@ -22,6 +22,17 @@ Depends:
     rjd3toolkit,
     rjd3x13
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    DataEditR,
+    yaml,
+    dplyr,
+    bslib,
+    htmltools,
+    httr,
+    miniUI,
+    rstudioapi,
+    shiny,
+    shinyBS,
+    shinyjs
 Config/testthat/edition: 3
 URL: https://statisticsnorway.github.io/ssb-pickmdl3/
