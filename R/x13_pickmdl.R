@@ -405,7 +405,12 @@ x13_pickmdl <- function(ts, spec,
   
   if(!is.null(identification_end) | !is.null(identification_estimate.to)){  ## Holder dette? Nei, hvis identify_outliers ikke er på skal hele identifiseres på nytt... 
     ### få inn noe med if policy = outliers og identify outliers e.l.
-    spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = outlier_date_limit , end = end(ts))  
+    if(isTRUE(identify_outliers) | policy == "Current"){
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = outlier_date_limit, end = end(ts))  
+    }else{
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = start(ts), end = end(ts))  
+    }
+    
   }else {
     spec <- ref_spec
   }
@@ -421,7 +426,7 @@ x13_pickmdl <- function(ts, spec,
     
   }
   
-  sa <- rjd3x13::x13(ts = ts, spec = spec_refreshed, ...)
+  sa <- rjd3x13::x13(ts = ts, spec = spec, ...)
   
   # Include possibility to check differences.
   # Seen that !isTRUE(all_equal) happen as result of specified outlier at end of series.
@@ -432,7 +437,7 @@ x13_pickmdl <- function(ts, spec,
       if (isTRUE(all_equal))
         message(all_equal) else warning(all_equal)
     }
-  }   ### Denne maa fikses paa !
+  }   ### Denne maa fikses paa ! Hva er dette? 
   
   
   
@@ -451,13 +456,11 @@ x13_pickmdl <- function(ts, spec,
   }
   
   if(output == "sa_spec"){                                       #### Trengs denne ? 
-    #return(list(sa = sa, spec = spec))
-    return(list(sa = sa, spec = spec_refreshed))
+    return(list(sa = sa, spec = spec))
   }
   
   if(output == "all"){
-    #return(list(sa = sa, spec = spec, mdl_nr = mdl_nr, crit_tab = crit_tab, sa_mult = sa_mult))
-    return(list(sa = sa, spec = spec_refreshed, mdl_nr = mdl_nr, crit_tab = crit_tab, sa_mult = sa_mult))
+    return(list(sa = sa, spec = spec, mdl_nr = mdl_nr, crit_tab = crit_tab, sa_mult = sa_mult))
   }
   
   sa
