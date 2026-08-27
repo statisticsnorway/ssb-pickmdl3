@@ -244,7 +244,7 @@ x13_pickmdl <- function(ts, spec,
     }
   }
   
-  if (!is.null(corona)) {
+  if (!is.null(corona) | !is.null(identification_end) | !is.null(identification_estimate.to)) {
     end_ts <- stats::end(stats::ts(1:2, start = stats::end(stats::window(ts, end = identification_end)), frequency = stats::frequency(ts)))
     end_ts_final <- stats::end(stats::ts(1:2, start = stats::end(ts), frequency = stats::frequency(ts)))
     if (stats::frequency(ts) == 4) {
@@ -264,6 +264,7 @@ x13_pickmdl <- function(ts, spec,
       #DANGER! outlier_date_limit <- seq(as.Date(outlier_date_limit), by = "month", length = 2)[2] 
       #Derfor jeg har fikset det i traad med Oyvinds. 
     }
+    outlier_date_limit_b <- end_ts
   }
   
   
@@ -406,8 +407,9 @@ x13_pickmdl <- function(ts, spec,
   
   if(!is.null(identification_end) | !is.null(identification_estimate.to)){  ## Holder dette? Nei, hvis identify_outliers ikke er på skal hele identifiseres på nytt... 
     ### få inn noe med if policy = outliers og identify outliers e.l.
+    
     if(isTRUE(identify_outliers) | policy == "Current"){
-      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = outlier_date_limit, end = end(ts))  
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = outlier_date_limit_b, end = end(ts))  
     }else{
       spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = start(ts), end = end(ts))  
     }
