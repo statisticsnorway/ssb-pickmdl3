@@ -3,7 +3,7 @@
 test_that("x13_pickmdl works ok", {
   myseries <- pickmdl_data("myseries")
   
-  spec_c <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa5c"))
+  spec_c <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa5c"),outliers.type=NULL)
   
   q <- c(2, 3, 11, 45, 29, 11, 6, 4, 4, 2, 3, 9, 8, 3, 1, 2, 25, 19,
          11, 125, 6, 7, 10, 7, 31, 49, 28, 4, 5, 4, 3, 7, 18, 17, 33,
@@ -37,6 +37,48 @@ test_that("x13_pickmdl works ok", {
   expect_equal(nrow(d1$crit_tab), 2)
   expect_equal(d1$crit_tab, d1b$crit_tab[1:2, ])
   expect_equal(d3$mdl_nr, 6)
+  
+  spec_d <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa3"),outliers.type=c("AO","LS"))
+  myseries_b <- myseries
+  myseries_b[length(myseries_b)-12] <- 100
+  myseries_b[length(myseries_b)-27] <- 160
+  myseries_b[length(myseries_b)-37] <- 290
+  
+  d5  <- x13_pickmdl(myseries_b, spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning)
+  
+  expect_equal(gsub("SARIMA model: ","",capture.output(d5$result$preprocessing$description$arima)[1]), "(2,1,0) (0,1,1)", ignore_attr = TRUE)
+  expect_equal(d5$result$preprocessing$description$arima$btheta["value",]$value, -0.9044161,tolerance=0.0000001)
+  expect_equal(d5$result$preprocessing$description$arima$phi["value",][[1]],0.9510804,tolerance=0.0000001)
+  expect_equal(d5$result$preprocessing$description$arima$phi["value",][[2]],0.5500484,tolerance=0.0000001)
+  
+  expect_equal(length(lapply(d5$result_spec$regarima$regression$outliers,"[[","pos")),3L)
+  expect_equal(sapply(d5$result_spec$regarima$regression$outliers,"[[","coef")["value",][[1]], 0.8625756,tolerance=0.000001)
+  expect_equal(sapply(d5$result_spec$regarima$regression$outliers,"[[","coef")["value",][[2]], 0.2744643,tolerance=0.000001)
+  expect_equal(sapply(d5$result_spec$regarima$regression$outliers,"[[","coef")["value",][[3]],-0.3702705,tolerance=0.000001)
+  
+  
+  d6 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12))
+  
+  expect_equal(gsub("SARIMA model: ","",capture.output(d6$result$preprocessing$description$arima)[1]), "(0,1,2) (0,1,1)", ignore_attr = TRUE)
+  expect_equal(d6$result$preprocessing$description$arima$btheta["value",]$value,-0.9998071,tolerance=0.0000001)
+  expect_equal(d6$result$preprocessing$description$arima$theta["value",][[1]], -1.10098013,tolerance=0.0000001)
+  expect_equal(d6$result$preprocessing$description$arima$theta["value",][[2]],  0.3218098,tolerance=0.0000001)
+  
+  expect_equal(length(lapply(d6$result_spec$regarima$regression$outliers,"[[","pos")),2)
+  expect_equal(sapply(d6$result_spec$regarima$regression$outliers,"[[","coef")["value",][[1]],0.8735507,tolerance=0.000001)
+  
+  d7 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_estimate.to="2019-12-01")
+  expect_equal(d7$result$preprocessing$description$arima$btheta["value",]$value,d6$result$preprocessing$description$arima$btheta["value",]$value)
+  
+  d8 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),identify_outliers = FALSE)
+  expect_equal(ok(d8)$mdl_nr,2L)
+  expect_equal(d8$result$preprocessing$description$arima$btheta["value",]$value,-0.9530288,tolerance=0.0000001)
+  
+  d9 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),corona=TRUE,identify_outliers = FALSE)
+  expect_equal(d9$result$preprocessing$description$arima$theta["value",][[1]],-1.10290359,tolerance=0.0000001)
+  
+  
+  
   
 })
 
