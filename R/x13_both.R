@@ -51,6 +51,7 @@ x13_both <- function(ts,spec = NULL,  ..., context= NULL,userdefined = NULL, bot
                      when_automdl = message,
                      when_finalnotok = NULL,
                      identification_end = NULL, identification_estimate.to = NULL,
+                     policy = "Outliers",
                      identify_t_filter = FALSE, identify_s_filter = FALSE,
                      identify_outliers = TRUE,
                      identify_arima_mu = TRUE,
