@@ -354,7 +354,8 @@ x13_pickmdl <- function(ts, spec,
   
   length_spec <- length(spec)
   #spec <- spec[[mdl_nr]]
-  ref_spec <- spec[[mdl_nr]]
+  ref_spec <- spec[[mdl_nr]]   # ikke ref.spec fordi endret estimation.to med identification_estimate.to 
+  # dette kan vaere problem hvis estimate.to er satt i utg. spec. Fikse? 
   #ref_spec <- sa_mult[[mdl_nr]]$estimation_spec
   spec_to_refresh <- sa_mult[[mdl_nr]]$result_spec
   if(!is.null(identification_estimate.to)){
