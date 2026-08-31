@@ -27,6 +27,7 @@
 #'            That is, the series is shortened by `window(ts,` `end = identification_end)`.
 #' @param identification_estimate.to   To set \code{\link[rjd3toolkit]{set_estimate}} parameter `d1` before runs used to identify (arima) parameters.
 #'            This is an alternative to  `identification_end`.
+#' @param policy Which refresh policy when model identification by shortened series. See \code{\link[rjd3x13]{x13_refresh}}.          
 #' @param identify_t_filter When `TRUE`, Henderson trend filter is identified by the shortened (see above) series.
 #' @param identify_s_filter When `TRUE`, Seasonal moving average filter is identified by the shortened series.
 #' @param identify_outliers When `TRUE`, Outliers are identified by the shortened series.
@@ -362,12 +363,11 @@ x13_pickmdl <- function(ts, spec,
   #### Her maa det faas inn at estimate_to i disse skal være lik inngangsspec. (foer sa_mult) Kan ikke bare sette all, da estimate.to kan være definert 
   ### paa ordinært vis. Saa maa ta utgangspunkt i spec-listen. # Done 
   
-  if(automdl.enabled | (auto_in_pickmdl & mdl_nr == length_spec)){
-    if(!automdl.enabled){
-      if(!is.null(when_automdl)){
-        when_automdl("automdl since no pickmdl model ok")
-      }
+  if(auto_in_pickmdl & mdl_nr == length_spec){
+    if(!is.null(when_automdl)){
+      when_automdl("automdl since no pickmdl model ok")
     }
+  }
     #arma <- sa_mult[[mdl_nr]]$result$preprocessing$description$arima
     #spec <- rjd3toolkit::set_arima(rjd3toolkit::set_automodel(spec,enabled = automdl.enabled),
     #                               p = as.numeric(ifelse(is.matrix(arma$phi),ncol(arma$phi),0)),
@@ -376,7 +376,7 @@ x13_pickmdl <- function(ts, spec,
     #                               bp = as.numeric(ifelse(is.matrix(arma$bphi),ncol(arma$bphi),0)),
     #                               bd = as.numeric(arma$bd),
     #                               bq = as.numeric(ifelse(is.matrix(arma$btheta),ncol(arma$btheta),0)))
-  }
+  #}
   
   #if (identify_arima_mu) {
   #  if(arima_mu(sa_mult[[mdl_nr]])){
@@ -386,18 +386,18 @@ x13_pickmdl <- function(ts, spec,
   #  }
   #}
   
-  #if (identify_t_filter | identify_s_filter) {
-  #  filters <- filter_input(sa_mult[[mdl_nr]])
-  #  if (identify_t_filter) {
-  #    spec <- rjd3x13::set_x11(spec,henderson.filter = filters[["henderson.filter"]])
-  #  }
-  #  if (identify_s_filter) {
-  #    spec <- rjd3x13::set_x11(spec,seasonal.filter = filters[["seasonal.filter"]])
-  #  }
-  #  if (verbose) {
-  #    print(unlist(filters)[c(identify_t_filter, identify_s_filter)], quote = FALSE)
-  #  }
-  #}
+  if (identify_t_filter | identify_s_filter) {
+    filters <- filter_input(sa_mult[[mdl_nr]])
+    if (identify_t_filter) {
+      spec_to_refresh <- rjd3x13::set_x11(spec_to_refresh,henderson.filter = filters[["henderson.filter"]])
+    }
+    if (identify_s_filter) {
+      spec_to_refresh <- rjd3x13::set_x11(spec_to_refresh,seasonal.filter = filters[["seasonal.filter"]])
+    }
+    if (verbose) {
+      print(unlist(filters)[c(identify_t_filter, identify_s_filter)], quote = FALSE)
+    }
+  }
   
   
   if (!is.null(corona)) { # Because of new final limit possible extra outliers included
@@ -409,9 +409,11 @@ x13_pickmdl <- function(ts, spec,
     ### få inn noe med if policy = outliers og identify outliers e.l.
     
     if(isTRUE(identify_outliers) | policy == "Current"){
-      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = outlier_date_limit_b, end = end(ts))  
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),
+                                   start = outlier_date_limit_b, end = stats::end(ts))  
     }else{
-      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),start = start(ts), end = end(ts))  
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),
+                                   start = stats::start(ts), end = stats::end(ts))  
     }
     
   }else {

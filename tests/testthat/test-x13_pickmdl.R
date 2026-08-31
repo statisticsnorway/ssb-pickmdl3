@@ -3,7 +3,7 @@
 test_that("x13_pickmdl works ok", {
   myseries <- pickmdl_data("myseries")
   
-  spec_c <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa5c"),outliers.type=NULL)
+  spec_c <- rjd3toolkit::set_outlier(rjd3x13::x13_spec("rsa5c")) #,outliers.type=c(NULL)
   
   q <- c(2, 3, 11, 45, 29, 11, 6, 4, 4, 2, 3, 9, 8, 3, 1, 2, 25, 19,
          11, 125, 6, 7, 10, 7, 31, 49, 28, 4, 5, 4, 3, 7, 18, 17, 33,

@@ -120,6 +120,7 @@ x13_both <- function(ts,spec = NULL,  ..., context= NULL,userdefined = NULL, bot
                          pickmdl_method = pickmdl_method, star = star, when_star = when_star,
                          when_automdl = when_automdl, when_finalnotok = when_finalnotok,
                          identification_end = identification_end, identification_estimate.to = identification_estimate.to,
+                         policy = "Outliers",
                          identify_t_filter = identify_t_filter, identify_s_filter = identify_s_filter,
                          identify_outliers = identify_outliers, identify_arima_mu = identify_arima_mu,
                          automdl.enabled = automdl.enabled,
