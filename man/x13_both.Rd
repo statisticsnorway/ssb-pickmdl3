@@ -19,6 +19,7 @@ x13_both(
   when_finalnotok = NULL,
   identification_end = NULL,
   identification_estimate.to = NULL,
+  policy = "Outliers",
   identify_t_filter = FALSE,
   identify_s_filter = FALSE,
   identify_outliers = TRUE,
@@ -72,6 +73,8 @@ That is, the series is shortened by \verb{window(ts,} \verb{end = identification
 
 \item{identification_estimate.to}{To set \code{\link[rjd3toolkit]{set_estimate}} parameter \code{d1} before runs used to identify (arima) parameters.
 This is an alternative to  \code{identification_end}.}
+
+\item{policy}{Which refresh policy when model identification by shortened series. See \code{\link[rjd3x13]{x13_refresh}}.}
 
 \item{identify_t_filter}{When \code{TRUE}, Henderson trend filter is identified by the shortened (see above) series.}
 

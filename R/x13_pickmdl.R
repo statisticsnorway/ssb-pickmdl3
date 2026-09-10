@@ -27,6 +27,7 @@
 #'            That is, the series is shortened by `window(ts,` `end = identification_end)`.
 #' @param identification_estimate.to   To set \code{\link[rjd3toolkit]{set_estimate}} parameter `d1` before runs used to identify (arima) parameters.
 #'            This is an alternative to  `identification_end`.
+#' @param policy Which refresh policy when model identification by shortened series. See \code{\link[rjd3x13]{x13_refresh}}.          
 #' @param identify_t_filter When `TRUE`, Henderson trend filter is identified by the shortened (see above) series.
 #' @param identify_s_filter When `TRUE`, Seasonal moving average filter is identified by the shortened series.
 #' @param identify_outliers When `TRUE`, Outliers are identified by the shortened series.
@@ -192,6 +193,7 @@ x13_pickmdl <- function(ts, spec,
                         when_automdl = message,
                         when_finalnotok = NULL,
                         identification_end = NULL, identification_estimate.to = NULL,
+                        policy = "Outliers",
                         identify_t_filter = FALSE, identify_s_filter = FALSE,
                         identify_outliers = TRUE,
                         identify_arima_mu = TRUE,
@@ -243,7 +245,7 @@ x13_pickmdl <- function(ts, spec,
     }
   }
   
-  if (!is.null(corona)) {
+  if (!is.null(corona) | !is.null(identification_end) | !is.null(identification_estimate.to)) {
     end_ts <- stats::end(stats::ts(1:2, start = stats::end(stats::window(ts, end = identification_end)), frequency = stats::frequency(ts)))
     end_ts_final <- stats::end(stats::ts(1:2, start = stats::end(ts), frequency = stats::frequency(ts)))
     if (stats::frequency(ts) == 4) {
@@ -253,8 +255,17 @@ x13_pickmdl <- function(ts, spec,
     outlier_date_limit <- paste(end_ts[1], Number(end_ts[2], 2), "01", sep = "-")
     outlier_date_limit_final <- paste(end_ts_final[1], Number(end_ts_final[2], 2), "01", sep = "-")
     if (!is.null(identification_estimate.to)) {
-      outlier_date_limit <- identification_estimate.to
+      
+      yr <- as.numeric(substr(identification_estimate.to, 1, 4))
+      mnth <- as.numeric(substr(identification_estimate.to, 6, 7))  
+      end_ts <- stats::end(stats::ts(1:2, start = c(yr,mnth), frequency = stats::frequency(ts)))
+      outlier_date_limit <- paste(end_ts[1], Number(end_ts[2], 2), "01", sep = "-")
+      
+      #outlier_date_limit <- identification_estimate.to
+      #DANGER! outlier_date_limit <- seq(as.Date(outlier_date_limit), by = "month", length = 2)[2] 
+      #Derfor jeg har fikset det i traad med Oyvinds. 
     }
+    outlier_date_limit_b <- end_ts
   }
   
   
@@ -342,40 +353,47 @@ x13_pickmdl <- function(ts, spec,
   }
   
   length_spec <- length(spec)
-  spec <- spec[[mdl_nr]]
-  
-  
-  if(automdl.enabled | (auto_in_pickmdl & mdl_nr == length_spec)){
-    if(!automdl.enabled){
-      if(!is.null(when_automdl)){
-        when_automdl("automdl since no pickmdl model ok")
-      }
-    }
-    arma <- sa_mult[[mdl_nr]]$result$preprocessing$description$arima
-    spec <- rjd3toolkit::set_arima(rjd3toolkit::set_automodel(spec,enabled = automdl.enabled),
-                                   p = as.numeric(ifelse(is.matrix(arma$phi),ncol(arma$phi),0)),
-                                   d = as.numeric(arma$d),
-                                   q =  as.numeric(ifelse(is.matrix(arma$theta),ncol(arma$theta),0)),
-                                   bp = as.numeric(ifelse(is.matrix(arma$bphi),ncol(arma$bphi),0)),
-                                   bd = as.numeric(arma$bd),
-                                   bq = as.numeric(ifelse(is.matrix(arma$btheta),ncol(arma$btheta),0)))
+  #spec <- spec[[mdl_nr]]
+  ref_spec <- spec[[mdl_nr]]   # ikke ref.spec fordi endret estimation.to med identification_estimate.to 
+  # dette kan vaere problem hvis estimate.to er satt i utg. spec. Fikse? 
+  #ref_spec <- sa_mult[[mdl_nr]]$estimation_spec
+  spec_to_refresh <- sa_mult[[mdl_nr]]$result_spec
+  if(!is.null(identification_estimate.to)){
+    spec_to_refresh$regarima$estimate$span <- ref_spec$regarima$estimate$span
   }
+  #### Her maa det faas inn at estimate_to i disse skal være lik inngangsspec. (foer sa_mult) Kan ikke bare sette all, da estimate.to kan være definert 
+  ### paa ordinært vis. Saa maa ta utgangspunkt i spec-listen. # Done 
   
-  if (identify_arima_mu) {
-    if(arima_mu(sa_mult[[mdl_nr]])){
-      spec <- rjd3toolkit::set_arima(spec,mean=0,mean.type="Initial")
-    }else{
-      spec <- rjd3toolkit::set_arima(spec,mean=NA)
+  if(auto_in_pickmdl & mdl_nr == length_spec){
+    if(!is.null(when_automdl)){
+      when_automdl("automdl since no pickmdl model ok")
     }
   }
+    #arma <- sa_mult[[mdl_nr]]$result$preprocessing$description$arima
+    #spec <- rjd3toolkit::set_arima(rjd3toolkit::set_automodel(spec,enabled = automdl.enabled),
+    #                               p = as.numeric(ifelse(is.matrix(arma$phi),ncol(arma$phi),0)),
+    #                               d = as.numeric(arma$d),
+    #                               q =  as.numeric(ifelse(is.matrix(arma$theta),ncol(arma$theta),0)),
+    #                               bp = as.numeric(ifelse(is.matrix(arma$bphi),ncol(arma$bphi),0)),
+    #                               bd = as.numeric(arma$bd),
+    #                               bq = as.numeric(ifelse(is.matrix(arma$btheta),ncol(arma$btheta),0)))
+  #}
+  
+  #if (identify_arima_mu) {
+  #  if(arima_mu(sa_mult[[mdl_nr]])){
+  #    spec <- rjd3toolkit::set_arima(spec,mean=0,mean.type="Initial")
+  #  }else{
+  #    spec <- rjd3toolkit::set_arima(spec,mean=NA)
+  #  }
+  #}
   
   if (identify_t_filter | identify_s_filter) {
     filters <- filter_input(sa_mult[[mdl_nr]])
     if (identify_t_filter) {
-      spec <- rjd3x13::set_x11(spec,henderson.filter = filters[["henderson.filter"]])
+      spec_to_refresh <- rjd3x13::set_x11(spec_to_refresh,henderson.filter = filters[["henderson.filter"]])
     }
     if (identify_s_filter) {
-      spec <- rjd3x13::set_x11(spec,seasonal.filter = filters[["seasonal.filter"]])
+      spec_to_refresh <- rjd3x13::set_x11(spec_to_refresh,seasonal.filter = filters[["seasonal.filter"]])
     }
     if (verbose) {
       print(unlist(filters)[c(identify_t_filter, identify_s_filter)], quote = FALSE)
@@ -384,15 +402,34 @@ x13_pickmdl <- function(ts, spec,
   
   
   if (!is.null(corona)) { # Because of new final limit possible extra outliers included
-    spec <- update_spec_corona_outliers(spec, option = corona, outlier_date_limit = outlier_date_limit_final, freq = stats::frequency(ts))
+    ref_spec <- update_spec_corona_outliers(ref_spec, option = corona, outlier_date_limit = outlier_date_limit_final, freq = stats::frequency(ts))   # spec eller spec_refresh?
+    spec_to_refresh <- update_spec_corona_outliers(spec_to_refresh, option = corona, outlier_date_limit = outlier_date_limit_final, freq = stats::frequency(ts))   # spec eller spec_refresh?
   }
   
-  if (identify_outliers) {
-    spec <- update_spec_outliers(sa = sa_mult[[mdl_nr]], spec = spec, verbose = verbose)
+  if(!is.null(identification_end) | !is.null(identification_estimate.to)){  ## Holder dette? Nei, hvis identify_outliers ikke er på skal hele identifiseres på nytt... 
+    ### få inn noe med if policy = outliers og identify outliers e.l.
+    
+    if(isTRUE(identify_outliers) | policy == "Current"){
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),
+                                   start = outlier_date_limit_b, end = stats::end(ts))  
+    }else{
+      spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),
+                                   start = stats::start(ts), end = stats::end(ts))  
+    }
+    
+  }else {
+    spec <- ref_spec
   }
+  
+  
+  
+  #if (identify_outliers) {
+  #  spec <- update_spec_outliers(sa = sa_mult[[mdl_nr]], spec = spec, verbose = verbose)
+  #}
   
   if(output == "spec"){
     return(spec)
+    
   }
   
   sa <- rjd3x13::x13(ts = ts, spec = spec, ...)
@@ -406,7 +443,7 @@ x13_pickmdl <- function(ts, spec,
       if (isTRUE(all_equal))
         message(all_equal) else warning(all_equal)
     }
-  }   ### Denne maa fikses paa !
+  }   ### Denne maa fikses paa ! Hva er dette? 
   
   
   
@@ -424,7 +461,7 @@ x13_pickmdl <- function(ts, spec,
                      mdl_nr = as.character(mdl_nr * c(1, NA)[automdl.enabled + 1]))
   }
   
-  if(output == "sa_spec"){
+  if(output == "sa_spec"){                                       #### Trengs denne ? 
     return(list(sa = sa, spec = spec))
   }
   

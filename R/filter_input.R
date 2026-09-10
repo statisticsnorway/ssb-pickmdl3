@@ -34,7 +34,8 @@ filter_input <- function(sa) {
   if (henderson.filter < 1) {
     stop("Could not find correct henderson.filter")
   }
-  seasonal.filter <- paste0("S3x", seasonal.filter)
+  #seasonal.filter <- paste0("S3x", seasonal.filter)
+  seasonal.filter <- gsub("FILTER_", "", seasonal.filter)
   
   list(henderson.filter = henderson.filter, seasonal.filter = seasonal.filter)
 }

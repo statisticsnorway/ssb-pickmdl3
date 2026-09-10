@@ -15,7 +15,6 @@ Description: PICKMDL for rjd3.
 License: MIT + file LICENSE
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 Imports: 
     stats
 Depends:
@@ -36,3 +35,4 @@ Suggests:
     shinyjs
 Config/testthat/edition: 3
 URL: https://statisticsnorway.github.io/ssb-pickmdl3/
+Config/roxygen2/version: 8.1.0

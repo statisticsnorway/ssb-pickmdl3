@@ -65,7 +65,8 @@ update_spec_corona_outliers <- function(spec, option = "ssb", freq = 12, day = "
   co <- corona_outliers(option = option, freq = freq, day = day, q_month = q_month)
   co <- co[co$date < outlier_date_limit, , drop = FALSE]
   if (nrow(co)) {
-    pre_date <- sapply(spec$regarima$regression$outliers,"[[","pos")
+    pre_date <- lapply(spec$regarima$regression$outliers,"[[","pos")
+    pre_date <- sapply(pre_date,as.character)
     updated <- co[!(co$date %in% pre_date),]
   } else {
     updated <- NULL
