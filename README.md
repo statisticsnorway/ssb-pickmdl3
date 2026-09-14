@@ -7,12 +7,21 @@
 
 ***
 
+## R package implementing the X-12-ARIMA pickmdl procedure within rjd3 
 
-The package relies on the R package 
-[RJDemetra](https://CRAN.R-project.org/package=RJDemetra)
+The package relies on the R packages
+[rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13)
 and provides additional functionality used in the production of statistics at Statistics Norway.
 
------------
+
+***
+
+📌 See the [broader list of available functions](https://statisticsnorway.github.io/ssb-gausssuppression/reference/index.html).
+
+
+***
+
+
 
 ## Installation
 
