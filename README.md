@@ -22,7 +22,7 @@ and provides additional functionality used in the production of statistics at St
 
 
 ***
-https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html
+
 
 
 ## Installation
@@ -87,4 +87,4 @@ A function for constructing user-defined calendar regressors is included.
 
 # Detailed documentation
 
-More detailed documentation can be found at the [reference site for pickmdl](https://statisticsnorway.github.io/ssb-pickmdl/reference/index.html)
+More detailed documentation can be found at the [reference site for pickmdl](https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html)
