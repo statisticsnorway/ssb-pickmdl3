@@ -9,6 +9,8 @@
 
 ## R package implementing the X-12-ARIMA pickmdl procedure within rjd3 
 
+Her kommer noe beskrivelse. Huks å si at textframe er med, men at dataeditr ikke blir automatisk installert.
+
 The package relies on the R packages
 [rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13)
 and provides additional functionality used in the production of statistics at Statistics Norway.
@@ -16,11 +18,11 @@ and provides additional functionality used in the production of statistics at St
 
 ***
 
-📌 See the [broader list of available functions](https://statisticsnorway.github.io/ssb-gausssuppression/reference/index.html).
+📌 See the [broader list of available functions](https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html).
 
 
 ***
-
+https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html
 
 
 ## Installation
@@ -33,7 +35,7 @@ on its GitHub page and note the availability of
 Usual installation from GitHub:
 ```r
 # install.packages("devtools")
-devtools::install_github("statisticsnorway/pickmdl")
+devtools::install_github("statisticsnorway/ssb-pickmdl3")
 ```
 If you know that the dependencies listed under *Imports* and *Depends* in the 
 [DESCRIPTION file](https://github.com/statisticsnorway/ssb-pickmdl/blob/main/DESCRIPTION)
