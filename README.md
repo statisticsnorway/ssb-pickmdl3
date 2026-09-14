@@ -1,7 +1,7 @@
 # R package pickmdl3  <img src="man/figures/logo.png" align="right" height="150" /> 
 
 
-| [Her kjeme noko om CRAN](https://cran.r-project.org/package=GaussSuppression) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-gausssuppression/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
+| [Her kjeme noko om CRAN](https://cran.r-project.org/package=GaussSuppression) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-pickmdl3/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
 |----------------------|---|----------------------|---|----------------------|
 
 
