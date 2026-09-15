@@ -9,10 +9,10 @@
 
 ## R package implementing the X-12-ARIMA pickmdl procedure within rjd3 
 
-A package that makes the pickdml model selection procedure from X-12-ARIMA available within rjd3. Pickmdl is a model selection procedure that restricts the choiche of 
-seasonal RegARIMA model to an ordered set of five parsimonius models.  The package relies on the R packages 
+A package that makes the pickdml model selection procedure in X-12-ARIMA available within rjd3. The pickmdl model selection procedure
+restricts the choiche of seasonal RegARIMA model to an ordered set of five parsimonius models. The package relies on the R packages 
 [rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13) and enables the x13 function in rjd3x13
-to be run with the pickmdl specification. The package further includes functionality for seasonal adjustment of multiple series based on a data frame with model specifications. 
+to be run with the pickmdl specification as well as the usual automdodel specification. The package also includes functionality for seasonal adjustment of multiple series based on a data frame with model specifications. 
 
 
 ***
@@ -21,7 +21,6 @@ to be run with the pickmdl specification. The package further includes functiona
 
 
 ***
-
 
 See the package vignettes: 
 [Magnitude table suppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Magnitude_table_suppression.html), 
