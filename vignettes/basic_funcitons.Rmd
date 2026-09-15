@@ -1,0 +1,47 @@
+---
+title: "basic_funcitons"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basic_funcitons}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The pickdml3 package contains functionality for running the pickdml selection procedure when using the x13 methodology in rjd3. In this vignette we explore the basic functionality within the package.
+
+We begin by loading a time series to be seasonally adjusted. This is Norwegian retail indices. 47.6. 
+
+```{r load_data, warnings=FALSE}
+
+rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+
+rti_476
+```
+
+
+To seasonally adjust the series with the pickdml selection algorithm, we use the x13_pickmdl() function. This function seasonally adjust the series in accordance with the x13 function, but instead of using the default automodel procedure, the choiche of models is restricted to a list of five robust models. 
+
+We select the versatile rsa5c standard specification, where there is a test to check if each trading day should have its own effect. In accordance with recomondations at Statistics Norway, we only allow for Level Shift an additive outliers, however. The x13_pickmdl takes the series and the specification as input and  gives a list of model results as output, just as the x13 function.  
+
+
+```{r first model }
+library(pickmdl3)
+
+
+spec_now <- x13_spec("rsa5c") |>
+  set_transform(fun="Log")|>
+  set_outlier(outliers.type=c("AO","LS")) 
+
+
+model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now)
+
+model_476
+```
+To get information on the model choiche.  Use the function ok().  We see that the selected model is deemed ok, that is it fulfills the tree criteria. The  model number is three.  
+
+```{r ok }
+pickmdl3::ok(model_476)  
+```
+
