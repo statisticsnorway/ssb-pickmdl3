@@ -10,12 +10,10 @@
 ## R package implementing the X-12-ARIMA pickmdl procedure within rjd3 
 
 The pickmdl3 package relies on the R packages 
-[rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13). The package makes
-the pickmdl model selection procedure from X-12-ARIMA available in rjd3. The PICKMDL model selection procedure differs from the default automodel
-procedure in that it restricts the choiche of seasonal RegARIMA model to an ordered set of five parsimonius models. This restriction may result in more stable
-model selection and thus less future revisions to seasonally adjusted data. The pickdml3 package allows
-the x13 function in rjd3x13 to be run as usual (automdl) or with the PICKMDL specification. The package provides the option to fall back on the automodel procedure 
-when none of the five listed models proves adequate. 
+[rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13). With the pickdml3 package, 
+the x13 function in rjd3x13 can be run as usual with the automodel selection procedure, or it can be run with the pickmdl selection procedure from X-12-ARIMA. 
+The pickmdl model selection procedure differs from the default automodel procedure in that it restricts the choiche of seasonal RegARIMA model to an ordered set
+of five parsimonius models. If none of the five listed models proves adequate, the package provides the option to fall back on the automodel procedure. 
 The package further includes functionality for seasonal adjustment of multiple series based on a data frame with model specifications. 
 
 
