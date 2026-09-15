@@ -34,6 +34,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/basic_funcitons.html">basic_funcitons</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -69,76 +75,32 @@
 <tbody></tbody>
 </table>
 <hr>
-<p>The package relies on the R package <a href="https://CRAN.R-project.org/package=RJDemetra" class="external-link">RJDemetra</a> and provides additional functionality used in the production of statistics at Statistics Norway.</p>
+<div class="section level2">
+<h2 id="r-package-implementing-the-x-12-arima-pickmdl-procedure-within-rjd3">R package implementing the X-12-ARIMA pickmdl procedure within rjd3<a class="anchor" aria-label="anchor" href="#r-package-implementing-the-x-12-arima-pickmdl-procedure-within-rjd3"></a>
+</h2>
+<p>This package makes the pickdml model selection procedure in X-12-ARIMA available for seasonal adjustment with rjd3. The package relies on <a href="https://CRAN.R-project.org/package=rjd3toolkit" class="external-link">rjd3toolkit</a> and <a href="https://CRAN.R-project.org/package=rjd3x13" class="external-link">rjd3x13</a>, and enables the x13 function in rjd3x13 to be run with the pickmdl specification as an alternative to the default automodel specification. The pickmdl selection procedure differs from the default automodel procedure, in that the choiche of seasonal RegARIMA model is restricted to an ordered set of five parsimonius models. In the case when none of these are adeaquate, the package provides the option to fall back on the automdodel procedure. The package further includes functionality for seasonal adjustment of multiple series based on a data frame with model specifications.</p>
 <hr>
+<p>📌 See the <a href="https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html">broader list of available functions</a>.</p>
+<hr>
+<p>See the package vignettes: <a href="https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Magnitude_table_suppression.html" class="external-link">Magnitude table suppression</a>, <a href="https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Small_count_frequency_table_suppression.html" class="external-link">Small count frequency table suppression</a>, <a href="https://cran.r-project.org/web/packages/GaussSuppression/vignettes/define_tables.html" class="external-link">Defining tables for GaussSuppression</a>.</p>
+<hr>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Since <em>pickmdl</em> depends on <em>RJDemetra</em>, refer to the <a href="https://github.com/rjdverse/rjdemetra/blob/main/README.md#Installation" class="external-link">installation instructions</a> on its GitHub page and note the availability of <a href="https://github.com/jdemetra/rjdemetra/wiki/Installation-manual" class="external-link">the installation manual</a>.</p>
+<p>Since <em>pickmdl3</em> depends on <em>rjd3toolkit</em> and <em>rjd3x13</em>, refer to the installation instruction found on the<br><a href="https://github.com/rjdverse" class="external-link">rjdverse</a> GitHub page. See also the chapter on R packages in the <a href="https://doc.jdemetra.org/t-r-packages" class="external-link">Jdemetra+ documentation</a>.</p>
 <p>Usual installation from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"statisticsnorway/pickmdl"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"statisticsnorway/ssb-pickmdl3"</span><span class="op">)</span></span></code></pre></div>
 <p>If you know that the dependencies listed under <em>Imports</em> and <em>Depends</em> in the <a href="https://github.com/statisticsnorway/ssb-pickmdl/blob/main/DESCRIPTION" class="external-link">DESCRIPTION file</a> are already installed, an alternative is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"statisticsnorway/pickmdl"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<hr>
-</div>
-</div>
-<div class="section level1">
-<h1 id="functionality">Functionality<a class="anchor" aria-label="anchor" href="#functionality"></a>
-</h1>
-<div class="section level3">
-<h3 id="pickmdl-specification">PICKMDL specification<a class="anchor" aria-label="anchor" href="#pickmdl-specification"></a>
-</h3>
-<p>The x13 function in RJDemetra can be run as usual (automdl) or with a PICKMDL specification.</p>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"statisticsnorway/pickmdl3"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <ul>
-<li>PICKMDL is an X-12-ARIMA procedure not yet available in RJDemetra.</li>
-<li>See <a href="https://github.com/jdemetra/jdemetra-app/issues/504" class="external-link uri">https://github.com/jdemetra/jdemetra-app/issues/504</a>
-</li>
+<li><hr></li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="partial-concurrent-adjustment">Partial concurrent adjustment<a class="anchor" aria-label="anchor" href="#partial-concurrent-adjustment"></a>
-</h3>
-<p>The package has also possibilities for partial concurrent adjustment.</p>
-<ul>
-<li>The ARIMA model, outliers and filters can be identified at a certain date and then held fixed (with a new outlier-span).</li>
-</ul>
 </div>
-<div class="section level3">
-<h3 id="multiple-series-specifications">Multiple series specifications<a class="anchor" aria-label="anchor" href="#multiple-series-specifications"></a>
-</h3>
-<p>Specifications for multiple series can be managed through parameter settings in a table.</p>
-<ul>
-<li>The table may, for example, be stored as a CSV file.</li>
-<li>See the function <code><a href="reference/x13_text_frame.html">x13_text_frame()</a></code>.</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="the-corona-period">The corona period<a class="anchor" aria-label="anchor" href="#the-corona-period"></a>
-</h3>
-<p>Handling the corona period according to <a href="https://github.com/statisticsnorway/ssb-seasonaladjustment-corona" class="external-link">Statistics Norway’s recommendation</a> can be done easily.</p>
-<ul>
-<li>By specifying the parameter <code>corona_outliers</code> as <code>TRUE</code> or <code>"SSB"</code>.</li>
-</ul>
-</div>
-<div class="section level3">
-<h3 id="norwegian-calendar-regressors">Norwegian calendar regressors<a class="anchor" aria-label="anchor" href="#norwegian-calendar-regressors"></a>
-</h3>
-<p>A function for constructing user-defined calendar regressors is included.</p>
-<ul>
-<li>See the function <code>konstruksjon()</code>.</li>
-</ul>
-<hr>
-</div>
-</div>
-<div class="section level1">
-<h1 id="detailed-documentation">Detailed documentation<a class="anchor" aria-label="anchor" href="#detailed-documentation"></a>
-</h1>
-<p>More detailed documentation can be found at the <a href="https://statisticsnorway.github.io/ssb-pickmdl/reference/index.html" class="external-link">reference site for pickmdl</a></p>
-</div>
-
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">

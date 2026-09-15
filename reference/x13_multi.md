@@ -37,10 +37,7 @@ of multiple specifications.
  myseries <- pickmdl_data("myseries")
 
  spec <- rjd3x13::x13_spec("rsa3")
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
  spec5 <- x13_spec_pickmdl(spec)
-#> Error: object 'spec' not found
 
  sa5 <- x13_multi(myseries, spec = spec5)
-#> Error: object 'spec5' not found
 ```

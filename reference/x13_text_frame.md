@@ -85,12 +85,19 @@ outABC <- x13_text_frame(tf, ts = "seriesABC", spec = "RSA3", set_transform__fun
 #>     "2016-01-01"), add_outlier__type = rep("LS", 2), set_outlier__outliers.type = c("LS", 
 #>     "AO"), ts = seriesABC[, "A"], spec = "RSA3", set_transform__fun = "Log")
 #> 
-#> Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name): RcallMethod: cannot determine object class
+#>   ----   id =  B    ----
+#> x13_both(automdl.enabled = FALSE, add_outlier__date = c("2009-01-01"), 
+#>     add_outlier__type = "AO", set_outlier__outliers.type = c("LS", 
+#>         "AO"), ts = seriesABC[, "B"], spec = "RSA3", set_transform__fun = "Log")
+#> 
+#>   ----   id =  C    ----
+#> x13_both(automdl.enabled = FALSE, set_outlier__outliers.type = c("LS", 
+#>     "AO"), ts = seriesABC[, "C"], spec = "RSA3", set_transform__fun = "Log")
+#> 
 outB   <- x13_text_frame(tf, ts = "seriesABC", spec = "RSA3", set_transform__fun  = "Log",
                          id = "B")
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 identical(outABC[[2]], outB)  # TRUE
-#> Error: object 'outABC' not found
+#> [1] TRUE
 
 
 # Spec can also be given as variable in the data frame
@@ -108,10 +115,18 @@ outABC2 <-  x13_text_frame(tf2, ts = "seriesABC",set_transform__fun  = "Log",
 #>     "2016-01-01"), add_outlier__type = rep("LS", 2), set_outlier__outliers.type = c("LS", 
 #>     "AO"), ts = seriesABC[, "A"], set_transform__fun = "Log")
 #> 
-#> Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name): RcallMethod: cannot determine object class
+#>   ----   id =  B    ----
+#> x13_both(spec = "rsa3", automdl.enabled = FALSE, add_outlier__date = c("2009-01-01"), 
+#>     add_outlier__type = "AO", set_outlier__outliers.type = c("LS", 
+#>         "AO"), ts = seriesABC[, "B"], set_transform__fun = "Log")
+#> 
+#>   ----   id =  C    ----
+#> x13_both(spec = "rsa3", automdl.enabled = FALSE, set_outlier__outliers.type = c("LS", 
+#>     "AO"), ts = seriesABC[, "C"], set_transform__fun = "Log")
+#> 
 
 identical(outABC, outABC2)
-#> Error: object 'outABC' not found
+#> [1] TRUE
 
 
 ```

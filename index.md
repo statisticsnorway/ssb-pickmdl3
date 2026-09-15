@@ -5,26 +5,52 @@
 
 ------------------------------------------------------------------------
 
-The package relies on the R package
-[RJDemetra](https://CRAN.R-project.org/package=RJDemetra) and provides
-additional functionality used in the production of statistics at
-Statistics Norway.
+## R package implementing the X-12-ARIMA pickmdl procedure within rjd3
+
+This package makes the pickdml model selection procedure in X-12-ARIMA
+available for seasonal adjustment with rjd3. The package relies on
+[rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and
+[rjd3x13](https://CRAN.R-project.org/package=rjd3x13), and enables the
+x13 function in rjd3x13 to be run with the pickmdl specification as an
+alternative to the default automodel specification. The pickmdl
+selection procedure differs from the default automodel procedure, in
+that the choiche of seasonal RegARIMA model is restricted to an ordered
+set of five parsimonius models. In the case when none of these are
+adeaquate, the package provides the option to fall back on the
+automdodel procedure. The package further includes functionality for
+seasonal adjustment of multiple series based on a data frame with model
+specifications.
+
+------------------------------------------------------------------------
+
+📌 See the [broader list of available
+functions](https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html).
+
+------------------------------------------------------------------------
+
+See the package vignettes: [Magnitude table
+suppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Magnitude_table_suppression.html),
+[Small count frequency table
+suppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Small_count_frequency_table_suppression.html),
+[Defining tables for
+GaussSuppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/define_tables.html).
 
 ------------------------------------------------------------------------
 
 ## Installation
 
-Since *pickmdl* depends on *RJDemetra*, refer to the [installation
-instructions](https://github.com/rjdverse/rjdemetra/blob/main/README.md#Installation)
-on its GitHub page and note the availability of [the installation
-manual](https://github.com/jdemetra/rjdemetra/wiki/Installation-manual).
+Since *pickmdl3* depends on *rjd3toolkit* and *rjd3x13*, refer to the
+installation instruction found on the  
+[rjdverse](https://github.com/rjdverse) GitHub page. See also the
+chapter on R packages in the [Jdemetra+
+documentation](https://doc.jdemetra.org/t-r-packages).
 
 Usual installation from GitHub:
 
 ``` r
 
 # install.packages("devtools")
-devtools::install_github("statisticsnorway/pickmdl")
+devtools::install_github("statisticsnorway/ssb-pickmdl3")
 ```
 
 If you know that the dependencies listed under *Imports* and *Depends*
@@ -34,55 +60,9 @@ are already installed, an alternative is:
 
 ``` r
 
-devtools::install_github("statisticsnorway/pickmdl", dependencies = FALSE)
+devtools::install_github("statisticsnorway/pickmdl3", dependencies = FALSE)
 ```
 
-------------------------------------------------------------------------
+- 
 
-# Functionality
-
-### PICKMDL specification
-
-The x13 function in RJDemetra can be run as usual (automdl) or with a
-PICKMDL specification.
-
-- PICKMDL is an X-12-ARIMA procedure not yet available in RJDemetra.
-- See <https://github.com/jdemetra/jdemetra-app/issues/504>
-
-### Partial concurrent adjustment
-
-The package has also possibilities for partial concurrent adjustment.
-
-- The ARIMA model, outliers and filters can be identified at a certain
-  date and then held fixed (with a new outlier-span).
-
-### Multiple series specifications
-
-Specifications for multiple series can be managed through parameter
-settings in a table.
-
-- The table may, for example, be stored as a CSV file.
-- See the function
-  [`x13_text_frame()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/x13_text_frame.md).
-
-### The corona period
-
-Handling the corona period according to [Statistics Norway’s
-recommendation](https://github.com/statisticsnorway/ssb-seasonaladjustment-corona)
-can be done easily.
-
-- By specifying the parameter `corona_outliers` as `TRUE` or `"SSB"`.
-
-### Norwegian calendar regressors
-
-A function for constructing user-defined calendar regressors is
-included.
-
-- See the function `konstruksjon()`.
-
-------------------------------------------------------------------------
-
-# Detailed documentation
-
-More detailed documentation can be found at the [reference site for
-pickmdl](https://statisticsnorway.github.io/ssb-pickmdl/reference/index.html)
+  ------------------------------------------------------------------------

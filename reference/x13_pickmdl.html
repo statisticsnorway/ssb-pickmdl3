@@ -18,6 +18,10 @@ The ARIMA model, outliers and filters can be identified at a certain date and th
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/basic_funcitons.html">basic_funcitons</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -184,56 +188,145 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">myseries</span> <span class="op">&lt;-</span> <span class="fu"><a href="pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"myseries"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">spec_a</span>  <span class="op">&lt;-</span> <span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"rsa3"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
 <span class="r-in"><span><span class="va">spec_a</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_transform.html" class="external-link">set_transform</a></span><span class="op">(</span><span class="va">spec_a</span>, fun <span class="op">=</span> <span class="st">"Log"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (2,1,0) (0,1,1)"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/comment.html" class="external-link">comment</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ok ok_final   mdl_nr </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   "TRUE"   "TRUE"      "3" </span>
 <span class="r-in"><span><span class="fu"><a href="ok.html">ok</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ok</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ok_final</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mdl_nr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="ok.html">ok</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ok ok_final   mdl_nr </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        1        1        3 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (2,1,0) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)     0.98483    0.06035  16.318   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(2)     0.57655    0.06041   9.544   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.89213    0.07920 -11.264   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TC (2011-06-01) -0.19046    0.04705 -4.048 7.61e-05 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 230.554, Adjusted loglikelihood: -624.9538</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06727615 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1259.908, AICc: 1260.237, BIC: 1276.09</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a2</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2014</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a2</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,2) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -1.12616    0.06430 -17.515  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(2)   0.34892    0.06677   5.226 4.65e-07 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.96565    0.21022  -4.593 8.05e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> No regression variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 227.209, Adjusted loglikelihood: -628.2988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06684178 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1264.598, AICc: 1264.816, BIC: 1277.543</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># As above, another way</span></span></span>
 <span class="r-in"><span><span class="va">a3</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, identification_estimate.to <span class="op">=</span> <span class="st">"2014-03-01"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a3</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a3' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,2) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -1.12616    0.06430 -17.515  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(2)   0.34892    0.06677   5.226 4.65e-07 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.96565    0.21022  -4.593 8.05e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> No regression variables</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 227.209, Adjusted loglikelihood: -628.2988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06684178 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1264.598, AICc: 1264.816, BIC: 1277.543</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a4</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2014</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a4</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a4' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (1,0,2) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)    -0.95221    0.03452 -27.581  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -1.10920    0.06928 -16.011  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(2)   0.36254    0.07172   5.055 1.03e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.99999    1.07677  -0.929    0.354    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> const 0.026745   0.003966  6.744 1.95e-10 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 189, Number of parameters: 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 232.0136, Adjusted loglikelihood: -627.9996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06488971 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1267.999, AICc: 1268.461, BIC: 1287.45</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># As above, another way</span></span></span>
 <span class="r-in"><span><span class="va">a5</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, identification_estimate.to <span class="op">=</span> <span class="st">"2014-03-01"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a5</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'a5' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (1,0,2) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)    -0.95221    0.03452 -27.581  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -1.10920    0.06928 -16.011  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(2)   0.36254    0.07172   5.055 1.03e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.99999    1.07677  -0.929    0.354    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> const 0.026745   0.003966  6.744 1.95e-10 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 189, Number of parameters: 6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 232.0136, Adjusted loglikelihood: -627.9996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06488971 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1267.999, AICc: 1268.461, BIC: 1287.45</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">allvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"allvar"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">allvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>arb_dag<span class="op">=</span><span class="va">allvar</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,skuddar<span class="op">=</span><span class="va">allvar</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">my_context</span> <span class="op">&lt;-</span> <span class="fu">modelling_context</span><span class="op">(</span>variables<span class="op">=</span><span class="va">allvar</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span>name<span class="op">=</span> <span class="st">"rsa3"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcheck():</span> java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0</span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_transform.html" class="external-link">set_transform</a></span><span class="op">(</span><span class="va">spec_b</span>,fun<span class="op">=</span><span class="st">"Log"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_tradingdays.html" class="external-link">set_tradingdays</a></span><span class="op">(</span><span class="va">spec_b</span>,</span></span>
 <span class="r-in"><span>                       option<span class="op">=</span><span class="st">"Userdefined"</span>,uservariable<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r.arb_dag"</span>,<span class="st">"r.skuddar"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="va">spec_b</span>,outliers.type<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/add_outlier.html" class="external-link">add_outlier</a></span><span class="op">(</span><span class="va">spec_b</span>,type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"LS"</span>,<span class="fl">20</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                           date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2009-01-01"</span>, <span class="st">"2016-01-01"</span>, <span class="st">"2020-03-01"</span>,</span></span>
 <span class="r-in"><span>                                    <span class="st">"2020-04-01"</span>, <span class="st">"2020-05-01"</span>, <span class="st">"2020-06-01"</span>,</span></span>
@@ -242,99 +335,374 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span>                                    <span class="st">"2021-01-01"</span>, <span class="st">"2021-02-01"</span>, <span class="st">"2021-03-01"</span>,</span></span>
 <span class="r-in"><span>                                    <span class="st">"2021-04-01"</span>, <span class="st">"2021-05-01"</span>, <span class="st">"2021-06-01"</span>,</span></span>
 <span class="r-in"><span>                                    <span class="st">"2021-07-01"</span>, <span class="st">"2021-08-01"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>,<span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">2</span><span class="op">)</span>,context<span class="op">=</span><span class="va">my_context</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">b</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'b' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># automdl instead</span></span></span>
 <span class="r-in"><span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">2</span><span class="op">)</span>,context<span class="op">=</span><span class="va">my_context</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">b1</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'b1' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># effect of identify_t_filter and identify_s_filter</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rndseries</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">240</span><span class="op">)</span><span class="op">/</span><span class="fl">20</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">240</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">120</span><span class="op">)</span>, <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                frequency <span class="op">=</span> <span class="fl">12</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">spec_c</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>,outliers.type<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
 <span class="r-in"><span><span class="va">c1</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">rndseries</span>, <span class="va">spec_c</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_c' not found</span>
 <span class="r-in"><span><span class="va">c1</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'c1' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,0,0) (1,1,0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bphi(1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.9871 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> const </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 617.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X5;  Trend filter: H-9 terms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.533); q-m2 Good (0.598)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: NA (0.000);  F-test on SA: Good (0.989)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
 <span class="r-in"><span><span class="va">c2</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">rndseries</span>, <span class="va">spec_c</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">12</span><span class="op">)</span>, identify_t_filter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_c' not found</span>
 <span class="r-in"><span><span class="va">c2</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'c2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,0,0) (1,1,0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bphi(1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.9871 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> const </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 617.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.538); q-m2 Good (0.604)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: NA (0.000);  F-test on SA: Good (0.982)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
 <span class="r-in"><span><span class="va">c3</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">rndseries</span>, <span class="va">spec_c</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2009</span>, <span class="fl">12</span><span class="op">)</span>, identify_t_filter <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  identify_s_filter <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_c' not found</span>
 <span class="r-in"><span><span class="va">c3</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'c3' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,0,0) (1,1,0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> bphi(1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.9871 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> const </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 617.6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.526); q-m2 Good (0.599)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: NA (0.000);  F-test on SA: Good (0.990)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Warning when transform.function = "None"</span></span></span>
 <span class="r-in"><span><span class="va">spec_d</span>  <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_transform.html" class="external-link">set_transform</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, fun <span class="op">=</span> <span class="st">"None"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcheck():</span> java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0</span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_d</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_d' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No model is ok according to criteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Warning avoided (when_star) and 2nd (star) model selected</span></span></span>
 <span class="r-in"><span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_d</span>, star <span class="op">=</span> <span class="fl">2</span>, when_star <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_d' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,2) (0,1,1)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># automdl since no pickmdl model ok, but still not ok</span></span></span>
 <span class="r-in"><span><span class="va">d3</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_d</span>, pickmdl_method <span class="op">=</span> <span class="st">"first_automdl"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_d' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No model is ok according to criteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (2,1,1) (0,1,1)"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> automdl since no pickmdl model ok</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># airline model (star) since automdl also not ok</span></span></span>
 <span class="r-in"><span><span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_d</span>, pickmdl_method <span class="op">=</span> <span class="st">"first_tryautomdl"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  when_finalnotok <span class="op">=</span> <span class="va">warning</span><span class="op">)</span> <span class="co"># also finalnotok warning</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_d' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No model is ok according to criteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>FINAL RUN NOT OK</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># As b, with output = "all"</span></span></span>
 <span class="r-in"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2014</span>, <span class="fl">2</span><span class="op">)</span>, context <span class="op">=</span> <span class="va">my_context</span>,</span></span>
 <span class="r-in"><span>                 output <span class="op">=</span> <span class="st">"all"</span>, fastfirst <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># With TRUE only one model in this case</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_b' not found</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">k</span><span class="op">$</span><span class="va">sa</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span>  <span class="co"># As summary(b$result$preprocessing)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">mdl_nr</span>            <span class="co"># index of selected model used to identify parameters</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">sa_mult</span><span class="op">[[</span><span class="va">k</span><span class="op">$</span><span class="va">mdl_nr</span><span class="op">]</span><span class="op">]</span> <span class="co"># model to identify</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  theta(1) btheta(1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   -0.7411   -0.9998 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       r.arb_dag       r.skuddar LS (2009-01-01) LS (2016-01-01) LS (2020-03-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         0.01097         0.05701        -0.08219         0.00000         0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) LS (2020-05-01) LS (2020-06-01) LS (2020-07-01) LS (2020-08-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01) LS (2020-10-01) LS (2020-11-01) LS (2020-12-01) LS (2021-01-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) LS (2021-03-01) LS (2021-04-01) LS (2021-05-01) LS (2021-06-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) LS (2021-08-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X9;  Trend filter: H-23 terms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.675); q-m2 Good (0.728)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: Good (1.000);  F-test on SA: Good (0.772)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">crit_tab</span>          <span class="co"># Table of criteria</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           crit1     crit2      crit3    m_aic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.04606964 0.2276114 -0.7410599 587.0624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.04408752 0.2001792 -0.7808637 587.6074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.04476747 0.5715118  0.0000000 585.6321</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.04799657 0.1376824 -0.9814978 593.2904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.04284097 0.7464168 -0.4903478 585.3944</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Effect of identify_outliers (TRUE is default)</span></span></span>
 <span class="r-in"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value<span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
 <span class="r-in"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value<span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcheck():</span> java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value<span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No model is ok according to criteria</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With corona outliers (even possible when series is not long enough)</span></span></span>
 <span class="r-in"><span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_a</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, corona <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (2,1,0) (0,1,1)"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m4</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'm4' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (2,1,0) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)     1.00349    0.06178 16.244  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(2)     0.59143    0.06162  9.598  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.99978    0.15924 -6.278 2.91e-09 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01)  0.07527    0.06491  1.160   0.2479    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.19815    0.09193 -2.155   0.0326 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.05206    0.09577  0.544   0.5875    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01)  0.02157    0.09648  0.224   0.8234    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.14629    0.10027  1.459   0.1465    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.22966    0.10240 -2.243   0.0263 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.15744    0.10248  1.536   0.1264    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.07074    0.10275 -0.689   0.4921    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.02439    0.10328  0.236   0.8136    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.09929    0.10344  0.960   0.3385    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.19862    0.10335 -1.922   0.0564 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01)  0.06578    0.10335  0.636   0.5254    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.06252    0.10335  0.605   0.5461    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01) -0.01084    0.10338 -0.105   0.9166    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.11020    0.10341 -1.066   0.2882    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01)  0.04380    0.10346  0.423   0.6726    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.04410    0.10342 -0.426   0.6704    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01) -0.03237    0.10342 -0.313   0.7547    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-09-01)  0.18665    0.10341  1.805   0.0729 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TC (2011-06-01) -0.19161    0.04522 -4.237 3.76e-05 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 248.2395, Adjusted loglikelihood: -607.2683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.05883998 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1262.537, AICc: 1269.899, BIC: 1340.211</span>
 <span class="r-in"><span><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span> , <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value<span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, corona <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcheck():</span> java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m5</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'm5' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82011    0.03608 -22.732  &lt; 2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.99957    0.15375  -6.501 9.17e-10 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Estimate Std. Error T-stat Pr(&gt;|t|)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AO (2008-03-01) -0.206843   0.063927 -3.236  0.00147 **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01)  0.019613   0.067053  0.293  0.77028   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.171621   0.086539 -1.983  0.04903 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.085242   0.086314  0.988  0.32483   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.009981   0.086388 -0.116  0.90816   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.159593   0.086321  1.849  0.06629 . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.224664   0.086318 -2.603  0.01010 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.144138   0.086316  1.670  0.09686 . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.061034   0.086315 -0.707  0.48051   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.021406   0.086315  0.248  0.80444   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.097483   0.086315  1.129  0.26039   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.193458   0.086247 -2.243  0.02624 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01)  0.062555   0.086146  0.726  0.46879   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.033979   0.086472  0.393  0.69487   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.017838   0.086539  0.206  0.83695   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.110351   0.086314 -1.278  0.20290   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01)  0.044435   0.086388  0.514  0.60769   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.043371   0.086321 -0.502  0.61604   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01) -0.033781   0.086318 -0.391  0.69604   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-09-01)  0.187218   0.086316  2.169  0.03153 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TC (2011-06-01) -0.167211   0.053928 -3.101  0.00228 **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AO (2016-03-01) -0.192752   0.063927 -3.015  0.00298 **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 243.5223, Adjusted loglikelihood: -611.9856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06036874 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1273.971, AICc: 1281.996, BIC: 1354.882</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">###########  quarterly series  #############</span></span></span>
@@ -344,27 +712,78 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span><span class="co"># Effect of identify_outliers (TRUE is default)</span></span></span>
 <span class="r-in"><span><span class="va">q1</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">qseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
 <span class="r-in"><span><span class="va">q2</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">qseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, output <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcheck():</span> java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span><span class="va">q3</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">qseries</span>, <span class="va">q2</span><span class="op">$</span><span class="va">spec</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'q2' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With corona outliers (even possible when series is not long enough)</span></span></span>
 <span class="r-in"><span><span class="va">q4</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">qseries</span>, <span class="va">spec_a</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, corona <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'spec_a' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (2,1,0) (0,1,1)"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">q4</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'q4' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (2,1,0) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)      0.4350     0.1295  3.360  0.00148 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phi(2)      0.3402     0.1337  2.544  0.01403 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1)  -1.0000     0.1973 -5.069 5.63e-06 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-01-01) -0.03985    0.03822 -1.043 0.302139    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.02878    0.04161 -0.692 0.492397    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01) -0.07456    0.04206 -1.773 0.082343 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01)  0.08506    0.04278  1.988 0.052290 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.00062    0.04277 -0.014 0.988492    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01) -0.11516    0.04283 -2.689 0.009710 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01)  0.04422    0.04289  1.031 0.307501    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2008-07-01) -0.12536    0.03349 -3.744 0.000469 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 67, Number of effective observations: 62, Number of parameters: 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 116.804, Adjusted loglikelihood: -167.071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.0334999 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 358.142, AICc: 364.5093, BIC: 383.6676</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">q5</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">qseries</span>, <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span><span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa3"</span><span class="op">)</span>, critical.value <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span>, <span class="fl">2</span><span class="op">)</span>, identify_outliers <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>                  verbose <span class="op">=</span> <span class="cn">TRUE</span>, corona <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name):</span> RcallMethod: cannot determine object class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (0,1,1) (0,1,1)"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">q5</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'q5' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)   -0.4089     0.1161 -3.523  0.00091 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1)  -0.8712     0.1331 -6.545 2.85e-08 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2008-07-01) -0.1365364  0.0333403 -4.095 0.000154 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-01-01) -0.0336395  0.0370763 -0.907 0.368598    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.0273303  0.0400882 -0.682 0.498541    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01) -0.0788231  0.0401121 -1.965 0.054974 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01)  0.0803140  0.0400311  2.006 0.050250 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01)  0.0005791  0.0403317  0.014 0.988601    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01) -0.1045488  0.0404172 -2.587 0.012646 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01)  0.0387242  0.0404409  0.958 0.342897    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AO (2014-04-01)  0.0874622  0.0303509  2.882 0.005814 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 67, Number of effective observations: 62, Number of parameters: 12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 119.5754, Adjusted loglikelihood: -164.2996</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.03354065 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 352.5992, AICc: 358.9665, BIC: 378.1248</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

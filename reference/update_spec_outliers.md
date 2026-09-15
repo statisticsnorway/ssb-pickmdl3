@@ -65,27 +65,31 @@ of outliers (as created by
 myseries <- pickmdl_data("myseries")
 
 spec_1 <- rjd3x13::x13_spec("rsa3")
-#> Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name): RcallMethod: cannot determine object class
 spec_1 <- rjd3toolkit::set_transform(spec_1, fun = "Log")
-#> Error: object 'spec_1' not found
 spec_1 <- rjd3toolkit::set_outlier(spec_1, critical.value =3)
-#> Error: object 'spec_1' not found
 spec_1 <- rjd3toolkit::add_outlier(spec_1, type="AO",date="2008-09-01")
-#> Error: object 'spec_1' not found
 
 
 spec_2 <- rjd3toolkit::set_basic(spec_1, type="To", d1 = "2020-02-01")
-#> Error: object 'spec_1' not found
 
 a <- rjd3x13::x13(myseries, spec_2)
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 
 update_outliers(a, spec_1)
-#> Error: object 'spec_1' not found
+#>   type       date
+#> 2   LS 2005-11-01
+#> 3   TC 2011-06-01
+#> 4   AO 2016-03-01
 
 spec_3 <- update_spec_outliers(a, spec_1)
-#> Error: object 'a' not found
 
 update_spec_outliers(a)
-#> Error: object 'a' not found
+#> $outlier.from
+#> [1] "2020-02-01"
+#> 
+#> $type
+#> [1] "AO" "LS" "TC" "AO"
+#> 
+#> $date
+#> [1] "2008-09-01" "2005-11-01" "2011-06-01" "2016-03-01"
+#> 
 ```

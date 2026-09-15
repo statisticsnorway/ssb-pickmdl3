@@ -27,26 +27,32 @@ list of `henderson.filter` (numeric) and `seasonal.filter` (character)
 myseries <- pickmdl_data("myseries")
 
 a <- rjd3x13::x13(myseries, spec = "rsa3")
-#> Error in .jcall("jdplus/toolkit/base/r/timeseries/TsUtility", "Ljdplus/toolkit/base/api/timeseries/TsData;",     "of", as.integer(freq), as.integer(start[1]), as.integer(start[2]),     as.double(s)): RcallMethod: cannot determine object class
 
 a$result$decomposition$final_henderson
-#> Error: object 'a' not found
+#> [1] 23
 a$result$decomposition$final_seasonal
-#> Error: object 'a' not found
+#> [1] "FILTER_S3X9"
 filter_input(a)
-#> Error: object 'a' not found
+#> $henderson.filter
+#> [1] 23
+#> 
+#> $seasonal.filter
+#> [1] "S3X9"
+#> 
 
 spec_b <- rjd3x13::x13_spec("rsa3")
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/toolkit/base/r/timeseries/TsUtility has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 spec_b <- rjd3x13::set_x11(spec_b,seasonal.filter="Stable",henderson.filter=13)
-#> Error: object 'spec_b' not found
 b <- rjd3x13::x13(myseries, spec = spec_b)
-#> Error in .jcall("jdplus/toolkit/base/r/timeseries/TsUtility", "Ljdplus/toolkit/base/api/timeseries/TsData;",     "of", as.integer(freq), as.integer(start[1]), as.integer(start[2]),     as.double(s)): RcallMethod: cannot determine object class
 
 b$result$decomposition$final_henderson
-#> Error: object 'b' not found
+#> [1] 13
 b$result$decomposition$final_seasonal
-#> Error: object 'b' not found
+#> [1] "FILTER_STABLE"
 filter_input(b)
-#> Error: object 'b' not found
+#> $henderson.filter
+#> [1] 13
+#> 
+#> $seasonal.filter
+#> [1] "STABLE"
+#> 
 ```

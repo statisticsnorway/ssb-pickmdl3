@@ -207,20 +207,116 @@ All parameters except `both_output` and `...` are parameters to
 myseries <- pickmdl_data("myseries")
 
 a <- x13_both(myseries, spec = "rsa3", set_transform__fun = "Log", verbose = TRUE)
-#> Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name): RcallMethod: cannot determine object class
+#> [1] "SARIMA model: (2,1,0) (0,1,1)"
 summary(a)
-#> Error: object 'a' not found
+#> Model: X-13
+#> Log-transformation: yes 
+#> SARIMA model: (2,1,0) (0,1,1)
+#> 
+#> Coefficients
+#>           Estimate Std. Error  T-stat Pr(>|t|)    
+#> phi(1)     0.98483    0.06035  16.318   <2e-16 ***
+#> phi(2)     0.57655    0.06041   9.544   <2e-16 ***
+#> btheta(1) -0.89213    0.07920 -11.264   <2e-16 ***
+#> ---
+#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#> 
+#> Regression model:
+#>                 Estimate Std. Error T-stat Pr(>|t|)    
+#> TC (2011-06-01) -0.19046    0.04705 -4.048 7.61e-05 ***
+#> ---
+#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#> Number of observations: 201, Number of effective observations: 188, Number of parameters: 5
+#> Loglikelihood: 230.554, Adjusted loglikelihood: -624.9538
+#> Standard error of the regression (ML estimate): 0.06727615 
+#> AIC: 1259.908, AICc: 1260.237, BIC: 1276.09
+#> 
+#> Decomposition
+#> Monitoring and Quality Assessment Statistics: 
+#>     M stats
+#> m1    0.576
+#> m2    0.597
+#> m3    3.000
+#> m4    0.348
+#> m5    3.000
+#> m6    0.737
+#> m7    0.223
+#> m8    0.364
+#> m9    0.166
+#> m10   0.394
+#> m11   0.368
+#> q     0.963
+#> qm2   1.008
+#> 
+#> Final filters: 
+#> Seasonal filter: FILTER_S3X5
+#> Trend filter: 23 terms Henderson moving average
+#> 
+#> Diagnostics
+#> Relative contribution of the components to the stationary
+#> portion of the variance in the original series,
+#> after the removal of the long term trend (in %)
+#> 
+#>            Component
+#>  cycle         7.199
+#>  seasonal     85.827
+#>  irregular     5.894
+#>  calendar      0.000
+#>  others        1.296
+#>  total       100.215
+#> 
+#> Residual seasonality tests
+#>                 P.value
+#>  seas.ftest.i     0.456
+#>  seas.ftest.sa    0.666
+#>  seas.qstest.i    1.000
+#>  seas.qstest.sa   1.000
+#>  td.ftest.i       0.000
+#>  td.ftest.sa      0.000
+#> 
+#> 
+#> Final
+#> Last values
+#>          series       sa    trend      seas       irr
+#> Oct 2020  128.5 113.0278 114.8664 1.1368883 0.9839939
+#> Nov 2020  133.0 113.5577 114.9771 1.1712103 0.9876556
+#> Dec 2020  116.2 125.8861 115.0768 0.9230570 1.0939304
+#> Jan 2021  116.0 111.0763 115.0760 1.0443269 0.9652429
+#> Feb 2021  105.2 111.5908 114.9148 0.9427303 0.9710737
+#> Mar 2021  120.4 116.6002 114.5837 1.0325879 1.0175991
+#> Apr 2021  116.2 123.8947 114.1606 0.9378929 1.0852671
+#> May 2021  106.4 110.3646 113.7266 0.9640775 0.9704374
+#> Jun 2021  123.8 116.6090 113.3063 1.0616675 1.0291482
+#> Jul 2021   71.1 109.7391 112.9419 0.6479005 0.9716419
+#> Aug 2021  110.9 112.9516 112.6839 0.9818369 1.0023748
+#> Sep 2021  147.1 127.0492 112.5604 1.1578191 1.1287205
 
 # is equivalent to
 
 spec_a <- x13_spec("rsa3")
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 spec_a <- rjd3toolkit::set_transform(spec_a, fun = "Log")
-#> Error: object 'spec_a' not found
 a2 <- x13_both(myseries,spec_a,verbose=TRUE)
-#> Error: object 'spec_a' not found
+#> [1] "SARIMA model: (2,1,0) (0,1,1)"
 a2
-#> Error: object 'a2' not found
+#> Serie span: All 
+#> 
+#> Model: X-13
+#> Log-transformation: yes 
+#> SARIMA model: (2,1,0) (0,1,1)
+#> 
+#> SARIMA coefficients:
+#>    phi(1)    phi(2) btheta(1) 
+#>    0.9848    0.5766   -0.8921 
+#> 
+#> Regression model:
+#> TC (2011-06-01) 
+#>         -0.1905 
+#> 
+#>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms
+#>  M-Statistics: q Good (0.963); q-m2 Bad (1.008)
+#>  QS test on SA: Good (1.000);  F-test on SA: Good (0.666)
+#> 
+#> For a more detailed output, use the 'summary()' function.
 
 # several specification settings:
 
@@ -232,7 +328,7 @@ b <- x13_both(myseries, spec="rsa3",
   set_outlier__outliers.type = c("LS","AO"),
   set_outlier__critical.value = 3
 )
-#> Error in .jcall("jdplus/x13/base/api/x13/X13Spec", "Ljdplus/x13/base/api/x13/X13Spec;",     "fromString", name): RcallMethod: cannot determine object class
+#> Warning: No model is ok according to criteria
 
 # user defined regressors and modelling context
 

@@ -67,7 +67,5 @@ may be vectors. These vectors must be the same length.
 ``` r
 
 spec <- rjd3x13::x13_spec("rsa3")
-#> Error in .jcheck(): java.lang.UnsupportedClassVersionError: jdplus/x13/base/api/x13/X13Spec has been compiled by a more recent version of the Java Runtime (class file version 65.0), this version of the Java Runtime only recognizes class file versions up to 61.0
 spec_list <- x13_spec_pickmdl(spec)
-#> Error: object 'spec' not found
 ```
