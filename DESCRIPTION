@@ -32,7 +32,10 @@ Suggests:
     rstudioapi,
     shiny,
     shinyBS,
-    shinyjs
+    shinyjs,
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
 URL: https://statisticsnorway.github.io/ssb-pickmdl3/
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr
