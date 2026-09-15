@@ -15,7 +15,8 @@ We begin by loading a time series to be seasonally adjusted. This is Norwegian r
 
 ```{r load_data, warnings=FALSE}
 
-rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+#rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+rti_476 <- pickmdl3::pickmdl_data("myseries")
 
 rti_476
 ```
