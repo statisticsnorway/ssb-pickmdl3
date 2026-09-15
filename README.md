@@ -9,7 +9,7 @@
 
 ## R package implementing the X-12-ARIMA pickmdl procedure within rjd3 
 
-A package that makes the pickdml model selection procedure in X-12-ARIMA available for sesonal adjustment with the x13 functions in rjd3. 
+A package that makes the pickdml model selection procedure in X-12-ARIMA available for seasonal adjustment with rjd3. 
 The package relies on 
 [rjd3toolkit](https://CRAN.R-project.org/package=rjd3toolkit) and [rjd3x13](https://CRAN.R-project.org/package=rjd3x13), and enables the x13 function in rjd3x13 to be
 run with the pickmdl specification as an alternative to the default automodel specification.
