@@ -16,4 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(pickmdl3)
+
+#her er det noko som kjeme
+
 ```
