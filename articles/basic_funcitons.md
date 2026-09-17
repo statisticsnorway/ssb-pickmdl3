@@ -1,123 +1,169 @@
-# basic_funcitons
+# Basic functionality
 
 ## Introduction
 
-The pickdml3 package contains functionality for running the pickdml
-selection procedure when using the x13 methodology in rjd3. In this
-vignette we explore the basic functionality within the package.
+The `pickdml3` package contains functionality for running the
+X12-ARIMA-SEATS pickdml selection procedure when using the x13
+methodology in rjd3. In this vignette we explore the basic function
+`x13_pickmdl`, which is, as its name indicates, a function that runs the
+x13() algorithm from rjd3x13, but with pickdml as model selection
+procedure instead of the default automdl procedure.
 
-We begin by loading a time series to be seasonally adjusted. This is
-Norwegian retail indices. 47.6.
+We begin by loading a time series to be seasonally adjusted. The series
+in question is the Norwegian retail index for NACE 47.6, Retail sale of
+cultural and recreation goods, between January 2014 and July 2026. We
+also define a specification, using the default specification ‘rsa5c’,
+only allowing level shift and additive outliers, however.
 
-``` r
-
-#rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
-rti_476 <- pickmdl3::pickmdl_data("myseries")
-
-rti_476
-```
-
-    ##        Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
-    ## 2005  78.5  68.2  76.6  80.0  73.4  91.9  45.5  78.1  88.8  79.3  94.1  76.4
-    ## 2006  90.5  73.1  84.0  76.7  86.3  80.9  49.3  86.8  88.8  90.3  91.4  68.7
-    ## 2007  94.0  72.2  92.6  77.9  83.5  97.7  56.0  93.2  98.0 103.8 103.6  73.4
-    ## 2008 101.6  85.6  72.5  94.1  85.1  91.7  53.3  92.8 107.6  95.9  89.7  78.0
-    ## 2009  90.7  74.8  85.8  75.4  76.7  91.0  52.9  83.6  88.5  88.4  86.6  76.8
-    ## 2010  80.7  69.3  83.1  72.9  69.8  92.8  51.5  82.4  98.9  91.0  89.1  71.6
-    ## 2011  89.3  70.3  83.9  77.0  86.3  78.1  46.8  87.3  96.7  90.8  96.7  85.2
-    ## 2012  95.8  84.9  93.8  81.1  89.2  99.9  59.4  98.5  97.3 101.1 109.0  70.6
-    ## 2013 112.3  90.9  80.7  95.8  88.6  97.5  62.9  95.8 103.6 112.4 104.4  77.7
-    ## 2014 107.1  92.5  93.1  96.1  94.3 100.6  69.5  98.3 119.1 112.5 101.3  87.5
-    ## 2015 105.0  85.8  99.2  94.4  99.2 110.8  69.0  98.3 116.0 110.2 116.3  99.1
-    ## 2016  99.1  96.0  86.3 109.5  92.1 118.0  73.5 102.6 125.6 112.1 117.6 100.9
-    ## 2017 106.6  96.5 112.8  89.5 115.0 110.7  69.6 118.0 125.6 120.4 130.4 100.9
-    ## 2018 120.8 101.9 107.5 108.1 111.1 116.4  69.6 133.0 122.6 136.0 139.2  99.0
-    ## 2019 126.7 110.8 119.4 106.6 117.1 123.2  80.7 114.9 134.3 140.2 136.1 106.1
-    ## 2020 120.6 112.4 123.6  98.7 109.9 121.1  85.2 109.8 139.5 128.5 133.0 116.2
-    ## 2021 116.0 105.2 120.4 116.2 106.4 123.8  71.1 110.9 147.1
-
-To seasonally adjust the series with the pickdml selection algorithm, we
-use the x13_pickmdl() function. This function seasonally adjust the
-series in accordance with the x13 function, but instead of using the
-default automodel procedure, the choiche of models is restricted to a
-list of five robust models.
-
-We select the versatile rsa5c standard specification, where there is a
-test to check if each trading day should have its own effect. In
-accordance with recomondations at Statistics Norway, we only allow for
-Level Shift an additive outliers, however. The x13_pickmdl takes the
-series and the specification as input and gives a list of model results
-as output, just as the x13 function.
+The function `x13_pickmdl`takes the series and the specification as
+inputs, and gives the fitted model results as output in a list, just as
+is the case with the `x13` function.
 
 ``` r
 
-library(pickmdl3)
-```
 
-    ## Loading required package: rjd3toolkit
+library(rjd3toolkit)
+#> 
+#> Attaching package: 'rjd3toolkit'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     aggregate, mad
+library(rjd3x13)
+#> 
+#> Attaching package: 'rjd3x13'
+#> The following object is masked from 'package:grDevices':
+#> 
+#>     x11
 
-    ## 
-    ## Attaching package: 'rjd3toolkit'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     aggregate, mad
-
-    ## Loading required package: rjd3x13
-
-    ## 
-    ## Attaching package: 'rjd3x13'
-
-    ## The following object is masked from 'package:grDevices':
-    ## 
-    ##     x11
-
-``` r
+rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+#rti_476 <- pickmdl3::pickmdl_data("myseries")
 
 spec_now <- x13_spec("rsa5c") |>
-  set_transform(fun="Log")|>
+#  set_transform(fun="Log")|>
   set_outlier(outliers.type=c("AO","LS")) 
-
 
 model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now)
 
 model_476
+#> Serie span: All 
+#> 
+#> Model: X-13
+#> Log-transformation: yes 
+#> SARIMA model: (2,1,0) (0,1,1)
+#> 
+#> SARIMA coefficients:
+#>    phi(1)    phi(2) btheta(1) 
+#>    0.5141    0.1056   -0.4443 
+#> 
+#> Regression model:
+#>             mon             tue             wed             thu             fri 
+#>      -0.0107469       0.0062918       0.0099814      -0.0068710       0.0190396 
+#>             sat AO (2020-01-01) AO (2020-03-01) LS (2020-05-01) LS (2020-08-01) 
+#>       0.0007883      -0.1749130      -0.2249022       0.2078185      -0.1806520 
+#> LS (2021-05-01) LS (2021-08-01) 
+#>       0.2242468      -0.1430262 
+#> 
+#>  Seasonal filter: FILTER_S3X5;  Trend filter: H-13 terms
+#>  M-Statistics: q Good (0.393); q-m2 Good (0.433)
+#>  QS test on SA: Good (0.975);  F-test on SA: Good (0.547)
+#> 
+#> For a more detailed output, use the 'summary()' function.
 ```
 
-    ## Serie span: All 
-    ## 
-    ## Model: X-13
-    ## Log-transformation: yes 
-    ## SARIMA model: (2,1,2) (0,1,1)
-    ## 
-    ## SARIMA coefficients:
-    ##    phi(1)    phi(2)  theta(1)  theta(2) btheta(1) 
-    ##    1.0094    0.1968    0.2142   -0.6712   -0.8581 
-    ## 
-    ## Regression model:
-    ##       mon       tue       wed       thu       fri       sat    easter 
-    ## -0.002391  0.016866  0.013407  0.005757  0.019463 -0.021588 -0.127922 
-    ## 
-    ##  Seasonal filter: FILTER_S3X9;  Trend filter: H-23 terms
-    ##  M-Statistics: q Good (0.809); q-m2 Good (0.875)
-    ##  QS test on SA: Good (1.000);  F-test on SA: Good (0.520)
-    ## 
-    ## For a more detailed output, use the 'summary()' function.
-
-To get information on the model choiche. Use the function ok(). We see
-that the selected model is deemed ok, that is it fulfills the tree
-criteria. The model number is three.
+From the output list, we can read that the selected sARIMA model is
+(2,1,0)(0,1,1). Information about the model choiche can also be
+retrieved with the function `ok`.
 
 ``` r
 
 pickmdl3::ok(model_476)  
+#> $ok
+#> [1] TRUE
+#> 
+#> $ok_final
+#> [1] TRUE
+#> 
+#> $mdl_nr
+#> [1] 3
 ```
 
-    ## $ok
-    ## [1] TRUE
-    ## 
-    ## $ok_final
-    ## [1] TRUE
-    ## 
-    ## $mdl_nr
-    ## [1] 5
+The first object in this list tells us that the selected model fulfills
+the criteria. The object mdl_nr tells us that the third model on the
+list was selected, which of course is the (2,1,0)(0,1,1) model.
+
+The user can get more information about the pickmdl procedure by setting
+the parameter `output` to “all”. Now the calculated criteria are
+provided for each model in the output object `crit_tab`. Using this, we
+can now see that the first two models were rejected because they failed
+on the second criterium, that is the they failed the test to check
+wheter residuals are independent. One can now also access all calculated
+models, for example if one needs to compare results in detail.
+
+``` r
+
+model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now,output = "all")  
+
+model_476$mdl_nr 
+#> [1] 3
+
+model_476$crit_tab
+#>           crit1      crit2      crit3    m_aic
+#> [1,] 0.03655921 0.02228086 -0.7916005 860.9283
+#> [2,] 0.03546483 0.02464104 -0.7901148 831.0459
+#> [3,] 0.03107798 0.64725040  0.0000000 788.2761
+
+all_models <- model_476$sa
+```
+
+We can see that the list of models only contains the three first models
+on the list of five models. This is because the algorithm stops by
+default when it has found a model on the list that fulfills the
+criteria. If the user wants to fit all five models, the parameter
+`fastfirst`needs to be set to `FALSE`.
+
+``` r
+
+
+model_now <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now,output = "all",fastfirst = FALSE)
+
+model_now$crit_tab
+#>           crit1       crit2      crit3    m_aic
+#> [1,] 0.03655921 0.022280863 -0.7916005 860.9283
+#> [2,] 0.03546483 0.024641045 -0.7901148 831.0459
+#> [3,] 0.03107798 0.647250400  0.0000000 788.2761
+#> [4,] 0.03154734 0.177456254 -0.9999757 852.7246
+#> [5,] 0.03483096 0.008379515 -0.7677882 838.9111
+```
+
+One can also use the automdl procedure within the x13_pickmdl function
+by setting the parameter `automdl.enabled = TRUE`. This will override
+the pickdml procedure.
+
+``` r
+
+
+model_now <- pickmdl3::x13_pickmdl(ts = rti_476, spec = spec_now, automdl.enabled = TRUE)
+
+model_now 
+#> Serie span: All 
+#> 
+#> Model: X-13
+#> Log-transformation: yes 
+#> SARIMA model: (1,0,1) (0,1,1)
+#> 
+#> SARIMA coefficients:
+#>    phi(1)  theta(1) btheta(1) 
+#>   -0.7505   -0.2654   -0.3421 
+#> 
+#> Regression model:
+#>             mon             tue             wed             thu             fri 
+#>       -0.012691        0.012751        0.005173       -0.011958        0.023985 
+#>             sat LS (2020-02-01) AO (2020-03-01) 
+#>        0.001713        0.164992       -0.270125 
+#> 
+#>  Seasonal filter: FILTER_S3X3;  Trend filter: H-13 terms
+#>  M-Statistics: q Good (0.502); q-m2 Good (0.559)
+#>  QS test on SA: Good (1.000);  F-test on SA: Good (0.687)
+#> 
+#> For a more detailed output, use the 'summary()' function.
+```
