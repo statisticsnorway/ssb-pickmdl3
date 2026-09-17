@@ -26,6 +26,9 @@ The function `x13_pickmdl`takes the series and the specification as inputs, and 
 
 ```{r load_data, warnings=FALSE}
 
+library(rjd3toolkit)
+library(rjd3x13)
+
 rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
 #rti_476 <- pickmdl3::pickmdl_data("myseries")
 
