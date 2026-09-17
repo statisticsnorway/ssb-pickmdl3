@@ -1,0 +1,19 @@
+---
+title: "x13_text_frame()"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{multiple_series}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(pickmdl3)
+```
