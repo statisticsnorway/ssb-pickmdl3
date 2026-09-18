@@ -20,3 +20,46 @@ library(pickmdl3)
 #her er det noko som kjeme
 
 ```
+
+
+In accordance with the best practice defined in ESS Guideluines on seasonal adjustment, model identification should be done once a year and the sARIMA model should be kept frozen in line with the chosen refreshment policy. With the pickmdl package, it is easy to implement this best practice in the production process. 
+
+One can then set the parameter `identification_end` or `identification_estimate.to` and the will do the model selection at this date. For the sake of illustration. Let's say that model selection is to be done each January, based on data until December. The difference between the two is only the format of the date. 
+
+
+```{r}
+
+last_year <- stats::end(rti_476)[1] - 1 
+
+x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12))
+x13_pickmdl(rti_476,spec=spec_now,identification_estimate.to = paste0(last_year,"-12-01")) 
+
+```
+
+Wee see that the AIRLINE model is chosen. This is different from the , as the model selection is done only on data until the preceeding december. 
+
+```{r}
+x13_pickmdl(rti_476,spec=spec_now)
+```
+
+
+The specification at the identification time is the reference specification for the following year. Estimation specification is refreshed according to refreshment policy, as defined in x13_refresh(). Default refreshment policy in the pickmdl package is `Outliers`, where the model order is set, but parameters estimated anew. (Obs: only Outliers available pro tempora)
+
+How should Outliers be treated with regards to the reference specification? If the option `identify_outliers` is turned on, outliers indentified until the reference point is kept throughout the year, only outliers after the reference point is identified anew. If the parameter is turned off, the ouliers are identified anew for the whole series. 
+
+Compare: 
+
+
+```{r}
+
+x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12))
+
+x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12),identify_outliers = FALSE)
+
+
+```
+
+
+
+
+
