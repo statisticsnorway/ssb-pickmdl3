@@ -22,26 +22,80 @@ library(pickmdl3)
 ```
 
 
-In accordance with the best practice defined in ESS Guideluines on seasonal adjustment, model identification should be done once a year and the sARIMA model should be kept frozen in line with the chosen refreshment policy. With the pickmdl package, it is easy to implement this best practice in the production process. 
+In accordance with the best practice defined in ESS Guideluines on seasonal adjustment, model identification should be done once a year and the sARIMA model should be kept frozen in line with the chosen refreshment policy throughout the year. With the pickmdl package, it is easy to implement this best practice in a production process. 
 
-One can then set the parameter `identification_end` or `identification_estimate.to` and the will do the model selection at this date. For the sake of illustration. Let's say that model selection is to be done each January, based on data until December. The difference between the two is only the format of the date. 
+A date for model selection can be set by the parameter `identification_end` or `identification_estimate.to`. The `x13_pickmdl` function will then do the model selection based only on data up to and including this date. For the sake of illustration ,let us say that model selection is to be done each January, based on data until the preceding December as often is the case at Statistics Norway. We use the standard specification rsa5c and with outliers turned off. 
 
 
 ```{r}
+rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+
+spec_now <- x13_spec("rsa5c") |>
+  set_outlier(outliers.type= NULL) 
 
 last_year <- stats::end(rti_476)[1] - 1 
 
-x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12))
-x13_pickmdl(rti_476,spec=spec_now,identification_estimate.to = paste0(last_year,"-12-01")) 
+model_now <- x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12),output="all")
+model_now <- x13_pickmdl(rti_476,spec=spec_now,identification_estimate.to = paste0(last_year,"-12-01")) 
+
+ok(model_now)
+
 
 ```
 
-Wee see that the AIRLINE model is chosen. This is different from the , as the model selection is done only on data until the preceeding december. 
+Based on the model identification set at the preceeding December, the second model on the list is chosen by the pickmdl procedure. Compare this to what would have happened if model selection was done with all available data up to July 2026. In this case the model chosen is the fifth  model of order $(2,1,2)(0,1,1)_s$. Model change is thus prevented when we specify identification date for model selection. 
 
 ```{r}
-x13_pickmdl(rti_476,spec=spec_now)
+model_nowb <- x13_pickmdl(rti_476,spec=spec_now)
 ```
 
+The `ok` function now provides additional information. The `$mdl_nr` tells us that the second model on the list is chosen. The `$ok` tells us that this model satisfied the criteria at the identification date, i.e. December 2025. The `ok_final` however, tells whether the selected model still passes the criteria when the additional data is taken into account. That is, whether the model selected based on data until December 2025 still fits the data in July 2026. We see that that is no longer the case, which is an indication that model change should be expected when the model is to be re-identified in January 2027. 
+
+## Outliers 
+
+In the example above, we didn't consider outliers. The default option in `x13_pickmdl` is that outliers are identified by the shortened series in the cases when model selection is set to a past date. The outliers identified by the shortened series are kept throughout the year, and only new ouliers after the identification date are searched for throughout the year. 
+
+
+```{r}
+
+spec_now <- x13_spec("rsa5c") |>
+   set_outlier(outliers.type= c("AO","LS"))
+  
+
+last_year <- stats::end(rti_476)[1] - 1 
+
+rti_476_fix <- rti_476
+rti_476_fix[length(rti_476)-1] <- 10
+
+model_now <- x13_pickmdl(rti_476_fix,spec=spec_now,identification_end = c(last_year,12))
+
+model_now
+
+
+
+
+```
+
+Six of the outliers were identified by the 
+
+```{r}
+model_now$estimation_spec
+```
+It is possible to let the outlier span be the whole series, although model is identified at a past date. Comparing outliers we see that they are somewhat different. 
+
+```{r}
+
+rar <- x13_pickmdl(rti_476_fix,spec=spec_now,identification_end = c(last_year,12),identify_outliers = FALSE)
+
+
+```
+
+
+
+## Refreshment policy 
+
+
+To be more precise: 
 
 The specification at the identification time is the reference specification for the following year. Estimation specification is refreshed according to refreshment policy, as defined in x13_refresh(). Default refreshment policy in the pickmdl package is `Outliers`, where the model order is set, but parameters estimated anew. (Obs: only Outliers available pro tempora)
 
@@ -50,14 +104,7 @@ How should Outliers be treated with regards to the reference specification? If t
 Compare: 
 
 
-```{r}
 
-x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12))
-
-x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12),identify_outliers = FALSE)
-
-
-```
 
 
 

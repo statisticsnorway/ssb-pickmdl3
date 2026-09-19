@@ -15,12 +15,9 @@ knitr::opts_chunk$set(
 ```
 
 
-# Introduction
+In this vignette we explore the basic function `x13_pickmdl`, which is, as its name indicates, a function that runs the `x13` algorithm from `rjd3x13`, but with pickdml as model selection procedure instead of the default automdl procedure.  
 
-The `pickdml3`  package contains functionality for running the X12-ARIMA-SEATS pickdml selection procedure when using the x13 methodology in rjd3. 
-In this vignette we explore the basic function `x13_pickmdl`, which is, as its name indicates, a function that runs the x13() algorithm from rjd3x13, but with pickdml as model selection procedure instead of the default automdl procedure.  
-
-We begin by loading a time series to be seasonally adjusted. The series in question is the Norwegian retail index for NACE 47.6, Retail sale of cultural and recreation goods, between January 2014 and July 2026. We also define a specification, using the default specification 'rsa5c', only allowing level shift and additive outliers, however. 
+We begin by loading a time series to be seasonally adjusted. The series in question is the Norwegian retail index for nace 47.6, \textit{Retail sale of cultural and recreation goods}, between January 2014 and July 2026. We also define a specification, using the default specification 'rsa5c', only allowing level shift and additive outliers, however. 
 
 The function `x13_pickmdl`takes the series and the specification as inputs, and gives the fitted model results as output in a list, just as is the case with the `x13` function. 
 
@@ -30,10 +27,8 @@ library(rjd3toolkit)
 library(rjd3x13)
 
 rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
-#rti_476 <- pickmdl3::pickmdl_data("myseries")
 
 spec_now <- x13_spec("rsa5c") |>
-#  set_transform(fun="Log")|>
   set_outlier(outliers.type=c("AO","LS")) 
 
 model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now)
@@ -43,13 +38,15 @@ model_476
 ```
 
 
-From the output list, we can read that the selected sARIMA model is (2,1,0)(0,1,1). Information about the model choiche can also be retrieved with the function `ok`. 
+From the output in console, we can read that the selected sARIMA model is of order $(2,1,0)(0,1,1)_s$. Information about the model choiche can also be retrieved with the function `ok`. 
 
 
 ```{r ok }
 pickmdl3::ok(model_476)  
 ```
-The first object in this list tells us that the selected model fulfills the criteria. The object mdl_nr tells us that the third model on the list was selected, which of course is the (2,1,0)(0,1,1) model.
+The first object in this list tells us that the selected model fulfills the criteria. The object mdl_nr tells us that the third model on the list was selected, which of course is the $(2,1,0)(0,1,1)_s$ model.
+
+## Additional information
 
 The user can get more information about the pickmdl procedure by setting the parameter `output` to "all". Now the calculated criteria are provided for each model in the output object `crit_tab`. Using this, we can now see that the first two models were rejected because they failed on the second criterium, that is the they failed the test to check wheter residuals are independent. One can now also access all calculated models, for example if one needs to compare results in detail. 
 
@@ -78,6 +75,7 @@ model_now$crit_tab
 
 ```
 
+## Automodel.enabled  
 
 One can also use the automdl procedure within the x13_pickmdl function by setting the parameter `automdl.enabled = TRUE`. This will override the pickdml procedure. 
 
