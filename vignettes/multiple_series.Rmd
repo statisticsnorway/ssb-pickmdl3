@@ -17,3 +17,85 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(pickmdl3)
 ```
+
+
+The pickmdl3 package includes functionality to support an orderly production process when using the seasonal adjustment methods of `rjd3x13`. The function `x13_text_frame` is a wrapper function that seasonally adjusts a multivariate time series object with the `x13_pickmdl`function  based on a data frame with model specification settings. 
+
+The object `rti_mts` contains three time series:
+
+```{r}
+
+rti_mts <- do.call(cbind,pickmdl3::pickmdl_data("norwegian_rti"))
+
+head(rti_mts)
+
+
+```
+We can use the function `make_param_file`to define a data frame with specifications. The first input to this function is the multivariate time series object that is to be adjusted.  Further input are the specification settings that are used to define the specification with which to adjust the series in question. With this we mean all specification settings that are available in `rjd3toolkit`, `rjd3x13` or the parameter settings in `x13_pickmdl`. With the exception of the initial specification setting, the reference to settings in `rjd3tookit`and `rjd3x13` need to be given on the format `function__setting` as illustrated below.
+
+```{r}
+spec_file <- make_paramfile(rti_mts, spec = "rsa3",
+              set_outlier__outliers.type = c("LS","AO"),
+              set_transform__fun = "Log",
+              automdl.enabled = TRUE)
+
+spec_file 
+                
+```
+
+The `make_paramfile` function constructs the same specifications for all series as defined in the input. To adjust for individual series, use the function `edit_constraints` and adjust the individual settings in the shiny application that pops up. 
+
+
+```{r}
+
+#spec_file <- edit_constraints(spec_file)
+
+
+```
+
+
+```{r}
+
+spec_file$set_outlier__outliers.type[2] <- NA
+spec_file$spec[3] <- "\"rsa5c\""
+spec_file$automdl.enabled[1] <- "FALSE"
+
+
+```
+
+Resulting in a frame with individual settings for each series. For example: 
+
+
+```{r}
+spec_file
+
+```
+
+Note that a blank field means that the setting is not used for the series in question. 
+
+To add new specifications to an already existing specification frame, use the function `add_constraint`: 
+
+
+Now, to adjust the multiple time series object based on the data frame, on can use the function `x13_text_frame` Output of the function is a list of sa output objects for each time series in the mts. 
+
+
+```{r rar}
+
+sa_mult <- pickmdl3::x13_text_frame(text_frame= spec_file,ts = "rti_mts")
+
+
+```
+
+
+To evaluate indivudual series: 
+
+```{r}
+
+sa_mult$rti_472
+sa_mult$rti_476
+sa_mult$rti_4751
+
+```
+
+
+
