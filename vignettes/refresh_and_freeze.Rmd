@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(pickmdl3)
+
 
 #her er det noko som kjeme
 
@@ -27,7 +27,10 @@ In accordance with the best practice defined in ESS Guideluines on seasonal adju
 A date for model selection can be set by the parameter `identification_end` or `identification_estimate.to`. The `x13_pickmdl` function will then do the model selection based only on data up to and including this date. For the sake of illustration ,let us say that model selection is to be done each January, based on data until the preceding December as often is the case at Statistics Norway. We use the standard specification rsa5c and with outliers turned off. 
 
 
-```{r}
+```{r, message=FALSE, warning = FALSE }
+
+library(pickmdl3)
+
 rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
 
 spec_now <- x13_spec("rsa5c") |>
@@ -36,10 +39,12 @@ spec_now <- x13_spec("rsa5c") |>
 last_year <- stats::end(rti_476)[1] - 1 
 
 model_now <- x13_pickmdl(rti_476,spec=spec_now,identification_end = c(last_year,12),output="all")
+
+# or equivalently 
+
 model_now <- x13_pickmdl(rti_476,spec=spec_now,identification_estimate.to = paste0(last_year,"-12-01")) 
 
 ok(model_now)
-
 
 ```
 
