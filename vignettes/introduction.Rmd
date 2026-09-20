@@ -19,7 +19,7 @@ library(pickmdl3)
 ```
 
 
-Pre-adjustment and forecasting with a sARIMA model is of central importance to the x13-metholdogy, as calendar effects and effects of outliers need to be taken into account before seasonal components and trend can be calculated with filter based methods. In Jdemetra and rjd3, the automatic procedure for selecting an sARIMA model is the automodel procedure. The pickmdl approach differs from the automodel procedure by restricting the model choiche to an ordered list of five parsimonious models. The pickmdl selection procedure selects the first model on this list that fulfills three pre-defined criteria. 
+Pre-adjustment and forecasting with a sARIMA model is of central importance to the x13-metholdogy, as calendar effects and effects of outliers need to be taken into account before seasonal components and trend can be calculated with filter based methods of x13. In Jdemetra and rjd3, the automatic procedure for selecting an sARIMA model is the automodel procedure. The pickmdl approach differs from the automodel procedure by restricting the model choiche to an ordered list of five parsimonious models. The pickmdl selection procedure selects the first model on this list that fulfills three pre-defined criteria. 
 
 The sARIMA models on the pickmdl list are: 
 $$
