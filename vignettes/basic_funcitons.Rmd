@@ -48,7 +48,7 @@ The first object in this list tells us that the selected model fulfills the crit
 
 ## Additional information
 
-The user can get more information about the pickmdl procedure by setting the parameter `output` to "all". Now the calculated criteria are provided for each model in the output object `crit_tab`. Using this, we can now see that the first two models were rejected because they failed on the second criterium, that is the they failed the test to check wheter residuals are independent. One can now also access all calculated models, for example if one needs to compare results in detail. 
+The user can get more information about the pickmdl procedure by setting the parameter `output` to "all". Now the calculated criteria are provided for each model in the output object `crit_tab`. Using this, we can now see that the first two models were rejected because they failed on the second criterium, that is the they failed the test to check whether residuals are independent. One can now also access all calculated models, for example if one needs to compare results in detail. 
 
 
 ```{r}
