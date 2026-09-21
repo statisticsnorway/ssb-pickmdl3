@@ -37,6 +37,7 @@
 <li><a class="dropdown-item" href="../articles/basic_funcitons.html">Basic functionality</a></li>
     <li><a class="dropdown-item" href="../articles/introduction.html">What is pickmodel?</a></li>
     <li><a class="dropdown-item" href="../articles/multiple_series.html">x13_text_frame()</a></li>
+    <li><a class="dropdown-item" href="../articles/pickmdl_method.html">pickmdl_method</a></li>
     <li><a class="dropdown-item" href="../articles/refresh_and_freeze.html">refresh and freeze</a></li>
   </ul>
 </li>
@@ -67,22 +68,212 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://statisticsnorway.github.io/ssb-pickmdl3/">pickmdl3</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: rjd3toolkit</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'rjd3toolkit'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     aggregate, mad</span></span>
-<span><span class="co">#&gt; Loading required package: rjd3x13</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'rjd3x13'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:grDevices':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     x11</span></span>
+<code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co">#her er det noko som kjeme</span></span></code></pre></div>
-  </main>
+<p>In accordance with the best practice defined in ESS Guideluines on
+seasonal adjustment, model identification should be done once a year and
+the sARIMA model order should be kept in line with the chosen
+refreshment policy throughout the year. With the pickmdl package, it is
+easy to implement this best practice in a production process. A date for
+model selection can be set in the <code>x13_pickdml</code>function by
+the options <code>identification_end</code> or
+<code>identification_estimate.to</code>. The <code>x13_pickmdl</code>
+function will then do the model selection based on data only up to and
+including this date.</p>
+<p>For the sake of illustration, let us say that model selection is to
+be done each January, based on data until the preceding December, as
+often is the case at Statistics Norway. We use the norwegian rti in nace
+47.6 and the standard specification rsa5c, with outliers turned off to
+illustrate the option.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://statisticsnorway.github.io/ssb-pickmdl3/">pickmdl3</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rti_476</span> <span class="op">&lt;-</span> <span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"norwegian_rti"</span><span class="op">)</span><span class="op">$</span><span class="va">rti_476</span></span>
+<span></span>
+<span><span class="va">spec_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa5c"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span>outliers.type<span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">last_year</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/start.html" class="external-link">end</a></span><span class="op">(</span><span class="va">rti_476</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span> </span>
+<span></span>
+<span><span class="va">model_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476</span>,spec<span class="op">=</span><span class="va">spec_now</span>,identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">last_year</span>,<span class="fl">12</span><span class="op">)</span>,output<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or equivalently </span></span>
+<span></span>
+<span><span class="va">model_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476</span>,spec<span class="op">=</span><span class="va">spec_now</span>,identification_estimate.to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">last_year</span>,<span class="st">"-12-01"</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="../reference/ok.html">ok</a></span><span class="op">(</span><span class="va">model_now</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $ok</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ok_final</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mdl_nr</span></span>
+<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
+<p>Based on the model identification set at the preceding December, the
+second model on the pickmdl list is chosen by the pickmdl procedure.
+Compare this to what would have happened if model selection was done
+with all available data up toJuly 2026. In this case the chosen model is
+the fifth model, of order
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(2,1,2)(0,1,1)_s</annotation></semantics></math>.
+Model change is thus prevented when we specify identification date for
+model selection.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_nowb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476</span>,spec<span class="op">=</span><span class="va">spec_now</span><span class="op">)</span></span></code></pre></div>
+<p>Notice that there now is a difference between <code>$ok</code> and
+<code>ok_final</code> in the output above. Now <code>$ok</code> tells us
+that the selected model satisfied the pickmdl criteria at the
+identification date, i.e. December 2025. The <code>ok_final</code> gives
+information about whether the selected model still passes the criteria
+when the additional data is taken into account. That is, whether the
+model selected based on data until December 2025 still fits the data in
+July 2026. We see that that is no longer the case, which is an
+indication that model change should be expected when the model is to be
+re-identified in January 2027.</p>
+<div class="section level2">
+<h2 id="outliers">Outliers<a class="anchor" aria-label="anchor" href="#outliers"></a>
+</h2>
+<p>In the example above, we didn’t consider outliers. The default option
+in <code>x13_pickmdl</code> is that outliers are identified by the
+shortened series in the cases when model selection is set to a past
+date. The outliers identified by the shortened series are kept
+throughout the year, and only new ouliers after the identification date
+are searched for throughout the year.</p>
+<p>In the example below, we manipulate the series to identify an outlier
+in June 2026, that is after model selection is done based on data up to
+and including December 2025.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">spec_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa5c"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>   <span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span>outliers.type<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AO"</span>,<span class="st">"LS"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span></span>
+<span><span class="va">last_year</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/start.html" class="external-link">end</a></span><span class="op">(</span><span class="va">rti_476</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span> </span>
+<span></span>
+<span><span class="va">rti_476_fix</span> <span class="op">&lt;-</span> <span class="va">rti_476</span></span>
+<span><span class="va">rti_476_fix</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">rti_476</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span></span>
+<span><span class="va">model_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476_fix</span>,spec<span class="op">=</span><span class="va">spec_now</span>,identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">last_year</span>,<span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model_now</span></span>
+<span><span class="co">#&gt; Serie span: All </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: X-13</span></span>
+<span><span class="co">#&gt; Log-transformation: yes </span></span>
+<span><span class="co">#&gt; SARIMA model: (0,1,1) (0,1,1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; SARIMA coefficients:</span></span>
+<span><span class="co">#&gt;  theta(1) btheta(1) </span></span>
+<span><span class="co">#&gt;   -0.6243   -0.4483 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regression model:</span></span>
+<span><span class="co">#&gt;             mon             tue             wed             thu             fri </span></span>
+<span><span class="co">#&gt;      -0.0124209       0.0047325       0.0119882      -0.0072352       0.0179482 </span></span>
+<span><span class="co">#&gt;             sat AO (2020-01-01) AO (2020-03-01) LS (2020-05-01) LS (2020-08-01) </span></span>
+<span><span class="co">#&gt;       0.0004963      -0.1773416      -0.2213182       0.2261907      -0.1732089 </span></span>
+<span><span class="co">#&gt; LS (2021-05-01) LS (2021-08-01) AO (2026-06-01) </span></span>
+<span><span class="co">#&gt;       0.1943734      -0.1435998      -2.4332986 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Seasonal filter: FILTER_S3X5;  Trend filter: H-13 terms</span></span>
+<span><span class="co">#&gt;  M-Statistics: q Good (0.768); q-m2 Good (0.492)</span></span>
+<span><span class="co">#&gt;  QS test on SA: Good (0.909);  F-test on SA: Good (0.499)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; For a more detailed output, use the 'summary()' function.</span></span></code></pre></div>
+<p>We see that seven outliers are identified in total. Six of these have
+a date before the model selection date in December 2025 and was
+therefore identfied in the model selection step. If we take a closer
+look at the estimation specification for the model in June 2026, we see
+that the six outliers have been defined as pre-specfied outliers and
+that the detection span for new outliers is only from January 2026:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_now</span><span class="op">$</span><span class="va">estimation_spec</span></span>
+<span><span class="co">#&gt; Specification</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Series</span></span>
+<span><span class="co">#&gt; Serie span: All </span></span>
+<span><span class="co">#&gt; Preliminary Check: Yes</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Estimate</span></span>
+<span><span class="co">#&gt; Model span: All </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Tolerance: 1e-07</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Transformation</span></span>
+<span><span class="co">#&gt; Function: LOG</span></span>
+<span><span class="co">#&gt; AIC difference: -2</span></span>
+<span><span class="co">#&gt; Adjust: LEAPYEAR</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regression</span></span>
+<span><span class="co">#&gt; Calendar regressor: TradingDays</span></span>
+<span><span class="co">#&gt; with Leap Year: No</span></span>
+<span><span class="co">#&gt; AutoAdjust: FALSE</span></span>
+<span><span class="co">#&gt; Test: NO</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Easter: No</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Pre-specified outliers: 6</span></span>
+<span><span class="co">#&gt;  - AO (2020-01-01), coefficient: -0.177667511131776 (INITIAL)</span></span>
+<span><span class="co">#&gt;  - AO (2020-03-01), coefficient: -0.220168845662991 (INITIAL)</span></span>
+<span><span class="co">#&gt;  - LS (2020-05-01), coefficient: 0.224423169320979 (INITIAL)</span></span>
+<span><span class="co">#&gt;  - LS (2020-08-01), coefficient: -0.174401233307672 (INITIAL)</span></span>
+<span><span class="co">#&gt;  - LS (2021-05-01), coefficient: 0.195195660086895 (INITIAL)</span></span>
+<span><span class="co">#&gt;  - LS (2021-08-01), coefficient: -0.143382952057627 (INITIAL)</span></span>
+<span><span class="co">#&gt; Ramps: No</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Outliers</span></span>
+<span><span class="co">#&gt; Detection span: From 2026-01-01 </span></span>
+<span><span class="co">#&gt; Outliers type: </span></span>
+<span><span class="co">#&gt;  - AO, critical value : 0 (Auto)</span></span>
+<span><span class="co">#&gt;  - LS, critical value : 0 (Auto)</span></span>
+<span><span class="co">#&gt; TC rate: 0.7 (Auto)</span></span>
+<span><span class="co">#&gt; Method: ADDONE (Auto)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ARIMA</span></span>
+<span><span class="co">#&gt; SARIMA model: (0,1,1) (0,1,1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; SARIMA coefficients:</span></span>
+<span><span class="co">#&gt;  theta(1) btheta(1) </span></span>
+<span><span class="co">#&gt;         0         0 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Specification X11</span></span>
+<span><span class="co">#&gt; Seasonal component: Yes</span></span>
+<span><span class="co">#&gt; Length of the Henderson filter: 0</span></span>
+<span><span class="co">#&gt; Seasonal filter: FILTER_MSR</span></span>
+<span><span class="co">#&gt; Boundaries used for extreme values correction : </span></span>
+<span><span class="co">#&gt;   lower_sigma:  1.5 </span></span>
+<span><span class="co">#&gt;   upper_sigma:  2.5</span></span>
+<span><span class="co">#&gt; Nb of forecasts: -1</span></span>
+<span><span class="co">#&gt; Nb of backcasts: 0</span></span>
+<span><span class="co">#&gt; Calendar sigma: NONE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Benchmarking</span></span>
+<span><span class="co">#&gt; Is enabled: No</span></span></code></pre></div>
+<p>It is possible to let the outlier span be the whole series, even
+though the model order is identified at a specific date. This is done by
+setting the option <code>identify_outliers = FALSE</code>. Comparing
+outliers the outliers with the model above, we see that they are
+somewhat different, as they now all were identified based on the whole
+available time series.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">rar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476_fix</span>,spec<span class="op">=</span><span class="va">spec_now</span>,identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">last_year</span>,<span class="fl">12</span><span class="op">)</span>,</span>
+<span>                   identify_outliers <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="refreshment-policy">Refreshment policy<a class="anchor" aria-label="anchor" href="#refreshment-policy"></a>
+</h2>
+<p>The specification at the identification time is the reference
+specification for the following year. Estimation specification is
+refreshed according to refreshment policy, as defined in x13_refresh().
+Default refreshment policy in the pickmdl package is
+<code>Outliers</code>, where the model order is set, but parameters
+estimated anew. (Obs: only Outliers available pro tempora) To be
+extended.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
