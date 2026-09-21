@@ -1,5 +1,5 @@
 ---
-title: "refresh and freeze"
+title: "Partial concurrent adjustment"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{refresh_and_freeze}

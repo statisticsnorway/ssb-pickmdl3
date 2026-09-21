@@ -1,5 +1,5 @@
 ---
-title: "What is pickmodel?"
+title: "What is pickmdl?"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
