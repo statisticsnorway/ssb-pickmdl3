@@ -14,13 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-
-
-#her er det noko som kjeme
-
-```
-
 
 In accordance with the best practice defined in ESS Guideluines on seasonal adjustment, model identification should be done once a year and the sARIMA model order should be kept in line with the chosen refreshment policy throughout the year. With the pickmdl package, it is easy to implement this best practice in a production process. A date for model selection can be set in the `x13_pickdml`function by the options `identification_end` or `identification_estimate.to`. The `x13_pickmdl` function will then do the model selection based on data only up to and including this date. 
 
