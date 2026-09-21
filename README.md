@@ -1,7 +1,7 @@
 # R package pickmdl3  <img src="man/figures/logo.png" align="right" height="150" /> 
 
 
-| [not yet on CRAN](https://cran.r-project.org/) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-pickmdl3/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
+| [Not yet on CRAN](https://cran.r-project.org/) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-pickmdl3/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
 |----------------------|---|----------------------|---|----------------------|
 
 
