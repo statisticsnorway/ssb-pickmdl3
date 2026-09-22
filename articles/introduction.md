@@ -1,4 +1,4 @@
-# What is pickmodel?
+# What is pickmdl?
 
 Pre-adjustment and forecasting with a sARIMA model is of central
 importance to the x13-metholdogy, as calendar effects and effects of

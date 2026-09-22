@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>refresh and freeze • pickmdl3</title>
+<title>Partial concurrent adjustment • pickmdl3</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="refresh and freeze">
+<meta property="og:title" content="Partial concurrent adjustment">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,10 +35,10 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/basic_funcitons.html">Basic functionality</a></li>
-    <li><a class="dropdown-item" href="../articles/introduction.html">What is pickmodel?</a></li>
-    <li><a class="dropdown-item" href="../articles/multiple_series.html">x13_text_frame()</a></li>
-    <li><a class="dropdown-item" href="../articles/pickmdl_method.html">pickmdl_method</a></li>
-    <li><a class="dropdown-item" href="../articles/refresh_and_freeze.html">refresh and freeze</a></li>
+    <li><a class="dropdown-item" href="../articles/introduction.html">What is pickmdl?</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple_series.html">Multivariate time series</a></li>
+    <li><a class="dropdown-item" href="../articles/pickmdl_method.html">Alternatives when no model is acceptable</a></li>
+    <li><a class="dropdown-item" href="../articles/refresh_and_freeze.html">Partial concurrent adjustment</a></li>
   </ul>
 </li>
       </ul>
@@ -58,7 +58,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>refresh and freeze</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Partial concurrent adjustment</h1>
             
       
 
@@ -67,10 +67,6 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span></span>
-<span><span class="co">#her er det noko som kjeme</span></span></code></pre></div>
 <p>In accordance with the best practice defined in ESS Guideluines on
 seasonal adjustment, model identification should be done once a year and
 the sARIMA model order should be kept in line with the chosen
@@ -86,7 +82,7 @@ be done each January, based on data until the preceding December, as
 often is the case at Statistics Norway. We use the norwegian rti in nace
 47.6 and the standard specification rsa5c, with outliers turned off to
 illustrate the option.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://statisticsnorway.github.io/ssb-pickmdl3/">pickmdl3</a></span><span class="op">)</span></span>
 <span></span>
@@ -120,7 +116,7 @@ the fifth model, of order
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(2,1,2)(0,1,1)_s</annotation></semantics></math>.
 Model change is thus prevented when we specify identification date for
 model selection.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_nowb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476</span>,spec<span class="op">=</span><span class="va">spec_now</span><span class="op">)</span></span></code></pre></div>
 <p>Notice that there now is a difference between <code>$ok</code> and
 <code>ok_final</code> in the output above. Now <code>$ok</code> tells us
@@ -144,7 +140,7 @@ are searched for throughout the year.</p>
 <p>In the example below, we manipulate the series to identify an outlier
 in June 2026, that is after model selection is done based on data up to
 and including December 2025.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">spec_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa5c"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>   <span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span>outliers.type<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AO"</span>,<span class="st">"LS"</span><span class="op">)</span><span class="op">)</span></span>
@@ -187,7 +183,7 @@ therefore identfied in the model selection step. If we take a closer
 look at the estimation specification for the model in June 2026, we see
 that the six outliers have been defined as pre-specfied outliers and
 that the detection span for new outliers is only from January 2026:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_now</span><span class="op">$</span><span class="va">estimation_spec</span></span>
 <span><span class="co">#&gt; Specification</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -256,7 +252,7 @@ setting the option <code>identify_outliers = FALSE</code>. Comparing
 outliers the outliers with the model above, we see that they are
 somewhat different, as they now all were identified based on the whole
 available time series.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">rar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_476_fix</span>,spec<span class="op">=</span><span class="va">spec_now</span>,identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">last_year</span>,<span class="fl">12</span><span class="op">)</span>,</span>
 <span>                   identify_outliers <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>

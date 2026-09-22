@@ -321,6 +321,8 @@ summary(a5$result$preprocessing)
 allvar <- pickmdl_data("allvar")
 allvar <- list(arb_dag=allvar[,1],skuddar=allvar[,2])
 my_context <- modelling_context(variables=allvar)
+#> Replaced 1 duplicated or missing name(s).
+#> Replaced 1 duplicated or missing name(s).
 spec_b <- rjd3x13::x13_spec(name= "rsa3")
 spec_b <- rjd3toolkit::set_transform(spec_b,fun="Log")
 spec_b <- rjd3toolkit::set_tradingdays(spec_b,
@@ -335,91 +337,15 @@ spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("LS",20),
                                     "2021-04-01", "2021-05-01", "2021-06-01",
                                     "2021-07-01", "2021-08-01"))
 b <- x13_pickmdl(myseries,spec_b, identification_end = c(2020, 2),context=my_context)
+#> Error: Expecting a single value: [extent=0].
 summary(b$result$preprocessing)
-#> Log-transformation: yes 
-#> SARIMA model: (0,1,1) (0,1,1)
-#> 
-#> Coefficients
-#>           Estimate Std. Error T-stat Pr(>|t|)    
-#> theta(1)  -0.82140    0.04367 -18.81   <2e-16 ***
-#> btheta(1) -0.85625    0.06857 -12.49   <2e-16 ***
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> 
-#> Regression model:
-#>                   Estimate Std. Error T-stat Pr(>|t|)    
-#> r.arb_dag        0.0109384  0.0008939 12.237   <2e-16 ***
-#> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  
-#> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** 
-#> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    
-#> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    
-#> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  
-#> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    
-#> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    
-#> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    
-#> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  
-#> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    
-#> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    
-#> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    
-#> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    
-#> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    
-#> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    
-#> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    
-#> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    
-#> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    
-#> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    
-#> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    
-#> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25
-#> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969
-#> Standard error of the regression (ML estimate): 0.04928409 
-#> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705
+#> Error: object 'b' not found
 
 # automdl instead
 b1 <- x13_automdl(myseries, spec_b, identification_end = c(2020, 2),context=my_context)
+#> Error: Expecting a single value: [extent=0].
 summary(b1$result$preprocessing)
-#> Log-transformation: yes 
-#> SARIMA model: (0,1,1) (0,1,1)
-#> 
-#> Coefficients
-#>           Estimate Std. Error T-stat Pr(>|t|)    
-#> theta(1)  -0.82140    0.04367 -18.81   <2e-16 ***
-#> btheta(1) -0.85625    0.06857 -12.49   <2e-16 ***
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> 
-#> Regression model:
-#>                   Estimate Std. Error T-stat Pr(>|t|)    
-#> r.arb_dag        0.0109384  0.0008939 12.237   <2e-16 ***
-#> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  
-#> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** 
-#> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    
-#> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    
-#> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  
-#> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    
-#> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    
-#> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    
-#> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  
-#> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    
-#> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    
-#> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    
-#> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    
-#> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    
-#> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    
-#> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    
-#> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    
-#> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    
-#> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    
-#> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    
-#> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25
-#> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969
-#> Standard error of the regression (ML estimate): 0.04928409 
-#> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705
+#> Error: object 'b1' not found
 
 # effect of identify_t_filter and identify_s_filter
 set.seed(1)
@@ -518,85 +444,16 @@ d4 <- x13_pickmdl(myseries, spec_d, pickmdl_method = "first_tryautomdl", verbose
 # As b, with output = "all"
 k <- x13_pickmdl(myseries, spec_b, identification_end = c(2014, 2), context = my_context,
                  output = "all", fastfirst = FALSE) # With TRUE only one model in this case
+#> Error: Expecting a single value: [extent=0].
 summary(k$sa$result$preprocessing)  # As summary(b$result$preprocessing)
-#> Log-transformation: yes 
-#> SARIMA model: (0,1,1) (0,1,1)
-#> 
-#> Coefficients
-#>           Estimate Std. Error T-stat Pr(>|t|)    
-#> theta(1)  -0.82140    0.04367 -18.81   <2e-16 ***
-#> btheta(1) -0.85625    0.06857 -12.49   <2e-16 ***
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> 
-#> Regression model:
-#>                   Estimate Std. Error T-stat Pr(>|t|)    
-#> r.arb_dag        0.0109384  0.0008939 12.237   <2e-16 ***
-#> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  
-#> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** 
-#> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    
-#> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    
-#> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  
-#> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    
-#> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    
-#> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    
-#> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  
-#> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    
-#> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    
-#> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    
-#> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    
-#> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    
-#> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    
-#> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    
-#> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    
-#> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    
-#> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    
-#> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    
-#> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25
-#> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969
-#> Standard error of the regression (ML estimate): 0.04928409 
-#> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705
+#> Error: object 'k' not found
 
 k$mdl_nr            # index of selected model used to identify parameters
-#> [1] 1
+#> Error: object 'k' not found
 k$sa_mult[[k$mdl_nr]] # model to identify
-#> Serie span: All 
-#> 
-#> Model: X-13
-#> Log-transformation: yes 
-#> SARIMA model: (0,1,1) (0,1,1)
-#> 
-#> SARIMA coefficients:
-#>  theta(1) btheta(1) 
-#>   -0.7411   -0.9998 
-#> 
-#> Regression model:
-#>       r.arb_dag       r.skuddar LS (2009-01-01) LS (2016-01-01) LS (2020-03-01) 
-#>         0.01097         0.05701        -0.08219         0.00000         0.00000 
-#> LS (2020-04-01) LS (2020-05-01) LS (2020-06-01) LS (2020-07-01) LS (2020-08-01) 
-#>         0.00000         0.00000         0.00000         0.00000         0.00000 
-#> LS (2020-09-01) LS (2020-10-01) LS (2020-11-01) LS (2020-12-01) LS (2021-01-01) 
-#>         0.00000         0.00000         0.00000         0.00000         0.00000 
-#> LS (2021-02-01) LS (2021-03-01) LS (2021-04-01) LS (2021-05-01) LS (2021-06-01) 
-#>         0.00000         0.00000         0.00000         0.00000         0.00000 
-#> LS (2021-07-01) LS (2021-08-01) 
-#>         0.00000         0.00000 
-#> 
-#>  Seasonal filter: FILTER_S3X9;  Trend filter: H-23 terms
-#>  M-Statistics: q Good (0.675); q-m2 Good (0.728)
-#>  QS test on SA: Good (1.000);  F-test on SA: Good (0.772)
-#> 
-#> For a more detailed output, use the 'summary()' function.
+#> Error: object 'k' not found
 k$crit_tab          # Table of criteria
-#>           crit1     crit2      crit3    m_aic
-#> [1,] 0.04606964 0.2276114 -0.7410599 587.0624
-#> [2,] 0.04408752 0.2001792 -0.7808637 587.6074
-#> [3,] 0.04476747 0.5715118  0.0000000 585.6321
-#> [4,] 0.04799657 0.1376824 -0.9814978 593.2904
-#> [5,] 0.04284097 0.7464168 -0.4903478 585.3944
+#> Error: object 'k' not found
 
 
 # Effect of identify_outliers (TRUE is default)

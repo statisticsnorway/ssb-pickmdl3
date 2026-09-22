@@ -21,10 +21,10 @@ The ARIMA model, outliers and filters can be identified at a certain date and th
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/basic_funcitons.html">Basic functionality</a></li>
-    <li><a class="dropdown-item" href="../articles/introduction.html">What is pickmodel?</a></li>
-    <li><a class="dropdown-item" href="../articles/multiple_series.html">x13_text_frame()</a></li>
-    <li><a class="dropdown-item" href="../articles/pickmdl_method.html">pickmdl_method</a></li>
-    <li><a class="dropdown-item" href="../articles/refresh_and_freeze.html">refresh and freeze</a></li>
+    <li><a class="dropdown-item" href="../articles/introduction.html">What is pickmdl?</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple_series.html">Multivariate time series</a></li>
+    <li><a class="dropdown-item" href="../articles/pickmdl_method.html">Alternatives when no model is acceptable</a></li>
+    <li><a class="dropdown-item" href="../articles/refresh_and_freeze.html">Partial concurrent adjustment</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -326,6 +326,8 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span><span class="va">allvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"allvar"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">allvar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>arb_dag<span class="op">=</span><span class="va">allvar</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>,skuddar<span class="op">=</span><span class="va">allvar</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">my_context</span> <span class="op">&lt;-</span> <span class="fu">modelling_context</span><span class="op">(</span>variables<span class="op">=</span><span class="va">allvar</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Replaced 1 duplicated or missing name(s).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Replaced 1 duplicated or missing name(s).</span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3x13</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span>name<span class="op">=</span> <span class="st">"rsa3"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_transform.html" class="external-link">set_transform</a></span><span class="op">(</span><span class="va">spec_b</span>,fun<span class="op">=</span><span class="st">"Log"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">spec_b</span> <span class="op">&lt;-</span> <span class="fu">rjd3toolkit</span><span class="fu">::</span><span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_tradingdays.html" class="external-link">set_tradingdays</a></span><span class="op">(</span><span class="va">spec_b</span>,</span></span>
@@ -340,91 +342,15 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span>                                    <span class="st">"2021-04-01"</span>, <span class="st">"2021-05-01"</span>, <span class="st">"2021-06-01"</span>,</span></span>
 <span class="r-in"><span>                                    <span class="st">"2021-07-01"</span>, <span class="st">"2021-08-01"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>,<span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">2</span><span class="op">)</span>,context<span class="op">=</span><span class="va">my_context</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Expecting a single value: [extent=0].</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">b</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'b' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># automdl instead</span></span></span>
 <span class="r-in"><span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu">x13_automdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">2</span><span class="op">)</span>,context<span class="op">=</span><span class="va">my_context</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Expecting a single value: [extent=0].</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">b1</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'b1' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># effect of identify_t_filter and identify_s_filter</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
@@ -523,85 +449,16 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span><span class="co"># As b, with output = "all"</span></span></span>
 <span class="r-in"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu">x13_pickmdl</span><span class="op">(</span><span class="va">myseries</span>, <span class="va">spec_b</span>, identification_end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2014</span>, <span class="fl">2</span><span class="op">)</span>, context <span class="op">=</span> <span class="va">my_context</span>,</span></span>
 <span class="r-in"><span>                 output <span class="op">=</span> <span class="st">"all"</span>, fastfirst <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># With TRUE only one model in this case</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Expecting a single value: [extent=0].</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">k</span><span class="op">$</span><span class="va">sa</span><span class="op">$</span><span class="va">result</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">)</span>  <span class="co"># As summary(b$result$preprocessing)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> theta(1)  -0.82140    0.04367 -18.81   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.85625    0.06857 -12.49   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.arb_dag        0.0109384  0.0008939 12.237   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r.skuddar        0.0550904  0.0275650  1.999   0.0473 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2009-01-01) -0.0903091  0.0299686 -3.013   0.0030 ** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2016-01-01) -0.0398352  0.0300034 -1.328   0.1861    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-03-01) -0.0045544  0.0532111 -0.086   0.9319    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) -0.1263244  0.0686000 -1.841   0.0674 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-05-01)  0.0672858  0.0683746  0.984   0.3265    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-06-01) -0.0132324  0.0684061 -0.193   0.8469    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-07-01)  0.1088670  0.0684040  1.592   0.1134    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-08-01) -0.1185788  0.0685184 -1.731   0.0854 .  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01)  0.0434945  0.0679224  0.640   0.5228    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-10-01) -0.0217233  0.0682748 -0.318   0.7508    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-11-01)  0.0273831  0.0683750  0.400   0.6893    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-12-01)  0.0317430  0.0686204  0.463   0.6443    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-01-01) -0.0716395  0.0690694 -1.037   0.3012    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) -0.0044989  0.0690584 -0.065   0.9481    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-03-01)  0.0098894  0.0693131  0.143   0.8867    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-04-01)  0.0248501  0.0691176  0.360   0.7197    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-05-01) -0.0517386  0.0693224 -0.746   0.4565    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-06-01) -0.0353851  0.0695798 -0.509   0.6118    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) -0.0175290  0.0692027 -0.253   0.8004    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-08-01)  0.0569751  0.0602051  0.946   0.3454    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 290.6109, Adjusted loglikelihood: -564.8969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.04928409 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1179.794, AICc: 1187.819, BIC: 1260.705</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">mdl_nr</span>            <span class="co"># index of selected model used to identify parameters</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">sa_mult</span><span class="op">[[</span><span class="va">k</span><span class="op">$</span><span class="va">mdl_nr</span><span class="op">]</span><span class="op">]</span> <span class="co"># model to identify</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (0,1,1) (0,1,1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  theta(1) btheta(1) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   -0.7411   -0.9998 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       r.arb_dag       r.skuddar LS (2009-01-01) LS (2016-01-01) LS (2020-03-01) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0.01097         0.05701        -0.08219         0.00000         0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-04-01) LS (2020-05-01) LS (2020-06-01) LS (2020-07-01) LS (2020-08-01) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2020-09-01) LS (2020-10-01) LS (2020-11-01) LS (2020-12-01) LS (2021-01-01) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-02-01) LS (2021-03-01) LS (2021-04-01) LS (2021-05-01) LS (2021-06-01) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000         0.00000         0.00000         0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> LS (2021-07-01) LS (2021-08-01) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0.00000         0.00000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X9;  Trend filter: H-23 terms</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.675); q-m2 Good (0.728)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: Good (1.000);  F-test on SA: Good (0.772)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
 <span class="r-in"><span><span class="va">k</span><span class="op">$</span><span class="va">crit_tab</span>          <span class="co"># Table of criteria</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           crit1     crit2      crit3    m_aic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.04606964 0.2276114 -0.7410599 587.0624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.04408752 0.2001792 -0.7808637 587.6074</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.04476747 0.5715118  0.0000000 585.6321</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.04799657 0.1376824 -0.9814978 593.2904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.04284097 0.7464168 -0.4903478 585.3944</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'k' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Effect of identify_outliers (TRUE is default)</span></span></span>

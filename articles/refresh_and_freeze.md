@@ -1,11 +1,4 @@
-# refresh and freeze
-
-``` r
-
-
-
-#her er det noko som kjeme
-```
+# Partial concurrent adjustment
 
 In accordance with the best practice defined in ESS Guideluines on
 seasonal adjustment, model identification should be done once a year and

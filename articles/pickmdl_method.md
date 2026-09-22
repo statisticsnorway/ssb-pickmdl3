@@ -1,4 +1,4 @@
-# pickmdl_method
+# Alternatives when no model is acceptable
 
 It may be happen that none of the five models on the pickmdl list
 fulfills the three predefined criteria. In such cases, the default
