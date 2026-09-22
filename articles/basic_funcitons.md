@@ -1,21 +1,20 @@
 # Basic functionality
 
-In this vignette we explore the basic function `x13_pickmdl` function of
-the pickmdl3 pacakge. As its name indicates, this function is a wrapper
-function that runs the `x13` algorithm from the `rjd3x13` package, but
-with pickdml rather than automodel as the default model selection
-procedure.
+In this vignette we explore the basic function `x13_pickmdl`. As its
+name indicates, this function is a wrapper function that runs the `x13`
+function, but with pickdml rather than automodel as the default model
+selection procedure.
 
 We first load a time series to be seasonally adjusted. The series in
 question is the Norwegian retail index for nace 47.6, , between January
 2014 and July 2026. We define a specification to be used in the example,
 namely the default specification ‘rsa5c’, where we turn off transtive
-outliers, as this option is rarerly used at Statistics Norway.
+outliers.
 
 Just as in the `x13` function, `x13_pickmdl` takes the time series and
 the specification as inputs. Output is a list with fitted model results,
 where the most important information is shown in the console. We see
-that the model of order $`(2,1,0)(0,1,1)_s`$ has been selected.
+that the model of order $`(2,1,0)(0,1,1)_s`$ is selected.
 
 ``` r
 
@@ -62,14 +61,10 @@ function `ok`, which gives the user a list with three objects. The first
 object `$ok` tells the user whether the selected model fulfills the
 three pickmdl criteria at the moment of model selection. The second
 object `ok_final` says wheter the selected model fulfills the three
-pickmdl criteria at the end of the time series. Not that there is a
-difference between the `ok`and `ok_final`only if model selection is done
-based on a shortened series (See the vignette on refreshment policies).
-The third object `mdl_nr` says which model on the pickmdl list that was
-selected. We see that the third model was selected, which of course is
-the model of order $`(2,1,0)(0,1,1)_s`$ and this model fulfills the
-selection criteria. It follows that the first and second models on the
-list were rejected because they did not pass the selection criteria.
+pickmdl criteria at the end of the time series. The third object
+`mdl_nr` says which model on the pickmdl list that was selected. We see
+that the third model was selected, which of course is the model of order
+$`(2,1,0)(0,1,1)_s`$.
 
 ``` r
 
@@ -84,10 +79,10 @@ pickmdl3::ok(model_476)
 #> [1] 3
 ```
 
-The calculated pickmodel criteria are available if the option `output`
-is set to “all”. Now we can see that the first two models were rejected
-because they didn’t pass the second criterium, which is indepedent
-residuals.
+The calculated pickmodel criteria are included in the output if the
+option `output` is set to “all”. Now we can see that the first two
+models were rejected because they didn’t pass the second criterium,
+which is indepedent residuals.
 
 ``` r
 
@@ -106,7 +101,8 @@ To force calculation of all five models, set the option
 
 ``` r
 
-model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now,output = "all",fastfirst = FALSE)
+model_476 <- pickmdl3::x13_pickmdl(ts = rti_476,spec=spec_now,output = "all",
+                                   fastfirst = FALSE)
 model_476$crit_tab
 #>           crit1       crit2      crit3    m_aic
 #> [1,] 0.03655921 0.022280863 -0.7916005 860.9283
@@ -126,11 +122,9 @@ model_476$sa
 model_476$sa_mult
 ```
 
-Finally, the automodel procedure maybe used even within the
-`x13_pickmdl` function. When `automdl.enabled = TRUE` the automodel
-procedure is selected, which gives the exact same result as the `x13`
-function. We see that in this case the automodel procedure has selected
-a model that is not on the pickmdl list.
+Finally, the automodel procedure maybe used also with the `x13_pickmdl`
+function. When `automdl.enabled = TRUE` the automodel procedure is
+selected, which gives the exact same result as the `x13` function.
 
 ``` r
 

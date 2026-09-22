@@ -67,23 +67,23 @@
 
     
     
-<p>It may be happen that none of the five models on the pickmdl list
-fulfills the three predefined criteria. In such cases, the default
-choiche of the pickmdl procedure is to choose the first model on the
-list, that is the AIRLINE model. However, it may be that other models
-not list fits the data well. In such cases the pickmodel procedure
-selects a poorly fitted model, even though an acceptable model would
-have been selected by the automodel procedure. To mitigate this risk the
-pickmdl3 package provides the alternative of falling back on the
-automodel approach when none of the five listed models proves adequate.
-This is done by changing the <code>pickmdl_method</code> in
-<code>x13_pickmdl</code>.</p>
+<p>When using the <code>pickdml</code>selection procedure, it may be
+happen that none of the five models on the pickmdl list fulfills the
+three predefined criteria. In such cases, the default choiche is to
+choose the first model on the list, that is the AIRLINE model. It may
+however be that other models fits the data well. In such cases the
+pickmodel procedure selects a poorly fitted model, even though an
+acceptable model would have been available to the automodel procedure.
+To mitigate this risk the pickmdl3 package provides the alternative of
+falling back on the automodel approach when none of the five listed
+models proves adequate. This is done by setting the option
+<code>pickmdl_method</code> in <code>x13_pickmdl</code>.</p>
 <div class="section level2">
-<h2 id="first">first<a class="anchor" aria-label="anchor" href="#first"></a>
+<h2 id="pickmdl_method-first">pickmdl_method = first<a class="anchor" aria-label="anchor" href="#pickmdl_method-first"></a>
 </h2>
-<p>Let us first, however, show that the pickmdl procedure by default
-falls back on the AIRLINE model when none of the models on the list
-passes the pre-defined criteria. This is the default option
+<p>Let us first show that the pickmdl procedure by default falls back on
+the AIRLINE model when none of the models on the list passes the
+pre-defined criteria. This is the default option
 <code>pickmdl_method = "first"</code>. We select the standard
 specification <code>rsa3</code>and the Norwegian retail index for nace
 47.2 to illustrate the case.</p>
@@ -98,8 +98,8 @@ specification <code>rsa3</code>and the Norwegian retail index for nace
 <span><span class="co">#&gt; model is ok according to criteria</span></span></code></pre></div>
 <p>We see that a warning is given that tells us that none of the models
 on the pickmdl list are acceptable. The <code>ok</code> function tells
-us that the first model is selected, i.e. the AIRLINE model, but that
-this model is not acceptable according to the criteria.</p>
+us further that the first model is selected, i.e. the AIRLINE model, but
+that this model is not acceptable according to the criteria.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/ok.html">ok</a></span><span class="op">(</span><span class="va">model_now</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $ok</span></span>
@@ -129,7 +129,7 @@ procedure now falls back on the third model on the list.</p>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="first_automdl">first_automdl<a class="anchor" aria-label="anchor" href="#first_automdl"></a>
+<h2 id="pickmdl_method-first_automdl">pickmdl_method = first_automdl<a class="anchor" aria-label="anchor" href="#pickmdl_method-first_automdl"></a>
 </h2>
 <p>To let the <code>x13_pickdml</code> fall back on the automodel
 procedure when none of the models on the pickmdl list are acceptable,
@@ -138,7 +138,7 @@ illustrated with the norwegian retail index for nace 47.51. A warning
 tells the user that the procedure has switched to the automdl procedure,
 which means that none of the models on the list passed the criteria.
 From the output of <code>ok</code> we now see that the selected model
-fulfills the criteria, however. The model number is 6, which weans that
+fulfills the criteria, however. The model number is 6, which means that
 this is a model selected by the automodel procedure. The model output
 shows that the model in question is of order
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(1,0,2)(1,1,1)_s</annotation></semantics></math>.</p>
@@ -146,7 +146,8 @@ shows that the model in question is of order
 <code class="sourceCode R"><span><span class="va">rti_4751</span> <span class="op">&lt;-</span> <span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"norwegian_rti"</span><span class="op">)</span><span class="op">$</span><span class="va">rti_4751</span></span>
 <span><span class="va">spec_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rjdverse.github.io/rjd3x13/reference/x13_spec.html" class="external-link">x13_spec</a></span><span class="op">(</span><span class="st">"rsa4"</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rjdverse.github.io/rjd3toolkit/reference/set_outlier.html" class="external-link">set_outlier</a></span><span class="op">(</span>outliers.type<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> </span>
-<span><span class="va">model_now</span> <span class="op">&lt;-</span><span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_4751</span>, spec<span class="op">=</span><span class="va">spec_now</span>,pickmdl_method <span class="op">=</span> <span class="st">"first_automdl"</span><span class="op">)</span></span>
+<span><span class="va">model_now</span> <span class="op">&lt;-</span><span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/x13_pickmdl.html">x13_pickmdl</a></span><span class="op">(</span><span class="va">rti_4751</span>, spec<span class="op">=</span><span class="va">spec_now</span>,</span>
+<span>                                  pickmdl_method <span class="op">=</span> <span class="st">"first_automdl"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; automdl since no pickmdl model ok</span></span>
 <span></span>
 <span><span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/ok.html">ok</a></span><span class="op">(</span><span class="va">model_now</span><span class="op">)</span></span>
@@ -181,17 +182,16 @@ shows that the model in question is of order
 <span><span class="co">#&gt; For a more detailed output, use the 'summary()' function.</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="first_tryautomdl">first_tryautomdl<a class="anchor" aria-label="anchor" href="#first_tryautomdl"></a>
+<h2 id="pickmdl_method-first_tryautomdl">pickmdl_method = first_tryautomdl<a class="anchor" aria-label="anchor" href="#pickmdl_method-first_tryautomdl"></a>
 </h2>
-<p>There are cases were neither the pickmdl procedure nor the automdl
+<p>There are cases where neither the pickmdl procedure nor the automdl
 procedure will be able to identify a model that passes the criteria. In
 such cases one should consider falling back on a parsimonious default
 model, e.g. the AIRLINE model, although this model too provides seasonal
-adjustment of poor quality as it was not selected in the first. This may
-still be considered a better strategy than selecting the optimally
-fitted model with the automodel procedure, as this approach now
-introduces the risk of model change in addition to the poor quality of
-an ill fitted model.</p>
+adjustment of poor quality. This may still be considered a better
+strategy than selecting the optimally fitted model with the automodel
+procedure, as this approach now introduces the risk of model change in
+addition to the poor quality of an ill fitted model.</p>
 <p>When the option <code>pickmdl_method</code> is set to
 <code>first_tryautomdl</code>, the <code>x13_pickmdl</code> function
 first checks the models on the pickmdl list. If none of these five

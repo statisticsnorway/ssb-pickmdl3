@@ -1,27 +1,10 @@
 # Multivariate time series
 
-``` r
-
-library(pickmdl3)
-#> Loading required package: rjd3toolkit
-#> 
-#> Attaching package: 'rjd3toolkit'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     aggregate, mad
-#> Loading required package: rjd3x13
-#> 
-#> Attaching package: 'rjd3x13'
-#> The following object is masked from 'package:grDevices':
-#> 
-#>     x11
-```
-
 The pickmdl3 package includes functionality to support an orderly
 production process when using the seasonal adjustment methods of
 `rjd3x13`. The function `x13_text_frame` is a wrapper function that
 seasonally adjusts a multivariate time series object with the
-`x13_pickmdl`function based on a data frame with model specification
+`x13_pickmdl`function, based on a data frame with model specification
 settings.
 
 The object `rti_mts` contains three time series:
@@ -47,8 +30,8 @@ time series object that is to be adjusted. Further input are the
 specification settings that are used to define the specification with
 which to adjust the series in question. With this we mean all
 specification settings that are available in `rjd3toolkit`, `rjd3x13` or
-the parameter settings in `x13_pickmdl`. With the exception of the
-initial specification setting, the reference to settings in
+the options of `x13_pickmdl`. With the exception of the initial
+specification setting `spec`, the reference to settings in
 `rjd3tookit`and `rjd3x13` need to be given on the format
 `function__setting` as illustrated below.
 
@@ -64,21 +47,21 @@ spec_file
 #> 1  rti_472 "rsa3"              c("LS", "AO")              "Log"            TRUE
 #> 2  rti_476 "rsa3"              c("LS", "AO")              "Log"            TRUE
 #> 3 rti_4751 "rsa3"              c("LS", "AO")              "Log"            TRUE
-#>                                                                                                                                                                                                                                                                                                      userdefined
-#> 1 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 2 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 3 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#>                                                                                         userdefined
+#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
 ```
 
-The `make_paramfile` function constructs the same specifications for all
-series as defined in the input. To adjust for individual series, use the
-function `edit_constraints` and adjust the individual settings in the
-shiny application that pops up.
+The `make_paramfile` function constructs a data frame with the same
+specifications for all series. To adjust specifications settings for
+individual series, use the function `edit_constraints` and do the
+necessary adjustments in the shiny application that pops up.
 
 ``` r
 
 
-#spec_file <- edit_constraints(spec_file)
+spec_file <- edit_constraints(spec_file)
 ```
 
 ``` r
@@ -103,21 +86,19 @@ spec_file
 #> 1           FALSE
 #> 2            TRUE
 #> 3            TRUE
-#>                                                                                                                                                                                                                                                                                                      userdefined
-#> 1 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 2 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 3 c("decomposition.a1", "decomposition.a6", "decomposition.a7", "decomposition.a8", "decomposition.b1", "decomposition.d10", "decomposition.d11", "decomposition.d12", "decomposition.d13", "decomposition.d18", "diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#>                                                                                         userdefined
+#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
 ```
 
 Note that a blank field means that the setting is not used for the
 series in question.
 
-To add new specifications to an already existing specification frame,
-use the function `add_constraint`:
-
-Now, to adjust the multiple time series object based on the data frame,
-on can use the function `x13_text_frame` Output of the function is a
-list of sa output objects for each time series in the mts.
+Now, to do the seasonal adjustment of the multivariate time series
+object based on this data frame, we use the function `x13_text_frame`
+Output of the function is a list of sa output objects for each time
+series in the mts.
 
 ``` r
 

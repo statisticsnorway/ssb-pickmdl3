@@ -1,20 +1,20 @@
 # Alternatives when no model is acceptable
 
-It may be happen that none of the five models on the pickmdl list
-fulfills the three predefined criteria. In such cases, the default
-choiche of the pickmdl procedure is to choose the first model on the
-list, that is the AIRLINE model. However, it may be that other models
-not list fits the data well. In such cases the pickmodel procedure
+When using the `pickdml`selection procedure, it may be happen that none
+of the five models on the pickmdl list fulfills the three predefined
+criteria. In such cases, the default choiche is to choose the first
+model on the list, that is the AIRLINE model. It may however be that
+other models fits the data well. In such cases the pickmodel procedure
 selects a poorly fitted model, even though an acceptable model would
-have been selected by the automodel procedure. To mitigate this risk the
-pickmdl3 package provides the alternative of falling back on the
+have been available to the automodel procedure. To mitigate this risk
+the pickmdl3 package provides the alternative of falling back on the
 automodel approach when none of the five listed models proves adequate.
-This is done by changing the `pickmdl_method` in `x13_pickmdl`.
+This is done by setting the option `pickmdl_method` in `x13_pickmdl`.
 
-## first
+## pickmdl_method = first
 
-Let us first, however, show that the pickmdl procedure by default falls
-back on the AIRLINE model when none of the models on the list passes the
+Let us first show that the pickmdl procedure by default falls back on
+the AIRLINE model when none of the models on the list passes the
 pre-defined criteria. This is the default option
 `pickmdl_method = "first"`. We select the standard specification
 `rsa3`and the Norwegian retail index for nace 47.2 to illustrate the
@@ -33,9 +33,9 @@ model_now <- pickmdl3::x13_pickmdl(rti_472,spec_now, pickmdl_method="first")
 ```
 
 We see that a warning is given that tells us that none of the models on
-the pickmdl list are acceptable. The `ok` function tells us that the
-first model is selected, i.e. the AIRLINE model, but that this model is
-not acceptable according to the criteria.
+the pickmdl list are acceptable. The `ok` function tells us further that
+the first model is selected, i.e. the AIRLINE model, but that this model
+is not acceptable according to the criteria.
 
 ``` r
 
@@ -71,7 +71,7 @@ pickmdl3::ok(model_now)
 #> [1] 3
 ```
 
-## first_automdl
+## pickmdl_method = first_automdl
 
 To let the `x13_pickdml` fall back on the automodel procedure when none
 of the models on the pickmdl list are acceptable, set the
@@ -80,7 +80,7 @@ norwegian retail index for nace 47.51. A warning tells the user that the
 procedure has switched to the automdl procedure, which means that none
 of the models on the list passed the criteria. From the output of `ok`
 we now see that the selected model fulfills the criteria, however. The
-model number is 6, which weans that this is a model selected by the
+model number is 6, which means that this is a model selected by the
 automodel procedure. The model output shows that the model in question
 is of order $`(1,0,2)(1,1,1)_s`$.
 
@@ -89,7 +89,8 @@ is of order $`(1,0,2)(1,1,1)_s`$.
 rti_4751 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_4751
 spec_now <- x13_spec("rsa4")|>
   set_outlier(outliers.type=NULL) 
-model_now <-pickmdl3::x13_pickmdl(rti_4751, spec=spec_now,pickmdl_method = "first_automdl")
+model_now <-pickmdl3::x13_pickmdl(rti_4751, spec=spec_now,
+                                  pickmdl_method = "first_automdl")
 #> automdl since no pickmdl model ok
 
 pickmdl3::ok(model_now)
@@ -124,17 +125,16 @@ model_now
 #> For a more detailed output, use the 'summary()' function.
 ```
 
-## first_tryautomdl
+## pickmdl_method = first_tryautomdl
 
-There are cases were neither the pickmdl procedure nor the automdl
+There are cases where neither the pickmdl procedure nor the automdl
 procedure will be able to identify a model that passes the criteria. In
 such cases one should consider falling back on a parsimonious default
 model, e.g. the AIRLINE model, although this model too provides seasonal
-adjustment of poor quality as it was not selected in the first. This may
-still be considered a better strategy than selecting the optimally
-fitted model with the automodel procedure, as this approach now
-introduces the risk of model change in addition to the poor quality of
-an ill fitted model.
+adjustment of poor quality. This may still be considered a better
+strategy than selecting the optimally fitted model with the automodel
+procedure, as this approach now introduces the risk of model change in
+addition to the poor quality of an ill fitted model.
 
 When the option `pickmdl_method` is set to `first_tryautomdl`, the
 `x13_pickmdl` function first checks the models on the pickmdl list. If

@@ -70,14 +70,14 @@
 <p>Pre-adjustment and forecasting with a sARIMA model is of central
 importance to the x13-metholdogy, as calendar effects and effects of
 outliers need to be taken into account before seasonal components and
-trend can be calculated with filter based methods of x13. In Jdemetra
-and rjd3, the automatic procedure for selecting an sARIMA model is the
-automodel procedure. The pickmdl approach differs from the automodel
-procedure by restricting the model choiche to an ordered list of five
-parsimonious models. The pickmdl selection procedure selects the first
-model on this list that fulfills three pre-defined criteria.</p>
-<p>The sARIMA models on the pickmdl list are:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr></mtable><annotation encoding="application/x-tex">
+trend can be calculated with the filter based methods of
+<code>x13</code>. The <code>pickmdl</code> procedure differs from the
+default <code>automodel</code> procedure by restricting the model
+choiche to an ordered list of five parsimonious models. The first model
+on the ordered list that fulfills three pre-defined criteria is
+selcted.</p>
+<p>The sARIMA models on the pickmdl list are:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 (0,1,1)(0,1,1)_s  \\
 (0,1,2)(0,1,1)_s \\
@@ -112,33 +112,34 @@ unnecessary revisions as a consequence.</p>
 <p>Let us illustrate this point with an example. We use the Norwegian
 retail index for nace 47.6 . Following the best practice defined in ESS
 Guideluines on seasonal adjustment, model identification should be done
-once a year and the sARIMA model order should be kept unchanged
-throughout the year in line with the a predefined refreshment policy.
-Let us say that model identification is done in January each year, based
-on data until the preceding December. Throughout the year, the model is
-kept the same in accordance with the Outliers refreshment policy. Thus,
-in this case, there is a risk of major revisions in January each year,
-as the selected sARIMA model then may change.</p>
+once a year and the sARIMA model order should be kept unchanged in line
+with a predefined refreshment policy. Let us say that model
+identification is done in January each year, based on data until the
+preceding December. Throughout the year, the model is kept the same in
+accordance with the Outliers refreshment policy. Thus, there is a risk
+of major revisions in January each year, as the selected sARIMA model
+then may change.</p>
 <div class="figure" style="text-align: center">
-<img src="introduction_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Figure 1 automodel" width="576"><p class="caption">
-Figure 1 automodel
+<img src="introduction_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Figure 1: Automodel approach" width="576"><p class="caption">
+Figure 1: Automodel approach
 </p>
 </div>
-<p>This is what happens in the seasonal adjustment of the retail index
-for nace 47.6. In December 2024, the seasonal adjustment was based on a
-sARIMA model selected back in January 2024. Then the automodel procedure
-rejected the AIRLINE model and selected the sARIMA model of order
+<p>This is what happens in the seasonal adjustment of the norwegian
+retail index for nace 47.6. In December 2024, the seasonal adjustment
+was based on a sARIMA model selected almost a year ago. At the moment of
+selection, the automodel procedure rejected the AIRLINE model and
+selected a sARIMA model of order
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(0,0,1)(0,1,1)_s</annotation></semantics></math>.
-Turning to January 2025, the sARIMA model is identified anew and the
-AIRLINE model is still rejected. But the selected sARIMA model has now
+Turning to January 2025, the sARIMA model is identified anew. The
+AIRLINE model is still rejected, but the selected sARIMA model has now
 changed to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(1,0,0)(0,1,1)_s</annotation></semantics></math>.
 The resulting seasonally adjusted series are shown in figure 1, where
 the seasonal adjusted time series of Decemeber 2024 (black) is compared
-with the seasonal adjusted series in January 2025 (red.)</p>
+with the seasonal adjusted series of January 2025 (red.)</p>
 <div class="figure" style="text-align: center">
-<img src="introduction_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="Figure pickmdl" width="576"><p class="caption">
-Figure pickmdl
+<img src="introduction_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="Figure2: Pickmdl approach" width="576"><p class="caption">
+Figure2: Pickmdl approach
 </p>
 </div>
 <p>In figure 2, the same series are compared, but here the pickmdl
@@ -148,30 +149,29 @@ instead of searching for the optimal alternative model, the approach
 selects the first alternative model on the pickmdodel list that fulfills
 the predefined criteria. In both 2024 and in 2025, the sARIMA model
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><msub><mo stretchy="false" form="postfix">)</mo><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">(2,1,0)(0,1,1)_s</annotation></semantics></math>
-is considered acceptable. So although the optimal model has changed, the
-pickmdl approach selects the same model that is of acceptable
-quality.</p>
+is considered acceptable.</p>
 <p>The difference between the seasonally adjusted series in December
 2024 and January 2025 is shown in figure 3. The black line is the
 differences when using the automodel procedure, the red line is the
-differences when using the pickmdl procedure. We see that in this case,
-the model change that resulted from the first approach introduces
-considerable revisions of the adjusted data.</p>
+differences when using the pickmdl procedure. We see that the model
+change that resulted from the first approach introduces considerable
+revisions of the adjusted data. With the pickmdl approach, revisions are
+much smaller.</p>
 <div class="figure" style="text-align: center">
-<img src="introduction_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="Figure difference" width="576"><p class="caption">
-Figure difference
+<img src="introduction_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="Figure 3: Revisions" width="576"><p class="caption">
+Figure 3: Revisions
 </p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="limitations-of-the-pickmdl-procedure">Limitations of the pickmdl procedure<a class="anchor" aria-label="anchor" href="#limitations-of-the-pickmdl-procedure"></a>
 </h2>
-<p>A limitation of the pickmdl procedure, is that an inadequate sARIMA
-model may be chosen when none of the five models on the list passes the
-criteria. In this case, the procedure by default selects the AIRLINE
-model, potentially conflicting with the ESS’s guidelines on Seasonal
-adjustment. There may be other suitable sARIMA models, that are not
-considered. o address this issue, the pickmdl3 package provides the
+<p>A limitation of the pickmdl procedure, however, is that an inadequate
+sARIMA model may be chosen when none of the five models on the pickmdl
+list passes the criteria. In this case, the procedure by default selects
+the AIRLINE model, potentially conflicting with the ESS’s guidelines on
+Seasonal adjustment. There may be other suitable sARIMA models that are
+not considered. To address this issue, the pickmdl3 package provides the
 option to fall back on the automdl procedure when none of the five
 listed models proves adequate.</p>
 </div>
