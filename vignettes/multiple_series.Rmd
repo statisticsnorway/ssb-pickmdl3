@@ -1,5 +1,5 @@
 ---
-title: "x13_text_frame()"
+title: "Multivariate time series"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{multiple_series}

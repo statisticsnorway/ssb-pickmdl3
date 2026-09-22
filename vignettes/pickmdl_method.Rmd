@@ -1,5 +1,5 @@
 ---
-title: "pickmdl_method"
+title: "Alternatives when no model is acceptable"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{pickmdl_method}

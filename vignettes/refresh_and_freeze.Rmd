@@ -1,5 +1,5 @@
 ---
-title: "refresh and freeze"
+title: "Partial concurrent adjustment"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{refresh_and_freeze}
@@ -12,13 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
-
-
-#her er det noko som kjeme
-
 ```
 
 

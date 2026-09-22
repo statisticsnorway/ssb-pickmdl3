@@ -1,7 +1,7 @@
 # R package pickmdl3  <img src="man/figures/logo.png" align="right" height="150" /> 
 
 
-| [Her kjeme noko om CRAN](https://cran.r-project.org/package=GaussSuppression) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-pickmdl3/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
+| [Not yet on CRAN](https://cran.r-project.org/) |  | [pkgdown website](https://statisticsnorway.github.io/ssb-pickmdl3/) |  | [GitHub Repository](https://github.com/statisticsnorway/ssb-pickmdl3) |
 |----------------------|---|----------------------|---|----------------------|
 
 
@@ -27,9 +27,12 @@ The package further includes functionality for seasonal adjustment of multiple s
 ***
 
 See the package vignettes: 
-[Magnitude table suppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Magnitude_table_suppression.html), 
-[Small count frequency table suppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/Small_count_frequency_table_suppression.html), 
-[Defining tables for GaussSuppression](https://cran.r-project.org/web/packages/GaussSuppression/vignettes/define_tables.html).
+
+[What is pickmdl?](https://statisticsnorway.github.io/ssb-pickmdl3/articles/introduction.html),
+[Basic functionality](https://statisticsnorway.github.io/ssb-pickmdl3/articles/basic_funcitons.html), 
+[Alternatives when no model is acceptable](https://statisticsnorway.github.io/ssb-pickmdl3/articles/pickmdl_method.html), 
+[Partial concurrent adjustment](https://statisticsnorway.github.io/ssb-pickmdl3/articles/refresh_and_freeze.html),
+[Multivariate time series](https://statisticsnorway.github.io/ssb-pickmdl3/articles/multiple_series.html).
 
 
 ***
