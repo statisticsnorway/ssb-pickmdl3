@@ -39,8 +39,8 @@ See the package vignettes:
 
 ## Installation
 
-Since *pickmdl3* depends on *rjd3toolkit* and *rjd3x13*, refer to the installation instruction found on the  
-[rjdverse](https://github.com/rjdverse) GitHub page. See also the chapter on R packages in the 
+Since *pickmdl3* depends on *rjd3toolkit* and *rjd3x13*, refer to the installation instruction found on
+the [rjdverse](https://github.com/rjdverse) GitHub page. See also the chapter on R packages in the 
 [Jdemetra+ documentation](https://doc.jdemetra.org/t-r-packages).
 
 Usual installation from GitHub:
