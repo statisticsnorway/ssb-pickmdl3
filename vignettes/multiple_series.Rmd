@@ -1,5 +1,5 @@
 ---
-title: "Multivariate time series"
+title: "Multiple time series"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{multiple_series}
