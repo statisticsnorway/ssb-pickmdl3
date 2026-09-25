@@ -1,4 +1,4 @@
-# Multivariate time series
+# Multiple time series
 
 The pickmdl3 package includes functionality to support an orderly
 production process when using the seasonal adjustment methods of

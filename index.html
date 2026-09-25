@@ -39,7 +39,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/basic_funcitons.html">Basic functionality</a></li>
     <li><a class="dropdown-item" href="articles/introduction.html">What is pickmdl?</a></li>
-    <li><a class="dropdown-item" href="articles/multiple_series.html">Multivariate time series</a></li>
+    <li><a class="dropdown-item" href="articles/multiple_series.html">Multiple time series</a></li>
     <li><a class="dropdown-item" href="articles/pickmdl_method.html">Alternatives when no model is acceptable</a></li>
     <li><a class="dropdown-item" href="articles/refresh_and_freeze.html">Partial concurrent adjustment</a></li>
   </ul>
@@ -82,7 +82,7 @@
 <div class="section level2">
 <h2 id="r-package-implementing-the-x-12-arima-pickmdl-procedure-within-rjd3">R package implementing the X-12-ARIMA pickmdl procedure within rjd3<a class="anchor" aria-label="anchor" href="#r-package-implementing-the-x-12-arima-pickmdl-procedure-within-rjd3"></a>
 </h2>
-<p>The package relies on <a href="https://CRAN.R-project.org/package=rjd3toolkit" class="external-link">rjd3toolkit</a> and <a href="https://CRAN.R-project.org/package=rjd3x13" class="external-link">rjd3x13</a>. It enables the <code>x13</code> function in <code>rjd3x13</code> to be run with the <code>pickmdl</code> model selection procedure. The <code>pickmdl</code> selection procedure differs from the default <code>automodel</code> procedure by restricting the choiche of seasonal RegARIMA model to an ordered set of five parsimonius models. If none of these five models proves adequate, the package provides the option to fall back on the default <code>automodel</code>. The package further includes functionality for seasonal adjustment of multiple time series based on a data frame with model specifications.</p>
+<p>The package relies on <a href="https://CRAN.R-project.org/package=rjd3toolkit" class="external-link">rjd3toolkit</a> and <a href="https://CRAN.R-project.org/package=rjd3x13" class="external-link">rjd3x13</a>. It enables the <code>x13</code> function in <code>rjd3x13</code> to be run with the <code>pickmdl</code> model selection procedure. The <code>pickmdl</code> selection procedure differs from the default <code>automodel</code> procedure by restricting the choiche of seasonal RegARIMA model to an ordered set of five parsimonius models. If none of these five models proves adequate, the package provides the option to fall back on the default <code>automodel</code> procedure. The package further includes functionality for seasonal adjustment of multiple time series based on a data frame with model specifications.</p>
 <hr>
 <p>📌 See the <a href="https://statisticsnorway.github.io/ssb-pickmdl3/reference/index.html">broader list of available functions</a>.</p>
 <hr>

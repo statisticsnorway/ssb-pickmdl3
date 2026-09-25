@@ -15,7 +15,7 @@ procedure. The `pickmdl` selection procedure differs from the default
 `automodel` procedure by restricting the choiche of seasonal RegARIMA
 model to an ordered set of five parsimonius models. If none of these
 five models proves adequate, the package provides the option to fall
-back on the default `automodel`. The package further includes
+back on the default `automodel` procedure. The package further includes
 functionality for seasonal adjustment of multiple time series based on a
 data frame with model specifications.
 
