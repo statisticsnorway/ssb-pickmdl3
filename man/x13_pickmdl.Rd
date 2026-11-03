@@ -134,13 +134,9 @@ a5 <- x13_automdl(myseries, spec_a, identification_estimate.to = "2014-03-01")
 summary(a5$result$preprocessing)
 
 
-allvar <- pickmdl_data("allvar")
-allvar <- list(arb_dag=allvar[,1],skuddar=allvar[,2])
-my_context <- modelling_context(variables=allvar)
+
 spec_b <- rjd3x13::x13_spec(name= "rsa3")
 spec_b <- rjd3toolkit::set_transform(spec_b,fun="Log")
-spec_b <- rjd3toolkit::set_tradingdays(spec_b,
-                       option="Userdefined",uservariable=c("r.arb_dag","r.skuddar"))
 spec_b <- rjd3toolkit::set_outlier(spec_b,outliers.type=NULL)
 spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("LS",20),
                            date = c("2009-01-01", "2016-01-01", "2020-03-01",
@@ -150,11 +146,11 @@ spec_b <- rjd3toolkit::add_outlier(spec_b,type=rep("LS",20),
                                     "2021-01-01", "2021-02-01", "2021-03-01",
                                     "2021-04-01", "2021-05-01", "2021-06-01",
                                     "2021-07-01", "2021-08-01"))
-b <- x13_pickmdl(myseries,spec_b, identification_end = c(2020, 2),context=my_context)
+b <- x13_pickmdl(myseries,spec_b, identification_end = c(2020, 2))
 summary(b$result$preprocessing)
 
 # automdl instead
-b1 <- x13_automdl(myseries, spec_b, identification_end = c(2020, 2),context=my_context)
+b1 <- x13_automdl(myseries, spec_b, identification_end = c(2020, 2))
 summary(b1$result$preprocessing)
 
 # effect of identify_t_filter and identify_s_filter
@@ -186,7 +182,7 @@ d4 <- x13_pickmdl(myseries, spec_d, pickmdl_method = "first_tryautomdl", verbose
                   when_finalnotok = warning) # also finalnotok warning
 
 # As b, with output = "all"
-k <- x13_pickmdl(myseries, spec_b, identification_end = c(2014, 2), context = my_context,
+k <- x13_pickmdl(myseries, spec_b, identification_end = c(2014, 2),
                  output = "all", fastfirst = FALSE) # With TRUE only one model in this case
 summary(k$sa$result$preprocessing)  # As summary(b$result$preprocessing)
 

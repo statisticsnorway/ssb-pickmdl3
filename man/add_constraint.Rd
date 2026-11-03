@@ -4,10 +4,12 @@
 \alias{add_constraint}
 \title{Add a constraint to a constraint data frame object and open for editing.}
 \usage{
-add_constraint(dt, constraint, type = "chr", default = "")
+add_constraint(dt, view = "dialog", constraint, type = "chr", default = "")
 }
 \arguments{
 \item{dt}{Data frame object}
+
+\item{view}{To view in browser, write "browser".}
 
 \item{constraint}{Name of the new constraint to be added}
 
