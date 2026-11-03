@@ -19,7 +19,7 @@
 #' myseries <- pickmdl_data("myseries")
 #'
 #' a <- x13_both(myseries, spec = "rsa3", set_transform__fun = "Log", verbose = TRUE)
-#' summary(a)
+#' a
 #'
 #' # is equivalent to
 #'

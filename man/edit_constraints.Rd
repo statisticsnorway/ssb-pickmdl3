@@ -4,10 +4,12 @@
 \alias{edit_constraints}
 \title{Edit a constraint data frame object}
 \usage{
-edit_constraints(dt)
+edit_constraints(dt, view = "dialog")
 }
 \arguments{
 \item{dt}{Data frame object}
+
+\item{view}{To view in browser, write "browser".}
 }
 \value{
 Updated data frame object
