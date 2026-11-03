@@ -30,6 +30,11 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
+     - uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+          
       - uses: actions/checkout@v6
 
       - uses: r-lib/actions/setup-pandoc@v2
