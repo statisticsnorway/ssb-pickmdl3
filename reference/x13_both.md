@@ -208,53 +208,26 @@ myseries <- pickmdl_data("myseries")
 
 a <- x13_both(myseries, spec = "rsa3", set_transform__fun = "Log", verbose = TRUE)
 #> [1] "SARIMA model: (2,1,0) (0,1,1)"
-summary(a)
+a
+#> Serie span: All 
+#> 
 #> Model: X-13
 #> Log-transformation: yes 
 #> SARIMA model: (2,1,0) (0,1,1)
 #> 
-#> Coefficients
-#>           Estimate Std. Error  T-stat Pr(>|t|)    
-#> phi(1)     0.98483    0.06035  16.318   <2e-16 ***
-#> phi(2)     0.57655    0.06041   9.544   <2e-16 ***
-#> btheta(1) -0.89213    0.07920 -11.264   <2e-16 ***
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#> SARIMA coefficients:
+#>    phi(1)    phi(2) btheta(1) 
+#>    0.9848    0.5766   -0.8921 
 #> 
 #> Regression model:
-#>                 Estimate Std. Error T-stat Pr(>|t|)    
-#> TC (2011-06-01) -0.19046    0.04705 -4.048 7.61e-05 ***
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-#> Number of observations: 201, Number of effective observations: 188, Number of parameters: 5
-#> Loglikelihood: 230.554, Adjusted loglikelihood: -624.9538
-#> Standard error of the regression (ML estimate): 0.06727615 
-#> AIC: 1259.908, AICc: 1260.237, BIC: 1276.09
+#> TC (2011-06-01) 
+#>         -0.1905 
 #> 
-#> Decomposition
-#> Monitoring and Quality Assessment Statistics: 
-#>     M stats
-#> m1    0.576
-#> m2    0.597
-#> m3    3.000
-#> m4    0.348
-#> m5    3.000
-#> m6    0.737
-#> m7    0.223
-#> m8    0.364
-#> m9    0.166
-#> m10   0.394
-#> m11   0.368
-#> q     0.963
-#> qm2   1.008
+#>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms
+#>  M-Statistics: q Good (0.963); q-m2 Bad (1.008)
+#>  QS test on SA: Good (1.000);  F-test on SA: Good (0.666)
 #> 
-#> Final filters: 
-#> Seasonal filter: FILTER_S3X5
-#> Trend filter: 23 terms Henderson moving average
-#> 
-#> Diagnostics
-#> Residual seasonality tests
-#> Error in print_diagnostics(x$diagnostics, digits = digits, ...): object 'residual_tests' not found
+#> For a more detailed output, use the 'summary()' function.
 
 # is equivalent to
 

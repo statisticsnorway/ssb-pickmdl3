@@ -5,7 +5,7 @@ Edit a constraint data frame object
 ## Usage
 
 ``` r
-edit_constraints(dt)
+edit_constraints(dt, view = "dialog")
 ```
 
 ## Arguments
@@ -13,6 +13,10 @@ edit_constraints(dt)
 - dt:
 
   Data frame object
+
+- view:
+
+  To view in browser, write "browser".
 
 ## Value
 

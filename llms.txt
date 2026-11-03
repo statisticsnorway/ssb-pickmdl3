@@ -100,9 +100,6 @@ devtools::install_github("statisticsnorway/pickmdl3", dependencies = FALSE)
   [`m_aic()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/crit_table.md)
   : Table of PICKMDL criteria
 
-- [`data_edit_ssb()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/data_edit_ssb.md)
-  : An interactive editor for viewing, entering and editing data
-
 - [`edit_constraints()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/edit_constraints.md)
   : Edit a constraint data frame object
 
@@ -119,18 +116,12 @@ devtools::install_github("statisticsnorway/pickmdl3", dependencies = FALSE)
 - [`pickmdl_data()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/pickmdl_data.md)
   : Function that returns an r object with data
 
-- [`read_yaml_constraints()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/read_yaml_constraints.md)
-  : Read in yaml file with constraints information
-
 - [`text_frame_apply()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/text_frame_apply.md)
   : Apply function(s) with input from a data frame
 
 - [`update_spec_outliers()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/update_spec_outliers.md)
   [`update_outliers()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/update_spec_outliers.md)
   : Update x13 spec with outliers
-
-- [`write_yaml_constraints()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/write_yaml_constraints.md)
-  : Write constraints data.frame object to disk as a yaml file
 
 - [`x13_both()`](https://statisticsnorway.github.io/ssb-pickmdl3/reference/x13_both.md)
   :

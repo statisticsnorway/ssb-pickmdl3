@@ -5,7 +5,7 @@ Add a constraint to a constraint data frame object and open for editing.
 ## Usage
 
 ``` r
-add_constraint(dt, constraint, type = "chr", default = "")
+add_constraint(dt, view = "dialog", constraint, type = "chr", default = "")
 ```
 
 ## Arguments
@@ -13,6 +13,10 @@ add_constraint(dt, constraint, type = "chr", default = "")
 - dt:
 
   Data frame object
+
+- view:
+
+  To view in browser, write "browser".
 
 - constraint:
 

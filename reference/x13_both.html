@@ -208,53 +208,26 @@ to get the attribute or <code><a href="ok.html">ok</a></code> to get the attribu
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">x13_both</span><span class="op">(</span><span class="va">myseries</span>, spec <span class="op">=</span> <span class="st">"rsa3"</span>, set_transform__fun <span class="op">=</span> <span class="st">"Log"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SARIMA model: (2,1,0) (0,1,1)"</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">a</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Serie span: All </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model: X-13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Log-transformation: yes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA model: (2,1,0) (0,1,1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Estimate Std. Error  T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi(1)     0.98483    0.06035  16.318   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> phi(2)     0.57655    0.06041   9.544   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> btheta(1) -0.89213    0.07920 -11.264   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SARIMA coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    phi(1)    phi(2) btheta(1) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.9848    0.5766   -0.8921 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression model:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 Estimate Std. Error T-stat Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> TC (2011-06-01) -0.19046    0.04705 -4.048 7.61e-05 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Number of observations: 201, Number of effective observations: 188, Number of parameters: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Loglikelihood: 230.554, Adjusted loglikelihood: -624.9538</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Standard error of the regression (ML estimate): 0.06727615 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1259.908, AICc: 1260.237, BIC: 1276.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TC (2011-06-01) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         -0.1905 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Decomposition</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Monitoring and Quality Assessment Statistics: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     M stats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m1    0.576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m2    0.597</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m3    3.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m4    0.348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m5    3.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m6    0.737</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m7    0.223</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m8    0.364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m9    0.166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m10   0.394</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> m11   0.368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> q     0.963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> qm2   1.008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  M-Statistics: q Good (0.963); q-m2 Bad (1.008)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  QS test on SA: Good (1.000);  F-test on SA: Good (0.666)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Final filters: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Seasonal filter: FILTER_S3X5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Trend filter: 23 terms Henderson moving average</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostics</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual seasonality tests</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in print_diagnostics(x$diagnostics, digits = digits, ...):</span> object 'residual_tests' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> For a more detailed output, use the 'summary()' function.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># is equivalent to</span></span></span>
 <span class="r-in"><span></span></span>
