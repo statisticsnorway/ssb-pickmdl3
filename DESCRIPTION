@@ -3,14 +3,12 @@ Type: Package
 Title: PICKMDL for RJDemetra3
 Version: 0.0.1
 Date: 2026-04-29
-Authors@R: c(person("Øyvind", "Langsrud", role = c("aut"), email = "oyl@ssb.no"),
+Authors@R: c(person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "ffe@ssb.no"),
+             person("Øyvind", "Langsrud", role = c("aut"), comment = c(ORCID = "0000-0002-1380-4396")),
              person("Dinh Quang", "Pham", role = c("aut")),
              person("Ane", "Seierstad", role = c("aut")),
-             person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "ffe@ssb.no"),
              person("Joern Ivar", "Hamre", role = c("aut")),
              person("Statistics Norway", role = "cph"))
-Author: Øyvind Langsrud [aut, cre], Dinh Quang Pham [aut], Ane Seierstad [aut], Jens Kristoffer Haug [aut,cre], Joern Ivar Hamre [aut] 
-Maintainer: Jens Kristoffer Haug <ffe@ssb.no>
 Description: PICKMDL for rjd3.  
 License: MIT + file LICENSE
 Roxygen: list(markdown = TRUE)
