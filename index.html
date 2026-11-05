@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>PICKMDL for RJDemetra3 • pickmdl3</title>
+<title>Seasonal Adjustment with X-13 in JDemetra+ 3.x Extended with PICKMDL • pickmdl3</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="PICKMDL for RJDemetra3">
-<meta name="description" content="PICKMDL for rjd3.">
-<meta property="og:description" content="PICKMDL for rjd3.">
+<meta property="og:title" content="Seasonal Adjustment with X-13 in JDemetra+ 3.x Extended with PICKMDL">
+<meta name="description" content="A tool that makes the X-12-ARIMA PICKMDL procedure available within the JDemetra+ R Framework (&lt;https://github.com/rjdverse). PICKDML is a model selection procedure that differs from the automdl procedure implemented in Jdemetra+. The pickmdl procedure restricts the choiche of seasonal ARIMA models to an ordered set of parsimonious models, the first sARIMA model that fulfills a predefined set of three criteria is selected. This restriction may lead to more stable model selection and thus less future revisions. A limitation of the procedure, however, is that an inadequate sARIMA model may be selected if none of the models on the list fits the data well. To mitigate this risk, the pickdml3 pacakge provides the option to fall back on the automdl procedure. The pickdml3 package further includes functionality to support an orderly production process when using the X-13 methodology in rjd3. The package provides functionality that facilitates the process of partial concurrent adjustment, i.e. yearly model and outlier selection. The package also includes functions for seasonal adjustment of multiple series based on a data frame with model specifications, as well as a graphical user interface for creating, editing, and saving such data frames.">
+<meta property="og:description" content="A tool that makes the X-12-ARIMA PICKMDL procedure available within the JDemetra+ R Framework (&lt;https://github.com/rjdverse). PICKDML is a model selection procedure that differs from the automdl procedure implemented in Jdemetra+. The pickmdl procedure restricts the choiche of seasonal ARIMA models to an ordered set of parsimonious models, the first sARIMA model that fulfills a predefined set of three criteria is selected. This restriction may lead to more stable model selection and thus less future revisions. A limitation of the procedure, however, is that an inadequate sARIMA model may be selected if none of the models on the list fits the data well. To mitigate this risk, the pickdml3 pacakge provides the option to fall back on the automdl procedure. The pickdml3 package further includes functionality to support an orderly production process when using the X-13 methodology in rjd3. The package provides functionality that facilitates the process of partial concurrent adjustment, i.e. yearly model and outlier selection. The package also includes functions for seasonal adjustment of multiple series based on a data frame with model specifications, as well as a graphical user interface for creating, editing, and saving such data frames.">
 <meta property="og:image" content="https://statisticsnorway.github.io/ssb-pickmdl3/logo.png">
 </head>
 <body>
@@ -100,9 +100,7 @@
 <p>If you know that the dependencies listed under <em>Imports</em> and <em>Depends</em> in the <a href="https://github.com/statisticsnorway/ssb-pickmdl/blob/main/DESCRIPTION" class="external-link">DESCRIPTION file</a> are already installed, an alternative is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"statisticsnorway/pickmdl3"</span>, dependencies <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<ul>
-<li><hr></li>
-</ul>
+<hr>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
@@ -124,7 +122,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jens Kristoffer Haug <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Jens Kristoffer Haug <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0001-4487-4274" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Øyvind Langsrud <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-1380-4396" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Dinh Quang Pham <br><small class="roles"> Author </small>   </li>
 <li>Ane Seierstad <br><small class="roles"> Author </small>   </li>

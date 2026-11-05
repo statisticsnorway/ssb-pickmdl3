@@ -67,6 +67,4 @@ are already installed, an alternative is:
 devtools::install_github("statisticsnorway/pickmdl3", dependencies = FALSE)
 ```
 
-- 
-
-  ------------------------------------------------------------------------
+------------------------------------------------------------------------
