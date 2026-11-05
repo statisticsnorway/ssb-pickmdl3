@@ -257,9 +257,6 @@ x13_pickmdl <- function(ts, spec,
       end_ts <- stats::end(stats::ts(1:2, start = c(yr,mnth), frequency = stats::frequency(ts)))
       outlier_date_limit <- paste(end_ts[1], Number(end_ts[2], 2), "01", sep = "-")
       
-      #outlier_date_limit <- identification_estimate.to
-      #DANGER! outlier_date_limit <- seq(as.Date(outlier_date_limit), by = "month", length = 2)[2] 
-      #Derfor jeg har fikset det i traad med Oyvinds. 
     }
     outlier_date_limit_b <- end_ts
   }

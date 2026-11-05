@@ -1,15 +1,23 @@
 Package: pickmdl3
 Type: Package
-Title: PICKMDL for RJDemetra3
+Title: Seasonal Adjustment with 'X-13' in 'JDemetra+' 3.x Extended with 'PICKMDL'
 Version: 0.0.1
 Date: 2026-04-29
-Authors@R: c(person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "ffe@ssb.no"),
+Authors@R: c(person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "ffe@ssb.no", comment = c(ORCID = "0009-0001-4487-4274")),
              person("Øyvind", "Langsrud", role = c("aut"), comment = c(ORCID = "0000-0002-1380-4396")),
              person("Dinh Quang", "Pham", role = c("aut")),
              person("Ane", "Seierstad", role = c("aut")),
              person("Joern Ivar", "Hamre", role = c("aut")),
              person("Statistics Norway", role = "cph"))
-Description: PICKMDL for rjd3.  
+Description: A tool that makes the X-12-ARIMA PICKMDL procedure available within the JDemetra+ R Framework (<https://github.com/rjdverse).
+             PICKDML is a model selection procedure that differs from the automdl procedure implemented in Jdemetra+. The pickmdl procedure restricts 
+             the choiche of seasonal ARIMA models to an ordered set of parsimonious models, the first sARIMA model that fulfills a predefined set of 
+             three criteria is selected. This restriction may lead to more stable model selection and thus less future revisions. A limitation of the procedure, however,
+             is that an inadequate sARIMA model may be selected if none of the models on the list fits the data well. To mitigate this risk, the pickdml3 
+             pacakge provides the option to fall back on the automdl procedure. The pickdml3 package further includes functionality to support an orderly production 
+             process when using the X-13 methodology in rjd3. The package provides functionality that facilitates the process of partial concurrent adjustment, 
+             i.e. yearly model and outlier selection. The package also includes functions for seasonal adjustment of multiple series based 
+             on a data frame with model specifications, as well as a graphical user interface for creating, editing, and saving such data frames. 
 License: MIT + file LICENSE
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8

@@ -1,15 +1,10 @@
 
-
-
-
-
 #' Function to get list of column names and standard types
 #'
 #' @param dt Data frame for editing
 #'
 #' @returns List of column names and types to use in editor
 #' @noRd
-#' @keywords Internal
 get_column_list <- function (dt){
   column_list <- list(set_easter__enabled = c(TRUE,FALSE),
                       automdl.enabled = c(TRUE,FALSE)
@@ -35,6 +30,7 @@ get_column_list <- function (dt){
 #'
 #' @returns Updated data frame object
 #' @export
+#' 
 edit_constraints <- function(dt,view = "dialog"){
   
   if (!requireNamespace("DataEditR", quietly = TRUE)) {
@@ -49,7 +45,6 @@ edit_constraints <- function(dt,view = "dialog"){
   }else{
     new_data <- DataEditR::data_edit(dt,viewer="dialog",col_options = col_options_list)
   }
-  
   
   # convert all variables to character
   new_data[] <- lapply(new_data, as.character)
@@ -82,9 +77,7 @@ add_constraint <- function(dt, view = "dialog",constraint, type = "chr", default
   
   col_options_list <- get_column_list(dt)
   
-  #if (type == "bool") col_options_list[constraint] = c(TRUE,FALSE)
-  #if (type == "date") col_options_list[constraint] = "date"
-  
+
   if(view=="browser"){
     new_data <- DataEditR::data_edit(dt,
                                      viewer = "browser",
