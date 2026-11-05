@@ -12,7 +12,7 @@ Authors@R: c(person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "f
 Description: A tool that makes the X-12-ARIMA pickmdl procedure available within the JDemetra+ R Framework (<https://github.com/rjdverse).
              Pickmdl is a model selection procedure that differs from the automdl procedure implemented in Jdemetra+. The pickmdl procedure restricts 
              the choiche of seasonal ARIMA models to an ordered set of five parsimonious models, the first sARIMA model that fulfills a predefined set of 
-             three criteria is selected. This restriction may lead to more stable model selection and thus less future revisions. A limitation of the procedure
+             three criteria is selected. This restriction may lead to more stable model selection and thus less future revisions. A limitation of the procedure, however,
              is that an inadequate sARIMA model may be selected if none of the models on the list fits the data well. To mitigate this risk, the pickdml3 
              pacakge provides the option to fall back on the automdl procedure. The pickdml3 package further includes functionality to support an orderly production 
              process when using the X-13 methodology in rjd3. The package provides functionality that facilitates the process of partial concurrent adjustment, 
