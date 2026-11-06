@@ -77,10 +77,10 @@ x13_both <- function(ts,spec = NULL,  ..., context= NULL,userdefined = NULL, bot
     
     parts <- strsplit(names(dots),"__",fixed=TRUE)
     
-    # Første del er funksjonsnavn
+    # First part is name of function 
     fn_names <- vapply(parts, `[`, character(1), 1)
     
-    # Andre del er argumentnavn
+    # Second part is name of argument 
     arg_names <- vapply(parts, `[`, character(1), 2)
     
     by_fn <- split(seq_along(dots), fn_names)
@@ -94,7 +94,6 @@ x13_both <- function(ts,spec = NULL,  ..., context= NULL,userdefined = NULL, bot
       
       fn_obj <- get(fn, mode = "function")
       
-      # Evaluer funksjonskallet og legg til bidraget
       spec <- do.call(fn_obj, args)
     }
   }
