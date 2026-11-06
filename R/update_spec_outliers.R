@@ -112,10 +112,8 @@ update_spec_outliers <- function(sa, spec = NULL, day = "01", verbose = FALSE, i
 update_outliers <- function(sa, spec, day = "01", null_when_no_new = TRUE, verbose = FALSE) {
   
   if(!is.null(spec)){
-    #pre <- s_preOut(spec)
     pre_pos <- sapply(spec$regarima$regression$outliers,"[[","pos")
     pre_code <- sapply(spec$regarima$regression$outliers,"[[","code")
-    #pre_coeff <- sapply(spec$regarima$regression$outliers,"[[","coeff")
     pre <- data.frame(type=pre_code,date=pre_pos)
     
   } else {
@@ -165,7 +163,6 @@ update_outliers <- function(sa, spec, day = "01", null_when_no_new = TRUE, verbo
 
 sa_out <- function(a) {
   
-  #s <- row.names(a$regarima$regression.coefficients)
   s <- sapply(a$result$preprocessing$description$variables,"[[","name")
   if (!length(s)) {
     return(character(0))

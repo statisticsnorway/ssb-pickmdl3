@@ -218,8 +218,6 @@ x13_pickmdl <- function(ts, spec,
   
   auto_in_pickmdl <- FALSE
   
-  ## lager liste med spec. Oversatt til rjd3.
-  
   if (!all(sapply(spec, class) == "JD3_X13_SPEC")) {
     if (!all(class(spec) == "JD3_X13_SPEC")){
       stop("Wrong `spec` input")
@@ -346,40 +344,19 @@ x13_pickmdl <- function(ts, spec,
   }
   
   length_spec <- length(spec)
-  #spec <- spec[[mdl_nr]]
-  ref_spec <- spec[[mdl_nr]]   # ikke ref.spec fordi endret estimation.to med identification_estimate.to 
-  # dette kan vaere problem hvis estimate.to er satt i utg. spec. Fikse? 
-  #ref_spec <- sa_mult[[mdl_nr]]$estimation_spec
+  ref_spec <- spec[[mdl_nr]]   
   spec_to_refresh <- sa_mult[[mdl_nr]]$result_spec
+  
   if(!is.null(identification_estimate.to)){
     spec_to_refresh$regarima$estimate$span <- ref_spec$regarima$estimate$span
   }
-  #### Her maa det faas inn at estimate_to i disse skal være lik inngangsspec. (foer sa_mult) Kan ikke bare sette all, da estimate.to kan være definert 
-  ### paa ordinært vis. Saa maa ta utgangspunkt i spec-listen. # Done 
   
   if(auto_in_pickmdl & mdl_nr == length_spec){
     if(!is.null(when_automdl)){
       when_automdl("automdl since no pickmdl model ok")
     }
   }
-    #arma <- sa_mult[[mdl_nr]]$result$preprocessing$description$arima
-    #spec <- rjd3toolkit::set_arima(rjd3toolkit::set_automodel(spec,enabled = automdl.enabled),
-    #                               p = as.numeric(ifelse(is.matrix(arma$phi),ncol(arma$phi),0)),
-    #                               d = as.numeric(arma$d),
-    #                               q =  as.numeric(ifelse(is.matrix(arma$theta),ncol(arma$theta),0)),
-    #                               bp = as.numeric(ifelse(is.matrix(arma$bphi),ncol(arma$bphi),0)),
-    #                               bd = as.numeric(arma$bd),
-    #                               bq = as.numeric(ifelse(is.matrix(arma$btheta),ncol(arma$btheta),0)))
-  #}
-  
-  #if (identify_arima_mu) {
-  #  if(arima_mu(sa_mult[[mdl_nr]])){
-  #    spec <- rjd3toolkit::set_arima(spec,mean=0,mean.type="Initial")
-  #  }else{
-  #    spec <- rjd3toolkit::set_arima(spec,mean=NA)
-  #  }
-  #}
-  
+
   if (identify_t_filter | identify_s_filter) {
     filters <- filter_input(sa_mult[[mdl_nr]])
     if (identify_t_filter) {
@@ -400,7 +377,6 @@ x13_pickmdl <- function(ts, spec,
   }
   
   if(!is.null(identification_end) | !is.null(identification_estimate.to)){  ## Holder dette? Nei, hvis identify_outliers ikke er på skal hele identifiseres på nytt... 
-    ### få inn noe med if policy = outliers og identify outliers e.l.
     
     if(isTRUE(identify_outliers) | policy == "Current"){
       spec <- rjd3x13::x13_refresh(spec=spec_to_refresh,refspec = ref_spec, policy = policy, period=stats::frequency(ts),
@@ -414,11 +390,6 @@ x13_pickmdl <- function(ts, spec,
     spec <- ref_spec
   }
   
-  
-  
-  #if (identify_outliers) {
-  #  spec <- update_spec_outliers(sa = sa_mult[[mdl_nr]], spec = spec, verbose = verbose)
-  #}
   
   if(output == "spec"){
     return(spec)
@@ -436,7 +407,7 @@ x13_pickmdl <- function(ts, spec,
       if (isTRUE(all_equal))
         message(all_equal) else warning(all_equal)
     }
-  }   ### Denne maa fikses paa ! Hva er dette? 
+  }   
   
   
   
