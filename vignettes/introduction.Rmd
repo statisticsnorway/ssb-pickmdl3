@@ -44,7 +44,7 @@ with at least one non-seasonal difference) is greater than 0.9.
 
 ```{r, include = FALSE}
 
-ts_now <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+ts_now <- pickmdl3::pickmdl_data("norwegian_rti")[,"rti_476"]
 
 ts_2023 <- window(ts_now,start=start(ts_now),end=c(2023,12))
 ts_2024 <- window(ts_now,start=start(ts_now),end=c(2024,12))
@@ -129,9 +129,7 @@ axis(side = 2, at = -2:2 )
 lines(pick_oi2$result$final$d11final - pick_oi$result$final$d11final,col="tomato",lwd=2)
 abline(h=0,lty=2)
 
-#plot(oi3$result$final$d11final-oi_now_dec$result$final$d11final,xlim=c(2022,2025),ylim=c(-2.5,2.5),ylab="",xlab="") 
-#lines(pick_oi2$result$final$d11final - pick_oi$result$final$d11final,col="tomato")
-abline(h=0,lty=2)
+
 
 
 ```
