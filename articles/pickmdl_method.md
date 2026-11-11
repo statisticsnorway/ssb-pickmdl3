@@ -24,7 +24,7 @@ case.
 
 
 
-rti_472 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_472
+rti_472 <- pickmdl3::pickmdl_data("norwegian_rti")[,"rti_472"]
 spec_now <- x13_spec("rsa3")
 
 model_now <- pickmdl3::x13_pickmdl(rti_472,spec_now, pickmdl_method="first")
@@ -86,7 +86,7 @@ is of order $`(1,0,2)(1,1,1)_s`$.
 
 ``` r
 
-rti_4751 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_4751
+rti_4751 <- pickmdl3::pickmdl_data("norwegian_rti")[,"rti_4751"]
 spec_now <- x13_spec("rsa4")|>
   set_outlier(outliers.type=NULL) 
 model_now <-pickmdl3::x13_pickmdl(rti_4751, spec=spec_now,

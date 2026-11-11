@@ -12,16 +12,16 @@ The object `rti_mts` contains three time series:
 ``` r
 
 
-rti_mts <- do.call(cbind,pickmdl3::pickmdl_data("norwegian_rti"))
+rti_mts <- pickmdl3::pickmdl_data("norwegian_rti")
 
 head(rti_mts)
-#>          rti_472 rti_476 rti_4751
-#> Jan 2014    61.1    71.9     64.5
-#> Feb 2014    62.8    62.9     60.8
-#> Mar 2014    68.6    69.8     68.9
-#> Apr 2014    76.5    72.2     65.2
-#> May 2014    78.4    71.9     69.1
-#> Jun 2014    79.3    79.9     71.5
+#>          rti_472 rti_4751 rti_476
+#> Jan 2014    61.1     64.5    71.9
+#> Feb 2014    62.8     60.8    62.9
+#> Mar 2014    68.6     68.9    69.8
+#> Apr 2014    76.5     65.2    72.2
+#> May 2014    78.4     69.1    71.9
+#> Jun 2014    79.3     71.5    79.9
 ```
 
 We can use the function `make_param_file`to define a data frame with
@@ -45,12 +45,12 @@ spec_file <- make_paramfile(rti_mts, spec = "rsa3",
 spec_file 
 #>       name   spec set_outlier__outliers.type set_transform__fun automdl.enabled
 #> 1  rti_472 "rsa3"              c("LS", "AO")              "Log"            TRUE
-#> 2  rti_476 "rsa3"              c("LS", "AO")              "Log"            TRUE
-#> 3 rti_4751 "rsa3"              c("LS", "AO")              "Log"            TRUE
-#>                                                                                         userdefined
-#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#> 2 rti_4751 "rsa3"              c("LS", "AO")              "Log"            TRUE
+#> 3  rti_476 "rsa3"              c("LS", "AO")              "Log"            TRUE
+#>                                                                                                             userdefined
+#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
+#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
+#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
 ```
 
 The `make_paramfile` function constructs a data frame with the same
@@ -80,16 +80,16 @@ example:
 spec_file
 #>       name    spec set_outlier__outliers.type set_transform__fun
 #> 1  rti_472  "rsa3"              c("LS", "AO")              "Log"
-#> 2  rti_476  "rsa3"                       <NA>              "Log"
-#> 3 rti_4751 "rsa5c"              c("LS", "AO")              "Log"
+#> 2 rti_4751  "rsa3"                       <NA>              "Log"
+#> 3  rti_476 "rsa5c"              c("LS", "AO")              "Log"
 #>   automdl.enabled
 #> 1           FALSE
 #> 2            TRUE
 #> 3            TRUE
-#>                                                                                         userdefined
-#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
-#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")
+#>                                                                                                             userdefined
+#> 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
+#> 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
+#> 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")
 ```
 
 Note that a blank field means that the setting is not used for the
@@ -138,19 +138,21 @@ sa_mult$rti_476
 #> 
 #> Model: X-13
 #> Log-transformation: yes 
-#> SARIMA model: (0,1,1) (0,1,1)
+#> SARIMA model: (1,0,1) (0,1,1)
 #> 
 #> SARIMA coefficients:
-#>  theta(1) btheta(1) 
-#>   -0.8032   -0.3312 
+#>    phi(1)  theta(1) btheta(1) 
+#>   -0.7505   -0.2654   -0.3421 
 #> 
 #> Regression model:
-#> LS (2020-02-01) AO (2020-03-01) 
-#>          0.1854         -0.3411 
+#>             mon             tue             wed             thu             fri 
+#>       -0.012691        0.012751        0.005173       -0.011958        0.023985 
+#>             sat LS (2020-02-01) AO (2020-03-01) 
+#>        0.001713        0.164992       -0.270125 
 #> 
-#>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms
-#>  M-Statistics: q Good (0.671); q-m2 Good (0.724)
-#>  QS test on SA: Good (0.534);  F-test on SA: Good (0.760)
+#>  Seasonal filter: FILTER_S3X3;  Trend filter: H-13 terms
+#>  M-Statistics: q Good (0.502); q-m2 Good (0.559)
+#>  QS test on SA: Good (1.000);  F-test on SA: Good (0.687)
 #> 
 #> For a more detailed output, use the 'summary()' function.
 sa_mult$rti_4751
@@ -158,19 +160,19 @@ sa_mult$rti_4751
 #> 
 #> Model: X-13
 #> Log-transformation: yes 
-#> SARIMA model: (1,0,2) (0,1,1)
+#> SARIMA model: (0,1,1) (1,1,1)
 #> 
 #> SARIMA coefficients:
-#>    phi(1)  theta(1)  theta(2) btheta(1) 
-#>   -0.8132   -0.3264   -0.1841   -0.4981 
+#>  theta(1)   bphi(1) btheta(1) 
+#>   -0.7418   -0.3857   -1.0000 
 #> 
 #> Regression model:
-#>     const       mon       tue       wed       thu       fri       sat    easter 
-#>  0.036961 -0.012811  0.006242  0.009563 -0.008628  0.017098  0.010154 -0.070936 
+#> AO (2020-03-01) 
+#>         -0.2101 
 #> 
 #>  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms
-#>  M-Statistics: q Good (0.558); q-m2 Good (0.597)
-#>  QS test on SA: Good (0.482);  F-test on SA: Good (0.993)
+#>  M-Statistics: q Good (0.587); q-m2 Good (0.629)
+#>  QS test on SA: Good (0.979);  F-test on SA: Good (0.996)
 #> 
 #> For a more detailed output, use the 'summary()' function.
 ```

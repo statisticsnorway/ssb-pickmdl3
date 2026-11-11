@@ -75,16 +75,16 @@ with model specification settings.</p>
 <p>The object <code>rti_mts</code> contains three time series:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">rti_mts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>,<span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"norwegian_rti"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rti_mts</span> <span class="op">&lt;-</span> <span class="fu">pickmdl3</span><span class="fu">::</span><span class="fu"><a href="../reference/pickmdl_data.html">pickmdl_data</a></span><span class="op">(</span><span class="st">"norwegian_rti"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rti_mts</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          rti_472 rti_476 rti_4751</span></span>
-<span><span class="co">#&gt; Jan 2014    61.1    71.9     64.5</span></span>
-<span><span class="co">#&gt; Feb 2014    62.8    62.9     60.8</span></span>
-<span><span class="co">#&gt; Mar 2014    68.6    69.8     68.9</span></span>
-<span><span class="co">#&gt; Apr 2014    76.5    72.2     65.2</span></span>
-<span><span class="co">#&gt; May 2014    78.4    71.9     69.1</span></span>
-<span><span class="co">#&gt; Jun 2014    79.3    79.9     71.5</span></span></code></pre></div>
+<span><span class="co">#&gt;          rti_472 rti_4751 rti_476</span></span>
+<span><span class="co">#&gt; Jan 2014    61.1     64.5    71.9</span></span>
+<span><span class="co">#&gt; Feb 2014    62.8     60.8    62.9</span></span>
+<span><span class="co">#&gt; Mar 2014    68.6     68.9    69.8</span></span>
+<span><span class="co">#&gt; Apr 2014    76.5     65.2    72.2</span></span>
+<span><span class="co">#&gt; May 2014    78.4     69.1    71.9</span></span>
+<span><span class="co">#&gt; Jun 2014    79.3     71.5    79.9</span></span></code></pre></div>
 <p>We can use the function <code>make_param_file</code>to define a data
 frame with specifications. The first input to this function is the
 multivariate time series object that is to be adjusted. Further input
@@ -105,12 +105,12 @@ the reference to settings in <code>rjd3tookit</code>and
 <span><span class="va">spec_file</span> </span>
 <span><span class="co">#&gt;       name   spec set_outlier__outliers.type set_transform__fun automdl.enabled</span></span>
 <span><span class="co">#&gt; 1  rti_472 "rsa3"              c("LS", "AO")              "Log"            TRUE</span></span>
-<span><span class="co">#&gt; 2  rti_476 "rsa3"              c("LS", "AO")              "Log"            TRUE</span></span>
-<span><span class="co">#&gt; 3 rti_4751 "rsa3"              c("LS", "AO")              "Log"            TRUE</span></span>
-<span><span class="co">#&gt;                                                                                         userdefined</span></span>
-<span><span class="co">#&gt; 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span>
-<span><span class="co">#&gt; 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span>
-<span><span class="co">#&gt; 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 rti_4751 "rsa3"              c("LS", "AO")              "Log"            TRUE</span></span>
+<span><span class="co">#&gt; 3  rti_476 "rsa3"              c("LS", "AO")              "Log"            TRUE</span></span>
+<span><span class="co">#&gt;                                                                                                             userdefined</span></span>
+<span><span class="co">#&gt; 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span>
+<span><span class="co">#&gt; 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span>
+<span><span class="co">#&gt; 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span></code></pre></div>
 <p>The <code>make_paramfile</code> function constructs a data frame with
 the same specifications for all series. To adjust specifications
 settings for individual series, use the function
@@ -130,16 +130,16 @@ example:</p>
 <code class="sourceCode R"><span><span class="va">spec_file</span></span>
 <span><span class="co">#&gt;       name    spec set_outlier__outliers.type set_transform__fun</span></span>
 <span><span class="co">#&gt; 1  rti_472  "rsa3"              c("LS", "AO")              "Log"</span></span>
-<span><span class="co">#&gt; 2  rti_476  "rsa3"                       &lt;NA&gt;              "Log"</span></span>
-<span><span class="co">#&gt; 3 rti_4751 "rsa5c"              c("LS", "AO")              "Log"</span></span>
+<span><span class="co">#&gt; 2 rti_4751  "rsa3"                       &lt;NA&gt;              "Log"</span></span>
+<span><span class="co">#&gt; 3  rti_476 "rsa5c"              c("LS", "AO")              "Log"</span></span>
 <span><span class="co">#&gt;   automdl.enabled</span></span>
 <span><span class="co">#&gt; 1           FALSE</span></span>
 <span><span class="co">#&gt; 2            TRUE</span></span>
 <span><span class="co">#&gt; 3            TRUE</span></span>
-<span><span class="co">#&gt;                                                                                         userdefined</span></span>
-<span><span class="co">#&gt; 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span>
-<span><span class="co">#&gt; 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span>
-<span><span class="co">#&gt; 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value")</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                                                                             userdefined</span></span>
+<span><span class="co">#&gt; 1 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span>
+<span><span class="co">#&gt; 2 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span>
+<span><span class="co">#&gt; 3 c("diagnostics.seas-si-combined", "diagnostics.seas-sa-friedman", "residuals.independence.value", "decomposition.b1")</span></span></code></pre></div>
 <p>Note that a blank field means that the setting is not used for the
 series in question.</p>
 <p>Now, to do the seasonal adjustment of the multivariate time series
@@ -179,19 +179,21 @@ output objects for each time series in the mts.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model: X-13</span></span>
 <span><span class="co">#&gt; Log-transformation: yes </span></span>
-<span><span class="co">#&gt; SARIMA model: (0,1,1) (0,1,1)</span></span>
+<span><span class="co">#&gt; SARIMA model: (1,0,1) (0,1,1)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SARIMA coefficients:</span></span>
-<span><span class="co">#&gt;  theta(1) btheta(1) </span></span>
-<span><span class="co">#&gt;   -0.8032   -0.3312 </span></span>
+<span><span class="co">#&gt;    phi(1)  theta(1) btheta(1) </span></span>
+<span><span class="co">#&gt;   -0.7505   -0.2654   -0.3421 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Regression model:</span></span>
-<span><span class="co">#&gt; LS (2020-02-01) AO (2020-03-01) </span></span>
-<span><span class="co">#&gt;          0.1854         -0.3411 </span></span>
+<span><span class="co">#&gt;             mon             tue             wed             thu             fri </span></span>
+<span><span class="co">#&gt;       -0.012691        0.012751        0.005173       -0.011958        0.023985 </span></span>
+<span><span class="co">#&gt;             sat LS (2020-02-01) AO (2020-03-01) </span></span>
+<span><span class="co">#&gt;        0.001713        0.164992       -0.270125 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms</span></span>
-<span><span class="co">#&gt;  M-Statistics: q Good (0.671); q-m2 Good (0.724)</span></span>
-<span><span class="co">#&gt;  QS test on SA: Good (0.534);  F-test on SA: Good (0.760)</span></span>
+<span><span class="co">#&gt;  Seasonal filter: FILTER_S3X3;  Trend filter: H-13 terms</span></span>
+<span><span class="co">#&gt;  M-Statistics: q Good (0.502); q-m2 Good (0.559)</span></span>
+<span><span class="co">#&gt;  QS test on SA: Good (1.000);  F-test on SA: Good (0.687)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; For a more detailed output, use the 'summary()' function.</span></span>
 <span><span class="va">sa_mult</span><span class="op">$</span><span class="va">rti_4751</span></span>
@@ -199,19 +201,19 @@ output objects for each time series in the mts.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model: X-13</span></span>
 <span><span class="co">#&gt; Log-transformation: yes </span></span>
-<span><span class="co">#&gt; SARIMA model: (1,0,2) (0,1,1)</span></span>
+<span><span class="co">#&gt; SARIMA model: (0,1,1) (1,1,1)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SARIMA coefficients:</span></span>
-<span><span class="co">#&gt;    phi(1)  theta(1)  theta(2) btheta(1) </span></span>
-<span><span class="co">#&gt;   -0.8132   -0.3264   -0.1841   -0.4981 </span></span>
+<span><span class="co">#&gt;  theta(1)   bphi(1) btheta(1) </span></span>
+<span><span class="co">#&gt;   -0.7418   -0.3857   -1.0000 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Regression model:</span></span>
-<span><span class="co">#&gt;     const       mon       tue       wed       thu       fri       sat    easter </span></span>
-<span><span class="co">#&gt;  0.036961 -0.012811  0.006242  0.009563 -0.008628  0.017098  0.010154 -0.070936 </span></span>
+<span><span class="co">#&gt; AO (2020-03-01) </span></span>
+<span><span class="co">#&gt;         -0.2101 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Seasonal filter: FILTER_S3X5;  Trend filter: H-23 terms</span></span>
-<span><span class="co">#&gt;  M-Statistics: q Good (0.558); q-m2 Good (0.597)</span></span>
-<span><span class="co">#&gt;  QS test on SA: Good (0.482);  F-test on SA: Good (0.993)</span></span>
+<span><span class="co">#&gt;  M-Statistics: q Good (0.587); q-m2 Good (0.629)</span></span>
+<span><span class="co">#&gt;  QS test on SA: Good (0.979);  F-test on SA: Good (0.996)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; For a more detailed output, use the 'summary()' function.</span></span></code></pre></div>
   </main>

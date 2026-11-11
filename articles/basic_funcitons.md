@@ -23,7 +23,7 @@ library(rjd3toolkit)
 library(rjd3x13)
 library(pickmdl3)
 
-rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")$rti_476
+rti_476 <- pickmdl3::pickmdl_data("norwegian_rti")[,"rti_476"]
 
 spec_now <- x13_spec("rsa5c") |>
   set_outlier(outliers.type=c("AO","LS")) 
