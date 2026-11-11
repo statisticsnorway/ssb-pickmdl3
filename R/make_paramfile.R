@@ -65,7 +65,7 @@ make_paramfile <- function(indat,...) {
   
   #Ensure 'userdefined' is included in the parameters
   if (!"userdefined" %in% names(params)) {
-    params$userdefined <- c("diagnostics.seas-si-combined","diagnostics.seas-sa-friedman","residuals.independence.value")
+    params$userdefined <- c("diagnostics.seas-si-combined","diagnostics.seas-sa-friedman","residuals.independence.value","decomposition.b1")
   }
   
   params$userdefined <- paste0('c(', paste0('"', params$userdefined, '"', collapse = ", "), ')')

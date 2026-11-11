@@ -25,7 +25,7 @@ The object `rti_mts` contains three time series:
 
 ```{r}
 
-rti_mts <- do.call(cbind,pickmdl3::pickmdl_data("norwegian_rti"))
+rti_mts <- pickmdl3::pickmdl_data("norwegian_rti")
 
 head(rti_mts)
 
