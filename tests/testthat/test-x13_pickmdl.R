@@ -70,11 +70,11 @@ test_that("x13_pickmdl works ok", {
   d7 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_estimate.to="2019-12-01")
   expect_equal(d7$result$preprocessing$description$arima$btheta["value",]$value,d6$result$preprocessing$description$arima$btheta["value",]$value)
   
-  d8 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),identify_outliers = FALSE)
+  expect_warning({d8 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),identify_outliers = FALSE)})
   expect_equal(ok(d8)$mdl_nr,2L)
   expect_equal(d8$result$preprocessing$description$arima$btheta["value",]$value,-0.9530288,tolerance=0.00001)
   
-  d9 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),corona=TRUE,identify_outliers = FALSE)
+  expect_warning({d9 <- x13_pickmdl(myseries_b,spec_d,pickmdl_method = "first_automdl",when_finalnotok = warning,identification_end=c(2019,12),corona=TRUE,identify_outliers = FALSE)})
   expect_equal(d9$result$preprocessing$description$arima$theta["value",][[1]],-1.10290359,tolerance=0.00001)
   
   
