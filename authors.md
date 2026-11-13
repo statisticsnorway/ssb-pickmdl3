@@ -11,7 +11,7 @@
 
 - **Ane Seierstad**. Author.
 
-- **Joern Ivar Hamre**. Author.
+- **Jørn Ivar Hamre**. Author.
 
 - **Statistics Norway**. Copyright holder.
 
@@ -19,13 +19,13 @@
 
 Haug J, Langsrud Ø, Pham D, Seierstad A, Hamre J (2026). *pickmdl3:
 Seasonal Adjustment with 'X-13' in 'JDemetra+' 3.x Extended with
-'PICKMDL'*. R package version 0.0.1,
+'PICKMDL'*. R package version 0.0.2,
 <https://statisticsnorway.github.io/ssb-pickmdl3/>.
 
     @Manual{,
       title = {pickmdl3: Seasonal Adjustment with 'X-13' in 'JDemetra+' 3.x Extended with 'PICKMDL'},
-      author = {Jens Kristoffer Haug and Øyvind Langsrud and Dinh Quang Pham and Ane Seierstad and Joern Ivar Hamre},
+      author = {Jens Kristoffer Haug and Øyvind Langsrud and Dinh Quang Pham and Ane Seierstad and Jørn Ivar Hamre},
       year = {2026},
-      note = {R package version 0.0.1},
+      note = {R package version 0.0.2},
       url = {https://statisticsnorway.github.io/ssb-pickmdl3/},
     }
