@@ -1,13 +1,13 @@
 Package: pickmdl3
 Type: Package
 Title: Seasonal Adjustment with 'X-13' in 'JDemetra+' 3.x Extended with 'PICKMDL'
-Version: 0.0.1
-Date: 2026-04-29
+Version: 0.0.2
+Date: 2026-11-13
 Authors@R: c(person("Jens Kristoffer", "Haug", role = c("aut","cre"), email = "ffe@ssb.no", comment = c(ORCID = "0009-0001-4487-4274")),
              person("Øyvind", "Langsrud", role = c("aut"), comment = c(ORCID = "0000-0002-1380-4396")),
              person("Dinh Quang", "Pham", role = c("aut")),
              person("Ane", "Seierstad", role = c("aut")),
-             person("Joern Ivar", "Hamre", role = c("aut")),
+             person("Jørn Ivar", "Hamre", role = c("aut")),
              person("Statistics Norway", role = "cph"))
 Description:A tool that makes the X-12-ARIMA PICKMDL procedure available within the JDemetra+ R Framework (<https://github.com/rjdverse).
              PICKMDL is a model selection procedure that differs from the automdl procedure implemented in JDemetra+. The pickmdl procedure restricts 
