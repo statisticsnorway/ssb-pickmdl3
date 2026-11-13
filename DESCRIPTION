@@ -44,4 +44,5 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://statisticsnorway.github.io/ssb-pickmdl3/
 Config/roxygen2/version: 8.1.1
+SystemRequirements: Java (>= 21)
 VignetteBuilder: knitr
